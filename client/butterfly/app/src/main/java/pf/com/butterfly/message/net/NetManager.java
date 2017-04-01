@@ -30,7 +30,24 @@ public class NetManager
             WhatId=MsgHandler.getInstance().getNewWhat();
 
             //切换到ui线程
-            MsgHandler.getInstance().addOneDispose(WhatId,new Dispose());
+            MsgHandler.getInstance().addOneDispose(WhatId, new IMsgHandler() {
+                        @Override
+                        public void onMsgDispose(Message msg) {
+
+                            MsgBase mb =(MsgBase)msg.obj;
+                            //  MainActivity.getInstance().ShowText(str);
+
+                            try
+                            {
+                                MsgMap.GetResultClass(mb.CodeId).MsgCallback(mb);
+                            }
+                            catch(Exception ex)
+                            {
+                                //处理网络消息出现问题了...
+                            }
+                        }
+
+            });
         }
 
     }
@@ -51,23 +68,4 @@ public class NetManager
     }
 
 
-}
-class Dispose implements IMsgHandler
-{
-    //处理网络消息
-    public void onMsgDispose(Object o)
-    {
-        MsgBase msg =(MsgBase)o;
-        //  MainActivity.getInstance().ShowText(str);
-
-        try
-        {
-            MsgMap.GetResultClass(msg.CodeId).MsgCallback(msg);
-        }
-        catch(Exception ex)
-        {
-
-        }
-
-    }
 }

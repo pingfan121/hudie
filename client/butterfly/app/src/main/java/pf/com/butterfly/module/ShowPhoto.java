@@ -1,6 +1,7 @@
 package pf.com.butterfly.module;
 
 import android.graphics.Bitmap;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -187,9 +188,9 @@ public class ShowPhoto implements IMsgHandler
 
     //上传图片返回
     private String img_url;
-    public void onMsgDispose(Object msg)
+    public void onMsgDispose(Message msg)
     {
-        String data=msg.toString();
+        String data=msg.obj.toString();
 
         if(data == "" )
         {

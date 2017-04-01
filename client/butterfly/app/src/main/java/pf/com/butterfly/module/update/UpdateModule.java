@@ -57,7 +57,7 @@ public class UpdateModule
         //绑定获取更新文件返回函数
         MsgHandler.getInstance().addOneDispose(what, new IMsgHandler() {
             @Override
-            public void onMsgDispose(Object msg){
+            public void onMsgDispose(Message msg){
                 OnUpdateInfoBack(msg);
             }
         });
@@ -70,12 +70,12 @@ public class UpdateModule
 
 
     //下载更新文件的返回
-    public void OnUpdateInfoBack(Object msg)
+    public void OnUpdateInfoBack(Message msg)
     {
         HDLog.error("收到了消息....");
-        HDLog.error("收到了消息:"+(String)msg);
+        HDLog.error("收到了消息:"+(String)msg.obj);
 
-        String msgstr=(String)msg;
+        String msgstr=(String)msg.obj;
 
         if(msgstr.equals("-100"))
         {

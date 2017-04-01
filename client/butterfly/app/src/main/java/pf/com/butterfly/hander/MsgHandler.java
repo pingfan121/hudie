@@ -58,7 +58,7 @@ public class MsgHandler extends Handler
 
         if(dises.containsKey(msg.what))
         {
-            dises.get(msg.what).onMsgDispose(msg.obj);
+            dises.get(msg.what).onMsgDispose(msg);
         }
         else
         {
