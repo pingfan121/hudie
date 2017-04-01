@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumCompoundType	{		none = 0,//无		settled = 1,//固定合成		reandom = 2,//随机合成		reandom_fixation = 3,//随机加固定	}}

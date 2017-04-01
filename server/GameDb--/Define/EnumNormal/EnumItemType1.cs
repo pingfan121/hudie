@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumItemType1	{		item = 0,//道具		equipment = 1,//装备	}}

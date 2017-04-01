@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumExtensionAwardType	{		login = 1,//登录奖励		level = 2,//等级奖励		pay = 3,//充值奖励	}}

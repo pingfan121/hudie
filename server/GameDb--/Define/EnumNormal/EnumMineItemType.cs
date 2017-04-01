@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumMineItemType	{		all = 0,//全部		equip = 1,//装备		other = 2,//其他	}}

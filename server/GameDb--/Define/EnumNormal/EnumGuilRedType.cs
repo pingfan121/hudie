@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumGuilRedType	{		unknown = 0,//无效值		send = 1,//发红包		grab = 2,//抢红包	}}

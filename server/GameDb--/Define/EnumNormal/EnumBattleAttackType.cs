@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumBattleAttackType	{		unknown = 0,//未知		physical = 1,//物理攻击		magic = 2,//法术攻击		taoism = 3,//道术攻击	}}

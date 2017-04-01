@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumMailState	{		normal = 0,//未读取		opened = 1,//已读取		deleted = 2,//已删除	}}

@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumItemBindType	{		none = 0,//未知		bind = 1,//绑定		unbind = 2,//非绑定		exclusive = 3,//专有	}}

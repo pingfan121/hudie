@@ -1,0 +1,14 @@
+E:\liuhuitao\code\server\bin\Debug\GameDb.dll
+E:\liuhuitao\code\server\bin\Debug\GameDb.pdb
+E:\liuhuitao\code\server\XY2Server\GameDb\obj\Debug\GameDb.dll
+E:\liuhuitao\code\server\XY2Server\GameDb\obj\Debug\GameDb.pdb
+D:\hudie\server\hudie\GameDb\obj\Debug\GameDb.dll
+D:\hudie\server\hudie\GameDb\obj\Debug\GameDb.pdb
+D:\hudie\server\bin\Debug\GameDb.dll
+D:\hudie\server\bin\Debug\GameDb.pdb
+D:\hudie\server\hudie\GameDb\obj\Debug\GameDb.csprojResolveAssemblyReference.cache
+D:\case\server\bin\Debug\GameDb.dll
+D:\case\server\bin\Debug\GameDb.pdb
+D:\case\server\hudie\GameDb\obj\Debug\GameDb.dll
+D:\case\server\hudie\GameDb\obj\Debug\GameDb.pdb
+D:\case\server\hudie\GameDb\obj\Debug\GameDb.csprojResolveAssemblyReference.cache

@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumExtensionAwardState	{		not_reach = 0,//条件未达成，不可领取		can_receive = 1,//可领取		already_receive = 2,//已领取	}}

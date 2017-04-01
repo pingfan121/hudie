@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumMissionState	{		none = 0,//无		open = 1,//开启（可接受）		received = 2,//已接受		complete = 3,//已完成		submit = 4,//已提交	}}

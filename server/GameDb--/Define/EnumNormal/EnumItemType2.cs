@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumItemType2	{		equipment = 1,//装备		equipment_super = 2,//神装		equipment_others = 3,//其他部件（符文装备）		medicine = 4,//药品		material_synthesis = 5,//合成材料		buff = 6,//BUFF物品		material_functional = 7,//功能材料		res = 8,//资源物品		box = 9,//宝箱		gift = 10,//礼包		fashion = 11,//时装类型		equipment_soul = 12,//魂装	}}

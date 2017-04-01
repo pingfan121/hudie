@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumMapCloneModeType	{		unknown = 0,//未知		single = 1,//单人		team = 2,//组队		guild = 3,//公会		all = 5,//所有	}}

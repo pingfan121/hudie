@@ -1,0 +1,4 @@
+E:\liuhuitao\code\server\DLL\Easy4net.dll
+E:\liuhuitao\code\server\DLL\Easy4net.pdb
+E:\liuhuitao\code\server\tool\CodeBuilder_src\easy4net\Easy4net\obj\Release\Easy4net.dll
+E:\liuhuitao\code\server\tool\CodeBuilder_src\easy4net\Easy4net\obj\Release\Easy4net.pdb

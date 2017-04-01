@@ -1,0 +1,27 @@
+
+# directory:
+publish
+
+
+#android
+# Built application files
+*.apk
+*.ap_
+
+# Android Studio Navigation editor temp files
+.navigation/
+
+# Android Studio captures folder
+captures/
+
+# Intellij
+**/.idea
+
+# Keystore files
+*.jks
+
+# External native build folder generated in Android Studio 2.2 and later
+.externalNativeBuild
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json

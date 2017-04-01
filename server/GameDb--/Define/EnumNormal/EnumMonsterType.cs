@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumMonsterType	{		normal = 1,//小怪		boss = 2,//BOSS		elite = 3,//精英		person = 4,//人形		star_elite = 5,//七星精英	}}

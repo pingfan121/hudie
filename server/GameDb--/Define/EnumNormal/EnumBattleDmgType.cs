@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumBattleDmgType	{		none = 0,//无		normal = 1,//普通		luck = 2,//幸运		curse = 3,//诅咒		cri = 4,//暴击		dodge = 5,//闪避	}}

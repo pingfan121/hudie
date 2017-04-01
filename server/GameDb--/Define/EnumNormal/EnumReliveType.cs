@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumReliveType	{		back = 0,//回城复活		immediately = 1,//立即复活	}}

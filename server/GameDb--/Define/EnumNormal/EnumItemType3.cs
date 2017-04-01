@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumItemType3	{		material_functional_transfer = 1,//传送石		material_functional_skill_book = 2,//技能书		material_functional_head = 3,//首级		material_functional_isrune = 4,//符文		material_functional_gem = 5,//宝石		material_functional_office = 7,//官职	}}

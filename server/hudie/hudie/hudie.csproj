@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A8DC8137-ACF3-46C5-A153-FBD8EA74A3A8}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>hudie</RootNamespace>
+    <AssemblyName>hudie</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\publish\server\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\publish\server\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\dll\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dll\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="dbfile\dblogic\benefit\TbAppJianyi.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBenefitDiscuss.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBenefitHead.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBenefitJuankuan.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBenefitPraise.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBenefitProof.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbUser.cs" />
+    <Compile Include="error\MsgStateType.cs" />
+    <Compile Include="app\GameApp.cs" />
+    <Compile Include="message\ProtocolsReq\advise_cteate_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\benefit_detail_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\benefit_head_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\benefit_proof_discuss_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\benefit_theme_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\login_req_fun.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="message\ProtocolsReq\register_req_fun.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="message\Protocols\advise_cteate_req.cs" />
+    <Compile Include="message\Protocols\advise_cteate_res.cs" />
+    <Compile Include="message\Protocols\benefit_detail_req.cs" />
+    <Compile Include="message\Protocols\benefit_detail_res.cs" />
+    <Compile Include="message\Protocols\benefit_head_req.cs" />
+    <Compile Include="message\Protocols\benefit_head_res.cs" />
+    <Compile Include="message\Protocols\benefit_proof_discuss_req.cs" />
+    <Compile Include="message\Protocols\benefit_proof_discuss_res.cs" />
+    <Compile Include="message\Protocols\info_benefit_head_item.cs" />
+    <Compile Include="message\Protocols\login_req.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="message\Protocols\login_res.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="message\Protocols\register_req.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="message\Protocols\register_res.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="message\MsgCodeId.cs" />
+    <Compile Include="message\MsgHandle.cs" />
+    <Compile Include="message\MsgProcessor.cs" />
+    <Compile Include="message\MsgBase.cs" />
+    <Compile Include="net\NetHttp.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="dbfile\DBManager.cs" />
+    <Compile Include="dbfile\dblogic\benefit\DbBenefitThemeProc.cs" />
+    <Compile Include="dbfile\dblogic\user\DbLoginProc.cs" />
+    <Compile Include="dbfile\dblogic\user\DbRegisterProc.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\GameDb\GameDb.csproj">
+      <Project>{0acc664e-12fc-4daa-af22-d7810ce661af}</Project>
+      <Name>GameDb</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dbfile\1文件夹说明.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="dbfile\data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

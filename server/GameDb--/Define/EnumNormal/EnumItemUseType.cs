@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumItemUseType	{		unused = 0,//无法使用		single_use = 1,//单个使用		mass_use = 2,//批量使用		use_count = 3,//次数使用		use_energy = 4,//能量方式使用	}}

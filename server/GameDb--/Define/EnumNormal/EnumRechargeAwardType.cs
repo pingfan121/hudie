@@ -1,0 +1,1 @@
+namespace GameServer.Define.EnumNormal{	public enum EnumRechargeAwardType	{		none = 0,//无状态		level = 1,//等级类型		recharge = 2,//任意充值		total = 3,//累计充值	}}
