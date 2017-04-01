@@ -126,6 +126,7 @@ public class MainActivity  extends AppCompatActivity
         LogView.init();
 
 
+        //嘿嘿
         //创建函数在前后台切换的时候回多次调用 所以初始化函数要多多注意 不要重复创建视图
 
         try
