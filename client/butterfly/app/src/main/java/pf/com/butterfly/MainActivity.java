@@ -112,6 +112,7 @@ public class MainActivity  extends AppCompatActivity
 
     }
 
+    //测试
     //Activity创建或者从被覆盖、后台重新回到前台时被调用
     @Override
     protected void onResume() {
