@@ -1,0 +1,1 @@
+[{"name":"EnumMsgState","info":[{"index":0,"enumstr":"ok","explain":"没有错误"}]}]
