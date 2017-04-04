@@ -8,11 +8,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.security.PrivateKey;
 
 import pf.com.butterfly.MainActivity;
-import pf.com.butterfly.ModuleManager;
 import pf.com.butterfly.R;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.hander.MsgHandler;
@@ -203,7 +200,7 @@ public class ShowPhoto implements IMsgHandler
             //system.out.plant
             HDLog.info("上传成功了呀");
 
-            Toast.makeText(ModuleManager.main,"上传成功",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.main,"上传成功",Toast.LENGTH_LONG).show();
             img_url=data;
         }
     }

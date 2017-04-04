@@ -1,22 +1,16 @@
 package pf.com.butterfly.module.main;
 
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import pf.com.butterfly.ModuleManager;
 import pf.com.butterfly.R;
-import pf.com.butterfly.base.AppBaseControl;
-import pf.com.butterfly.base.AppBaseFragment;
-import pf.com.butterfly.hander.MsgHandler;
+import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.module.title.TitleModule;
 
 /**
  * Created by admin on 2017/3/4.
  */
-public class MainHead extends AppBaseControl
+public class MainHead extends AppBaseViewControl
 {
     private static MainHead _instance=null;
 
@@ -30,17 +24,19 @@ public class MainHead extends AppBaseControl
         return _instance ;
     }
 
+    protected void initValue()
+    {
+        title="首页";
+
+        layout=R.layout.main_head;
+
+
+    }
 
     private TextView tv;
 
-    ///参数 最上层的布局视图
-    @Override
-    public void init(AppBaseFragment fragment,View father)
+    protected void initControl()
     {
-        super.init(fragment,father);
-
-        view=father.findViewById(R.id.main_head);
-
         tv=(TextView)view.findViewById(R.id.tv_story);
 
         setText(st);
@@ -48,11 +44,9 @@ public class MainHead extends AppBaseControl
         view.findViewById(R.id.btn_fun).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainTest.getInstance().Show();
+                MainTest.getInstance().show();
             }
         });
-
-        this.Hide();
     }
 
     public void setText(String str)
@@ -61,9 +55,9 @@ public class MainHead extends AppBaseControl
     }
 
     @Override
-    public void SetTitleView()
+    public void resetTitle()
     {
-        TitleModule.getInstance().SetTitle("首页");
+        TitleModule.getInstance().SetTitle(title);
 
         TitleModule.getInstance().SetCatalogIcon();
     }

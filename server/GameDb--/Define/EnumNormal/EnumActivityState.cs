@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumActivityState	{		start = 0,//立即前往		ready = 1,//即将开始		close = 2,//未开启		end = 3,//已结束		stop = 4,//停止进入	}}

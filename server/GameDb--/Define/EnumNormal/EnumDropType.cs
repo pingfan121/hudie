@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumDropType	{		unknown = 0,//未知		gold = 1,//金币		item = 2,//物品	}}

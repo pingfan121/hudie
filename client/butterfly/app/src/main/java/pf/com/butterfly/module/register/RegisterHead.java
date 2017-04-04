@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseControl;
 import pf.com.butterfly.base.AppBaseFragment;
+import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.http.BmobHttp;
 import pf.com.butterfly.message.Protocols.register_req;
@@ -20,7 +21,7 @@ import pf.com.butterfly.util.HDLog;
 /**
  * Created by admin on 2017/3/3.
  */
-public class RegisterHead extends AppBaseControl
+public class RegisterHead extends AppBaseViewControl
 {
     private static RegisterHead _instance;
 
@@ -31,6 +32,12 @@ public class RegisterHead extends AppBaseControl
             _instance=new RegisterHead();
         }
         return _instance;
+    }
+
+    protected void initValue()
+    {
+        title="注册";
+        layout=R.layout.register_head;
     }
 
 
@@ -45,11 +52,8 @@ public class RegisterHead extends AppBaseControl
 
 
     @Override
-    public void init(AppBaseFragment fragment,View father)
+    public void initControl()
     {
-        super.init(fragment,father);
-
-        view=father.findViewById(R.id.register_head);
 
         et_mobile=(EditText)view.findViewById(R.id.et_tel);
         et_password=(EditText)view.findViewById(R.id.et_pass);
@@ -88,15 +92,17 @@ public class RegisterHead extends AppBaseControl
     private void OnRegisterBtn()
     {
 
-        //验证验证验证码
-        reqdata2 data2=new reqdata2();
-        data2.mobilePhoneNumber=et_mobile.getText().toString();
+//        //验证验证验证码
+//        reqdata2 data2=new reqdata2();
+//        data2.mobilePhoneNumber=et_mobile.getText().toString();
+//
+//        String str=new Gson().toJson(data2);
+//
+//        String code=et_verify.getText().toString();
+//        //去获取验证码
+//        http.send("https://api.bmob.cn/1/verifySmsCode/"+ code,str,2);
 
-        String str=new Gson().toJson(data2);
-
-        String code=et_verify.getText().toString();
-        //去获取验证码
-        http.send("https://api.bmob.cn/1/verifySmsCode/"+ code,str,2);
+        RegisterUser();
 
     }
 
@@ -111,13 +117,6 @@ public class RegisterHead extends AppBaseControl
        //去获取验证码
         http.send("https://api.bmob.cn/1/requestSmsCode",str,1);
 
-    }
-
-
-    @Override
-    public void SetTitleView()
-    {
-        TitleModule.getInstance().SetTitle("注册");
     }
 
 

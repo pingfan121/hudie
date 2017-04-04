@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumInvestType	{		unknown = 0,		month = 1,//月卡投资		level = 2,//升级投资	}}

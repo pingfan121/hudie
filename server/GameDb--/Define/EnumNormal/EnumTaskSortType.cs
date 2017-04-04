@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumTaskSortType	{		none = 0,//无		mainTask = 1,//主线任务		lineTask = 2,//支线任务		dailyTask = 3,//日常任务		weeklyTask = 4,//周常任务		exp = 5,//材料		item = 6,//经验		elite = 7,//日常精英任务	}}

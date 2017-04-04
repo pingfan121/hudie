@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumChatType	{		current = 100,//1.1 当前聊天		team = 200,//1.2 队伍聊天		gang = 300,//1.3  帮会聊天		world = 400,//1.4  世界聊天		secret = 500,//1.5  密聊		pm = 600,//1.6  私聊		system = 700,//1.7  系统信息		notice = 800,//1.8  公告信息		horn = 900,//1.9  喇叭喊话		alliance = 1000,//1.10 联盟聊天	}}

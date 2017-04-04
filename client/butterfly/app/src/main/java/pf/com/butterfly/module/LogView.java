@@ -2,16 +2,10 @@ package pf.com.butterfly.module;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
 import pf.com.butterfly.MainActivity;
-import pf.com.butterfly.ModuleManager;
 import pf.com.butterfly.R;
-import pf.com.butterfly.component.HtmlTextView;
 import pf.com.butterfly.util.HDLog;
 
 /**

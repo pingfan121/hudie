@@ -1,31 +1,23 @@
 package pf.com.butterfly.module.menu;
-import android.graphics.Point;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import pf.com.butterfly.ModuleManager;
 import pf.com.butterfly.R;
-import pf.com.butterfly.module.benefit.BenefitHeadItemAdapter;
-import pf.com.butterfly.module.benefit.BenefitModule;
-import pf.com.butterfly.tease.TeaseModule;
-
+import pf.com.butterfly.component.IItemClick;
+import pf.com.butterfly.component.ItemAdapter;
+import pf.com.butterfly.model.ItemData;
+import pf.com.butterfly.module.advise.AdviseHead;
+import pf.com.butterfly.module.benefit.BenefitHead;
+import pf.com.butterfly.module.set.SetingHead;
 
 
 /**
  * A fragment with a Google +1 button.
  */
-public class MenuModule // implements View.OnTouchListener
+public class MenuModule  implements IItemClick
  {
 
     private static MenuModule _instance=null;
@@ -42,14 +34,13 @@ public class MenuModule // implements View.OnTouchListener
 
     private static DrawerLayout slide;//菜单布局
     private View view;  //菜单视图
-    private LayoutInflater inflater;
-    private MenuItemAdapter adapter=new MenuItemAdapter();
-    private MenuItemAdapter2 adapter2=new MenuItemAdapter2();
 
     public void init( View father)
     {
 
-        inflater= LayoutInflater.from(father.getContext());
+        initValue();
+
+        LayoutInflater inflater= LayoutInflater.from(father.getContext());
         //菜单布局
         slide = (DrawerLayout)father;
         //菜单视图
@@ -57,7 +48,7 @@ public class MenuModule // implements View.OnTouchListener
 
         ListView listView=(ListView)view.findViewById(R.id.menu_item_list);
 
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter1);
 
         ListView listView2=(ListView)view.findViewById(R.id.menu_item_list2);
 
@@ -79,6 +70,46 @@ public class MenuModule // implements View.OnTouchListener
      public boolean getState()
      {
          return  slide.isDrawerOpen(Gravity.LEFT);
+     }
+
+     private ItemAdapter adapter1;
+     private ItemAdapter adapter2;
+     private void initValue()
+     {
+         adapter1=new ItemAdapter();
+         adapter1.setItemClick(this);
+         adapter1.setLayout(R.layout.itemlayout);
+         adapter1.addData(new ItemData(R.drawable.hudie,"蝴蝶"));
+
+         adapter2=new ItemAdapter();
+         adapter2.setItemClick(this);
+         adapter2.setLayout(R.layout.itemlayout);
+         adapter2.addData(new ItemData(R.drawable.jianyi,"建议"));
+         adapter2.addData(new ItemData(R.drawable.shezhi,"设置"));
+     }
+
+     public void onItemClick(View view, ItemData data)
+     {
+         MenuModule.getInstance().ShowMenu(false);
+
+         switch(data.text)
+         {
+             case "蝴蝶":
+             {
+                 BenefitHead.getInstance().show();
+                 break;
+             }
+             case "建议":
+             {
+                 AdviseHead.getInstance().show();
+                 break;
+             }
+             case "设置":
+             {
+                 SetingHead.getInstance().show();
+                 break;
+             }
+         }
      }
 
 

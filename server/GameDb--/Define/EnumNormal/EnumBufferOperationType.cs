@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumBufferOperationType	{		unknown = 0,//未知		addition = 1,//添加		remove = 2,//删除		modify = 3,//修改		list = 4,//列表	}}

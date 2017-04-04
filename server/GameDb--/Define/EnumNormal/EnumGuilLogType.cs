@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumGuilLogType	{		unknown = 0,//无效值		donate_money = 1,//捐献钱		donate_item = 2,//捐献物品		exchange_item = 3,//兑换物品	}}

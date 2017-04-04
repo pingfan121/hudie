@@ -20,19 +20,18 @@ import java.io.InputStream;
 import c.b.BP;
 import c.b.PListener;
 import pf.com.butterfly.MainActivity;
-import pf.com.butterfly.ModuleManager;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseControl;
 import pf.com.butterfly.base.AppBaseFragment;
+import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.module.title.TitleModule;
-import pf.com.butterfly.util.HDLog;
 import pf.com.butterfly.util.MixFun;
 
 /**
  * Created by admin on 2017/3/10.
  * 捐款界面
  */
-public class BenefitDonation extends AppBaseControl
+public class BenefitDonation extends AppBaseViewControl
 {
     private static BenefitDonation _instance;
 
@@ -46,6 +45,11 @@ public class BenefitDonation extends AppBaseControl
         return _instance;
     }
 
+    protected void initValue()
+    {
+        title="救助";
+        layout=R.layout.benefit_donation;
+    }
 
     private TextView tv_show;
     private ListView lv;
@@ -55,12 +59,8 @@ public class BenefitDonation extends AppBaseControl
 
     private BenefitDonationPayItemAdapter adapter=new BenefitDonationPayItemAdapter();
     @Override
-    public void init(AppBaseFragment appfragment, View father)
+    public void initControl()
     {
-        super.init(appfragment,father);
-
-        view=father.findViewById(R.id.benefit_donation);
-
         lv=(ListView)view.findViewById(R.id.lv_pay);
 
         lv.setAdapter(adapter);
@@ -75,12 +75,6 @@ public class BenefitDonation extends AppBaseControl
 
         view.setVisibility(View.INVISIBLE);
 
-    }
-
-    @Override
-    public void SetTitleView()
-    {
-        TitleModule.getInstance().SetTitle("捐款");
     }
 
     //确认按钮

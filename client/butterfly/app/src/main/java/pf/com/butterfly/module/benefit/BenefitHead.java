@@ -6,12 +6,13 @@ import android.widget.ListView;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseControl;
 import pf.com.butterfly.base.AppBaseFragment;
+import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.module.title.TitleModule;
 
 /**
  * Created by admin on 2017/3/3.
  */
-public class BenefitHead extends AppBaseControl
+public class BenefitHead extends AppBaseViewControl
 {
     private static BenefitHead _instance;
 
@@ -25,14 +26,17 @@ public class BenefitHead extends AppBaseControl
         return _instance;
     }
 
+    public void initValue()
+    {
+        title="蝴蝶";
+        layout=R.layout.benefit_head;
+    }
+
     private BenefitHeadItemAdapter adapter;
 
     @Override
-    public void init(AppBaseFragment appfragment,View father)
+    public void initControl()
     {
-        super.init(appfragment,father);
-
-        view=father.findViewById(R.id.benefit_head);
 
         View listshow=view.findViewById(R.id.listView);
 
@@ -56,11 +60,6 @@ public class BenefitHead extends AppBaseControl
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(adapter);
-    }
-    @Override
-    public void SetTitleView()
-    {
-        TitleModule.getInstance().SetTitle("求助列表");
     }
 
     public void OnAddInfo()

@@ -1,12 +1,11 @@
 package pf.com.butterfly.message.ProtocolsFun;
-import android.content.Intent;
 import android.widget.Toast;
 
-import pf.com.butterfly.ModuleManager;
+import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.message.MsgBase;
 import pf.com.butterfly.message.IMsgCallback;
 import pf.com.butterfly.message.Protocols.register_res;
-import pf.com.butterfly.module.login.LoginModule;
+import pf.com.butterfly.module.login.LoginHead;
 
 public class register_res_fun implements IMsgCallback
 {
@@ -19,15 +18,14 @@ public class register_res_fun implements IMsgCallback
             if(res.state==0)
             {
                   //注册成功
-                  Toast.makeText(ModuleManager.main,"哈哈哈",Toast.LENGTH_SHORT).show();
+                  Toast.makeText(MainActivity.main,"哈哈哈",Toast.LENGTH_SHORT).show();
 
-                  //关闭登录模块
-                  ModuleManager.CloseModule(LoginModule.class.getName());
+                  LoginHead.getInstance().hide();
 
             }
             else
             {
-                  Toast.makeText(ModuleManager.main,res.reason,Toast.LENGTH_SHORT).show();
+                  Toast.makeText(MainActivity.main,res.reason,Toast.LENGTH_SHORT).show();
             }
 
 

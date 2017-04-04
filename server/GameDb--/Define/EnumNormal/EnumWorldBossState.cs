@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumWorldBossState	{		normal = 0,//刷新		down = 1,//击杀	}}

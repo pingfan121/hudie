@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -17,19 +15,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Collection;
 import java.util.Hashtable;
-import java.util.Map;
-import java.util.Set;
 
 import pf.com.butterfly.MainActivity;
-import pf.com.butterfly.ModuleManager;
 import pf.com.butterfly.R;
-import pf.com.butterfly.util.ImageUtils;
 
 /**
  * Created by admin on 2017/2/26.
@@ -86,7 +76,7 @@ public class TestEditView
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
-        ModuleManager.main.startActivityForResult(intent, TEV_PICK);
+        MainActivity.main.startActivityForResult(intent, TEV_PICK);
     }
 
     // 因为调用了Camera和Gally所以要判断他们各自的返回情况,他们启动时是这样的startActivityForResult
@@ -134,7 +124,7 @@ public class TestEditView
         }
         String smile = uri.getPath();
         SpannableString ss = new SpannableString(smile);
-        ImageSpan span = new ImageSpan(ModuleManager.main, pic);
+        ImageSpan span = new ImageSpan(MainActivity.main, pic);
         ss.setSpan(span, 0, smile.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;
     }
@@ -160,7 +150,7 @@ public class TestEditView
         }
         Bitmap bitmap = null;
         try {
-            ContentResolver conReslv = ModuleManager.main.getContentResolver();
+            ContentResolver conReslv = MainActivity.main.getContentResolver();
             // 得到选择图片的Bitmap对象
             bitmap = MediaStore.Images.Media.getBitmap(conReslv, photoUri);
         } catch (Exception e) {

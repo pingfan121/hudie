@@ -2,23 +2,18 @@ package pf.com.butterfly.module.advise;
 
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import pf.com.butterfly.ModuleManager;
+import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
-import pf.com.butterfly.base.AppBaseControl;
-import pf.com.butterfly.base.AppBaseFragment;
+import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.message.Protocols.advise_cteate_req;
 import pf.com.butterfly.message.net.NetManager;
-import pf.com.butterfly.module.benefit.BenefitHeadItemAdapter;
-import pf.com.butterfly.module.title.TitleModule;
 
 /**
  * Created by admin on 2017/3/13.
  */
-public class AdviseHead extends AppBaseControl
+public class AdviseHead extends AppBaseViewControl
 {
     private static AdviseHead _instance;
 
@@ -32,18 +27,21 @@ public class AdviseHead extends AppBaseControl
         return _instance;
     }
 
+    protected void initValue()
+    {
+        title="建议";
+        layout=R.layout.advise_head;
+    }
+
+
     private EditText et;
 
     @Override
-    public void init(AppBaseFragment appfragment, View father)
+    public void initControl()
     {
-        super.init(appfragment,father);
+        et=(EditText)view.findViewById(R.id.et_advise);
 
-        view=father.findViewById(R.id.advise_head);
-
-        et=(EditText)father.findViewById(R.id.et_advise);
-
-        father.findViewById(R.id.btn_tijiao).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_tijiao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 OnTiJiao();
@@ -51,11 +49,6 @@ public class AdviseHead extends AppBaseControl
         });
     }
 
-    @Override
-    public void SetTitleView()
-    {
-        TitleModule.getInstance().SetTitle("建议");
-    }
 
     public void OnTiJiao()
     {
@@ -65,7 +58,7 @@ public class AdviseHead extends AppBaseControl
 
         if(str.equals(""))
         {
-            Toast.makeText(ModuleManager.main,"填一些建议,让世界变得更美好。",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.main,"填一些建议,让世界变得更美好。",Toast.LENGTH_SHORT).show();
             return;
         }
 

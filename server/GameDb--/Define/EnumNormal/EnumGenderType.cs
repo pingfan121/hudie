@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumGenderType	{		unknown = 0,//未知		male = 1,//男		female = 2,//女	}}

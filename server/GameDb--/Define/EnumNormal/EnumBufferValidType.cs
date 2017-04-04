@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumBufferValidType	{		none = 0,//无效的		time = 1,//时间		hp = 2,//生命		mp = 3,//法力		hp_mp = 4,//生命和法力		world = 5,//世界		shacheng_master = 6,//城主	}}

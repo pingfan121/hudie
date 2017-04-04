@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumItemLockType	{		none = 0,//解除锁定状态		trade = 1,//交易锁定		stall = 2,//摆摊锁定		sale = 3,//物品出售锁定	}}

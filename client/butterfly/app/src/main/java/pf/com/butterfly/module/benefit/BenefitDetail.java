@@ -1,23 +1,18 @@
 package pf.com.butterfly.module.benefit;
 
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import pf.com.butterfly.ModuleManager;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseControl;
-import pf.com.butterfly.base.AppBaseControlF;
 import pf.com.butterfly.base.AppBaseFragment;
+import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.module.title.TitleModule;
 
 /**
  * Created by admin on 2017/3/3.
  */
-public class BenefitDetail extends AppBaseControl
+public class BenefitDetail extends AppBaseViewControl
 {
     private static BenefitDetail _instance;
 
@@ -31,14 +26,17 @@ public class BenefitDetail extends AppBaseControl
         return _instance;
     }
 
+    protected void initValue()
+    {
+        title="详情";
+        layout=R.layout.benefit_detail;
+    }
+
 
     private TextView tv_show;
     @Override
-    public void init(AppBaseFragment appfragment,View father)
+    public void initControl()
     {
-        super.init(appfragment,father);
-
-        view=father.findViewById(R.id.benefit_detail);
 
         tv_show=(TextView)view.findViewById(R.id.tv_detail);
 
@@ -66,28 +64,23 @@ public class BenefitDetail extends AppBaseControl
         view.setVisibility(View.INVISIBLE);
 
     }
-    @Override
-    public void SetTitleView()
-    {
-        TitleModule.getInstance().SetTitle("详情");
-    }
 
     //论真按钮事件
     private void OnTrue()
     {
        // Toast.makeText(ModuleManager.main,"点击了论真按钮",Toast.LENGTH_LONG).show();
-        BenefitProof.getInstance().Show();
+        BenefitProof.getInstance().show();
     }
     private void OnFalse()
     {
         //Toast.makeText(ModuleManager.main,"点击了论假按钮",Toast.LENGTH_LONG).show();
 
-        BenefitFalsify.getInstance().Show();
+        BenefitFalsify.getInstance().show();
     }
     private void OnJuanKuan()
     {
        // Toast.makeText(ModuleManager.main,"点击了捐款按钮",Toast.LENGTH_LONG).show();
-        BenefitDonation.getInstance().Show();
+        BenefitDonation.getInstance().show();
     }
 
     //设置数据
@@ -104,7 +97,7 @@ public class BenefitDetail extends AppBaseControl
     //设置数据
     public void  setItemID(String id)
     {
-        this.Show();
+        this.show();
         //去下载详情
         //这里要走网络流
 

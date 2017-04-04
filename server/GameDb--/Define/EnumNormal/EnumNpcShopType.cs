@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumNpcShopType	{		carryType = 1,//随身商店		npcType = 2,//npc商店		mallType = 3,//商城		quickType = 4,//快速购买	}}

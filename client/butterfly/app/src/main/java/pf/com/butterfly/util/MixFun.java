@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import pf.com.butterfly.MainActivity;
-import pf.com.butterfly.ModuleManager;
 
 /**
  * Created by admin on 2017/3/17.

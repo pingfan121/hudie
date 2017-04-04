@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumItemSpecialType	{		unknown = 0,//未知		official = 1,//官职等级		skill = 2,//需要技能ID		mars = 3,//护卫开启		beast = 4,//圣兽升级		guild = 5,//帮会宝箱		vip_point = 6,//元宝使用	}}

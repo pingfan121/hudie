@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -39,7 +38,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
 import android.util.DisplayMetrics;
 
-import pf.com.butterfly.ModuleManager;
+import pf.com.butterfly.MainActivity;
 
 /**
  * 图片操作工具包
@@ -266,9 +265,9 @@ public class ImageUtils {
 //                null); // Order-by clause (ascending by name)
         Cursor cursor;
         if (Build.VERSION.SDK_INT < 11) {
-            cursor = ModuleManager.main.managedQuery(uri, proj, null, null, null);
+            cursor = MainActivity.main.managedQuery(uri, proj, null, null, null);
         } else {
-            CursorLoader cursorLoader = new CursorLoader(ModuleManager.main, uri, null, null, null, null);
+            CursorLoader cursorLoader = new CursorLoader(MainActivity.main, uri, null, null, null, null);
             cursor = cursorLoader.loadInBackground();
         }
         if (cursor != null) {

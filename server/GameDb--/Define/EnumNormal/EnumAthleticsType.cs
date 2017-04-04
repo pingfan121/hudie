@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumAthleticsType	{		none = 0,//无状态		received = 1,//已接受		submit = 2,//可提交		complete = 3,//已完成		cannot = 4,//无法领取	}}

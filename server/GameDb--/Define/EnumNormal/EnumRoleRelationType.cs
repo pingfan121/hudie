@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumRoleRelationType	{		remove = 0,//删除		friend = 1,//好友		black = 2,//黑名单		enemy = 3,//仇人	}}

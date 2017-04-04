@@ -9,30 +9,23 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Camera;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import pf.com.butterfly.ModuleManager;
+import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.module.ShowPhoto;
-import pf.com.butterfly.util.FileOper;
 
 /**
  * Created by admin on 2017/2/25.
@@ -52,7 +45,7 @@ public class PhotoChoose
     private static File mCurrentPhotoFile;//照相机拍照得到的图片
 
     public static void doPickPhotoAction() {
-        Context context = ModuleManager.main;
+        Context context = MainActivity.main;
 
         // Wrap our context to inflate list items using correct theme
         final Context dialogContext = new ContextThemeWrapper(context,
@@ -60,8 +53,8 @@ public class PhotoChoose
         String cancel="返回";
         String[] choices;
         choices = new String[2];
-        choices[0] = ModuleManager.main.getString(R.string.take_photo);  //拍照
-        choices[1] = ModuleManager.main.getString(R.string.pick_photo);  //从相册中选择
+        choices[0] = MainActivity.main.getString(R.string.take_photo);  //拍照
+        choices[1] = MainActivity.main.getString(R.string.pick_photo);  //从相册中选择
         final ListAdapter adapter = new ArrayAdapter<String>(dialogContext,
                 android.R.layout.simple_list_item_1, choices);
 
@@ -80,7 +73,7 @@ public class PhotoChoose
                                 }
                                 else{
                                   //  showToast("没有SD卡");
-                                    Toast.makeText(ModuleManager.main, R.string.nocard,
+                                    Toast.makeText(MainActivity.main, R.string.nocard,
                                             Toast.LENGTH_LONG).show();
                                 }
                                 break;
@@ -112,9 +105,9 @@ public class PhotoChoose
             PHOTO_DIR.mkdirs();// 创建照片的存储目录
             mCurrentPhotoFile = new File(PHOTO_DIR, getPhotoFileName());// 给新照的照片文件命名
             final Intent intent = getTakePickIntent(mCurrentPhotoFile);
-            ModuleManager.main.startActivityForResult(intent, CAMERA_WITH_DATA);
+            MainActivity.main.startActivityForResult(intent, CAMERA_WITH_DATA);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(ModuleManager.main, R.string.photoPickerNotFoundText,
+            Toast.makeText(MainActivity.main, R.string.photoPickerNotFoundText,
                     Toast.LENGTH_LONG).show();
         }
     }
@@ -141,9 +134,9 @@ public class PhotoChoose
         try {
             // Launch picker to choose photo for selected contact
             final Intent intent = getPhotoPickIntent();
-            ModuleManager.main.startActivityForResult(intent, PHOTO_PICKED_WITH_DATA);
+            MainActivity.main.startActivityForResult(intent, PHOTO_PICKED_WITH_DATA);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(ModuleManager.main, R.string.photoPickerNotFoundText1,
+            Toast.makeText(MainActivity.main, R.string.photoPickerNotFoundText1,
                     Toast.LENGTH_LONG).show();
         }
     }
@@ -170,13 +163,13 @@ public class PhotoChoose
         switch (requestCode) {
             case PHOTO_PICKED_WITH_DATA: {// 调用Gallery返回的
 
-                ContentResolver resolver = ModuleManager.main.getContentResolver();
+                ContentResolver resolver = MainActivity.main.getContentResolver();
                 Bitmap bm=null;
                 try {
 
                     Uri uri = data.getData();
                    // Uri uri=geturi(data);
-                    String path = FileOper.getImageAbsolutePath(ModuleManager.main,uri);
+                    String path = FileOper.getImageAbsolutePath(MainActivity.main,uri);
                     bm = BitmapFactory.decodeStream(resolver.openInputStream(uri));
                     ShowPhoto.getInstance().ShowPhoto(bm,path);
 
@@ -199,7 +192,7 @@ public class PhotoChoose
     public static String getRealPathFromURI(Uri contentUri) {
         String res = null;
         String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = ModuleManager.main.getContentResolver().query(contentUri, proj, null, null, null);
+        Cursor cursor = MainActivity.main.getContentResolver().query(contentUri, proj, null, null, null);
         if(cursor.moveToFirst()){;
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
@@ -214,7 +207,7 @@ public class PhotoChoose
             if (fileUrl.getScheme().toString().compareTo("content")==0)           //content://开头的uri
             {
                 String[] proj = { MediaStore.Images.Media.DATA };
-                Cursor cursor = ModuleManager.main.getContentResolver().query(fileUrl, proj, null, null, null);
+                Cursor cursor = MainActivity.main.getContentResolver().query(fileUrl, proj, null, null, null);
                 if (cursor != null && cursor.getCount()==1 && cursor.moveToFirst())
                 {
                     int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -244,9 +237,9 @@ public class PhotoChoose
         try {
             // 启动gallery去剪辑这个照片
             final Intent intent = getCropImageIntent(Uri.fromFile(f));
-            ModuleManager.main.startActivityForResult(intent, PHOTO_PICKED_WITH_DATA);
+            MainActivity.main.startActivityForResult(intent, PHOTO_PICKED_WITH_DATA);
         } catch (Exception e) {
-            Toast.makeText(ModuleManager.main, R.string.photoPickerNotFoundText,
+            Toast.makeText(MainActivity.main, R.string.photoPickerNotFoundText,
                     Toast.LENGTH_LONG).show();
         }
     }

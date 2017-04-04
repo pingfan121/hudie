@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumJobType	{		unknown = 0,//未知		zhan = 1,//战士		fa = 2,//法师		dao = 3,//道士	}}

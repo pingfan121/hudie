@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumAttackModuleType	{		none = 0,//未定义		peace = 1,//和平		all = 2,//全体		team = 3,//组队		gang = 4,//帮会		camp = 5,//阵营	}}

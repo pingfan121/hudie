@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.MotionEvent;
+import android.support.v7.media.MediaRouter;
 import android.view.View;
 import android.view.Window;
 
@@ -15,8 +13,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import c.b.BP;
-import pf.com.butterfly.base.AppBaseActivity;
-import pf.com.butterfly.module.main.MainModule;
 import pf.com.butterfly.module.menu.MenuModule;
 import pf.com.butterfly.module.title.TitleModule;
 import pf.com.butterfly.module.update.UpdateModule;
@@ -25,7 +21,6 @@ import pf.com.butterfly.util.PhotoChoose;
 import pf.com.butterfly.module.LogView;
 import pf.com.butterfly.module.ShowPhoto;
 import pf.com.butterfly.message.net.NetManager;
-import pf.com.butterfly.module.main.MainTest;
 import pf.com.butterfly.module.TestEditView;
 import pf.com.butterfly.module.TestTextView;
 
@@ -47,11 +42,11 @@ public class MainActivity  extends AppCompatActivity
         //检测版本更新
         UpdateModule.getInstance().init();
 
-        //初始化网络
-        NetManager.init();
-
         //初始化支付
         BP.init("a5a2688114fb06e9156acaaee76ca9a0");
+
+        //初始化网络
+        NetManager.init();
 
     }
 
@@ -91,7 +86,7 @@ public class MainActivity  extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        ModuleManager.Rollback();
+        ControlManager.Rollback();
     }
 
     //-------------------------------下面是测试---------------------------
@@ -137,9 +132,6 @@ public class MainActivity  extends AppCompatActivity
 
             InitModule();
 
-            //初始化管理器
-            ModuleManager.init(this);
-
             //初始化菜单
             MenuModule.getInstance().init(this.findViewById(R.id.drawer_layout));
 
@@ -152,6 +144,10 @@ public class MainActivity  extends AppCompatActivity
             ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(MainActivity.this));
 
             //初始化支付
+
+
+            //测试
+            ControlManager.resetView();
 
 
         }
@@ -206,6 +202,9 @@ public class MainActivity  extends AppCompatActivity
 
         HDLog.info("回复状态???");
     }
+
+
+
 
 }
 

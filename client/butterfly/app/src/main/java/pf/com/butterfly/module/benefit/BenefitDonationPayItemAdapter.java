@@ -2,10 +2,8 @@ package pf.com.butterfly.module.benefit;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,15 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import pf.com.butterfly.ModuleManager;
 import pf.com.butterfly.R;
-import pf.com.butterfly.model.BenefitItemData;
-import pf.com.butterfly.module.advise.AdviseModule;
-import pf.com.butterfly.module.benefit.BenefitDetail;
-import pf.com.butterfly.module.benefit.BenefitDonationPayItemData;
-import pf.com.butterfly.module.benefit.BenefitHeadItem;
-import pf.com.butterfly.module.benefit.BenefitModule;
-import pf.com.butterfly.tease.TeaseModule;
 
 /**
  * Created by Administrator on 2016/6/23.

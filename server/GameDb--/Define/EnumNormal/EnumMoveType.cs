@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumMoveType	{		unknown = 0,//未知		walk = 1,//走		run = 2,//跑		be_crash = 3,//冲撞被动		crash = 4,//冲撞主动		trans = 5,//传送	}}

@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumAttrAffectedType	{		skill = 1,//技能影响属性		buff = 2,//buff影响属性		item = 3,//物品影响属性	}}

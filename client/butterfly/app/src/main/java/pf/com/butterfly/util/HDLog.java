@@ -3,7 +3,7 @@ package pf.com.butterfly.util;
 import android.util.Log;
 import android.widget.Toast;
 
-import pf.com.butterfly.ModuleManager;
+import pf.com.butterfly.MainActivity;
 
 /**
  * Created by admin on 2017/3/1.
@@ -62,6 +62,6 @@ public class HDLog
 
     public static void Toast(String str)
     {
-        Toast.makeText(ModuleManager.main,str,Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.main,str,Toast.LENGTH_SHORT).show();
     }
 }

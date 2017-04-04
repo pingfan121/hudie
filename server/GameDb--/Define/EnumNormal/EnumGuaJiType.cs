@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumGuaJiType	{		ordinary = 1,//普通挂机		lowvip = 2,//vip低级挂机		hightvip = 3,//vip高级挂机	}}

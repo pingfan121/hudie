@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumPosChangeReasonType	{		normal = 0,//普通		teleport = 1,//传送点		skill = 2,//技能		item = 3,//道具		relive = 4,//复活	}}

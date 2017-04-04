@@ -6,6 +6,7 @@ import android.widget.EditText;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseControl;
 import pf.com.butterfly.base.AppBaseFragment;
+import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.message.Protocols.login_req;
 import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.title.TitleModule;
@@ -13,7 +14,7 @@ import pf.com.butterfly.module.title.TitleModule;
 /**
  * Created by admin on 2017/3/3.
  */
-public class LoginHead extends AppBaseControl
+public class LoginHead extends AppBaseViewControl
 {
     private static LoginHead _instance;
 
@@ -27,16 +28,19 @@ public class LoginHead extends AppBaseControl
         return _instance;
     }
 
+    protected void initValue()
+    {
+        title="登录";
+        layout=R.layout.login_head;
+    }
+
     private EditText et_mobile;
     private EditText et_password;
     private Button btn_login;
 
     @Override
-    public void init(AppBaseFragment fragment,View father)
+    public void initControl()
     {
-        super.init(fragment,father);
-
-        view=father.findViewById(R.id.login_head);
 
         et_mobile=(EditText)view.findViewById(R.id.et_mobile);
         et_password=(EditText)view.findViewById(R.id.et_password);
@@ -48,9 +52,6 @@ public class LoginHead extends AppBaseControl
                 OnLoginBtn();
             }
         });
-
-        view.setVisibility(View.INVISIBLE);
-
     }
 
     //登录按钮事件
@@ -68,12 +69,6 @@ public class LoginHead extends AppBaseControl
         req.pass=pass;
 
         NetManager.SendMsg(req);
-    }
-
-    @Override
-    public void SetTitleView()
-    {
-        TitleModule.getInstance().SetTitle("登录");
     }
 
 }

@@ -1,17 +1,15 @@
 package pf.com.butterfly.util;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
-import pf.com.butterfly.ModuleManager;
+import pf.com.butterfly.MainActivity;
 
 /**
  * Created by admin on 2017/3/1.
@@ -40,7 +38,7 @@ public class FileOper
             } else if (isDownloadsDocument(imageUri)) {
                 String id = DocumentsContract.getDocumentId(imageUri);
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-                return getDataColumn(ModuleManager.main, contentUri, null, null);
+                return getDataColumn(MainActivity.main, contentUri, null, null);
             } else if (isMediaDocument(imageUri)) {
                 String docId = DocumentsContract.getDocumentId(imageUri);
                 String[] split = docId.split(":");
@@ -55,14 +53,14 @@ public class FileOper
                 }
                 String selection = MediaStore.Images.Media._ID + "=?";
                 String[] selectionArgs = new String[]{split[1]};
-                return getDataColumn(ModuleManager.main, contentUri, selection, selectionArgs);
+                return getDataColumn(MainActivity.main, contentUri, selection, selectionArgs);
             }
         }
         else if ("content".equalsIgnoreCase(imageUri.getScheme())) {
             // Return the remote address
             if (isGooglePhotosUri(imageUri))
                 return imageUri.getLastPathSegment();
-            return getDataColumn(ModuleManager.main, imageUri, null, null);
+            return getDataColumn(MainActivity.main, imageUri, null, null);
         }
         // File
         else if ("file".equalsIgnoreCase(imageUri.getScheme())) {

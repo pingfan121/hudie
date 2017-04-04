@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumPlotState	{		normal = 0,//正常		shacheng = 1,//沙城		huanggong = 2,//皇宫		end = 3,//结束	}}

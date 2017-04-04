@@ -1,11 +1,8 @@
 package pf.com.butterfly.module.benefit;
 
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
-import pf.com.butterfly.ModuleManager;
 import pf.com.butterfly.R;
 import pf.com.butterfly.component.BenefitItemBar;
 import pf.com.butterfly.model.BenefitItemData;

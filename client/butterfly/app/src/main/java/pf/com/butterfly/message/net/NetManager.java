@@ -2,69 +2,103 @@ package pf.com.butterfly.message.net;
 
 import android.os.Message;
 
+import com.google.gson.Gson;
+
 import pf.com.butterfly.hander.IMsgHandler;
+import pf.com.butterfly.http.HttpBase;
+import pf.com.butterfly.message.CSMsg;
 import pf.com.butterfly.message.MsgBase;
 import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.message.MsgMap;
 import pf.com.butterfly.message.ProtocolsFun.MsgProcessor;
+import pf.com.butterfly.util.HDLog;
 
 /**
  * Created by Administrator on 2016/6/15.
  */
 public class NetManager
 {
-    private static NetHttp http;
 
-    public static int WhatId=100;
+    private static HDSend hdsend;
+
+    private static Gson gson;
+
+    private static String url="http://192.168.0.88:10012";
 
     public static void init()
     {
-        if(http==null)
+        if(gson !=null)
+            return ;
+
+        MsgProcessor.init();
+
+        gson=new Gson();
+
+        hdsend=new HDSend(new IMsgHandler()
         {
-            http=new NetHttp();
-            http.init();
-
-            //初始化协议映射
-            MsgProcessor.init();
-
-            WhatId=MsgHandler.getInstance().getNewWhat();
-
-            //切换到ui线程
-            MsgHandler.getInstance().addOneDispose(WhatId, new IMsgHandler() {
-                        @Override
-                        public void onMsgDispose(Message msg) {
-
-                            MsgBase mb =(MsgBase)msg.obj;
-                            //  MainActivity.getInstance().ShowText(str);
-
-                            try
-                            {
-                                MsgMap.GetResultClass(mb.CodeId).MsgCallback(mb);
-                            }
-                            catch(Exception ex)
-                            {
-                                //处理网络消息出现问题了...
-                            }
-                        }
-
-            });
-        }
+            @Override
+            public void onMsgDispose(Message msg)
+            {
+                onDispose(msg);
+            }
+        });
 
     }
 
+    //设置网络
+    public static void SetNet(Boolean flag)
+    {
+        //内网
+        if(flag==false)
+        {
+            url="http://192.168.0.88:10012";
+        }
+        else
+        {
+            //外网
+            url="http://www.pfkj.com:10012";
+        }
+    }
+
+    //发送数据
     public static void SendMsg(MsgBase msg)
     {
-        http.SendMsg(msg);
+        hdsend.send(url,gson.toJson(msg));
+
     }
 
-    public static void DisposeMsg(MsgBase msg)
+    //处理消息
+    public static void onDispose(Message msg)
     {
-        Message message=new Message();
+        if(msg.arg2==-100)
+        {
+            //网络异常
+            HDLog.Toast(msg.obj.toString());
 
-        message.what=WhatId;
-        message.obj=msg;
+            return;
+        }
 
-        MsgHandler.getInstance().sendMessage(message);
+        String context=msg.obj.toString();
+
+
+        if(context!="")
+        {
+            CSMsg csmsg=gson.fromJson(context, CSMsg.class);
+
+            if(csmsg.state==0)
+            {
+                Class cl =MsgMap.GetMsgClass(csmsg.msgid);
+
+                MsgBase msg2=(MsgBase)gson.fromJson(csmsg.msg,cl);
+
+                MsgMap.GetResultClass(msg2.CodeId).MsgCallback(msg2);
+
+            }
+            else
+            {
+                //这里显示错误状态
+            }
+        }
     }
 
 

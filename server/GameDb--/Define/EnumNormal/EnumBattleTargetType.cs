@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumBattleTargetType	{		sprite = 1,//精灵		grid_pos = 2,//格子		dir = 3,//方向	}}

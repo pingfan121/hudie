@@ -33,23 +33,32 @@ public class MsgHandler extends Handler
     }
     public int getNewWhat()
     {
-        return what++;
+       return what++;
     }
 
 
-   public void addOneDispose(int what,IMsgHandler dispose)
+   public synchronized void   addOneDispose(int what,IMsgHandler dispose)
    {
-       if(dises.containsKey(what)==false)
+
+       if (dises.containsKey(what) == false)
        {
-           dises.put(what,dispose);
+           dises.put(what, dispose);
        }
        else
        {
            //已经添加过处理接口了
-           System.out.print("已经添加过处理接口的消息号:"+what);
+           System.out.print("已经添加过处理接口的消息号:" + what);
        }
 
    }
+
+    public  void removeWhat(int what)
+    {
+        if (dises.containsKey(what) == true)
+        {
+            dises.remove(what);
+        }
+    }
 
     @Override
     public void handleMessage(Message msg)

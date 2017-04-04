@@ -1,11 +1,10 @@
 package pf.com.butterfly.module.title;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import pf.com.butterfly.ModuleManager;
+import pf.com.butterfly.ControlManager;
 import pf.com.butterfly.R;
 import pf.com.butterfly.module.LogView;
 
@@ -65,7 +64,7 @@ public class TitleModule
     //返回按钮事件
     public void OnBtnBack()
     {
-        ModuleManager.Rollback();
+        ControlManager.Rollback();
     }
 
 

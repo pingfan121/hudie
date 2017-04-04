@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumStrengthenType	{		attackType = 1,//攻击型装备		defenseType = 2,//防御型装备	}}

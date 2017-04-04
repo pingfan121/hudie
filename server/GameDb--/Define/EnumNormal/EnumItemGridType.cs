@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumItemGridType	{		bag = 0,//背包类型		bag_end = 99,//背包(0 - 99)		equip = 100,//装备类型		equip_end = 199,//装备(100 - 199)		storage = 200,//仓库类型		storage_end = 399,//仓库(200 - 399)		rune = 400,//符文		rune_end = 499,//符文（400 - 499）		fashion = 500,//时装		fashion_end = 699,//时装(500 - 699)	}}

@@ -1,1 +1,0 @@
-namespace GameServer.Define.EnumNormal{	public enum EnumRoleRankType	{		role_rank_level = 0,//等级榜		role_rank_zhan = 1,//战神榜		role_rank_fa = 2,//法神榜		role_rank_dao = 3,//道神榜		role_rank_wing = 4,//神翼榜		role_rank_equipment = 5,//神装榜	}}

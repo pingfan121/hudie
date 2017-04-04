@@ -7,6 +7,7 @@ import android.widget.TextView;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseControl;
 import pf.com.butterfly.base.AppBaseFragment;
+import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.module.title.TitleModule;
 
 /**
@@ -14,7 +15,7 @@ import pf.com.butterfly.module.title.TitleModule;
  * 证明界面视图
  */
 
-public class BenefitProof extends AppBaseControl
+public class BenefitProof extends AppBaseViewControl
 {
     private static BenefitProof _instance;
 
@@ -28,15 +29,17 @@ public class BenefitProof extends AppBaseControl
         return _instance;
     }
 
+    protected void initValue()
+    {
+        title="证明";
+        layout=R.layout.benefit_proof;
+    }
+
 
     private BenefitProofItemAdapter adapter;
     @Override
-    public void init(AppBaseFragment appfragment,View father)
+    public void initControl()
     {
-        super.init(appfragment,father);
-
-        view=father.findViewById(R.id.benefit_proof);
-
         View listshow=view.findViewById(R.id.listView);
 
         view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
@@ -61,11 +64,6 @@ public class BenefitProof extends AppBaseControl
         listView.setOnItemClickListener(adapter);
 
         view.setVisibility(View.INVISIBLE);
-    }
-    @Override
-    public void SetTitleView()
-    {
-        TitleModule.getInstance().SetTitle("证明列表");
     }
 
     public void OnAddInfo()
