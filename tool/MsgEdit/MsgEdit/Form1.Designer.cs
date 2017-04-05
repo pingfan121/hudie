@@ -30,17 +30,17 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.第一个标签 = new System.Windows.Forms.TabPage();
-            this.button7 = new System.Windows.Forms.Button();
-            this.btn_delpro = new System.Windows.Forms.Button();
-            this.btn_outCsharp = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.tb_content = new System.Windows.Forms.TextBox();
+            this.btn_delpro = new System.Windows.Forms.Button();
             this.tb_shuoming = new System.Windows.Forms.TextBox();
             this.tb_name = new System.Windows.Forms.TextBox();
+            this.btn_outCsharp = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -93,36 +93,6 @@
             this.第一个标签.Text = "协议";
             this.第一个标签.UseVisualStyleBackColor = true;
             // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(89, 18);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 11;
-            this.button7.Text = "修改目录";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // btn_delpro
-            // 
-            this.btn_delpro.Location = new System.Drawing.Point(255, 18);
-            this.btn_delpro.Name = "btn_delpro";
-            this.btn_delpro.Size = new System.Drawing.Size(75, 23);
-            this.btn_delpro.TabIndex = 8;
-            this.btn_delpro.Text = "删除协议";
-            this.btn_delpro.UseVisualStyleBackColor = true;
-            this.btn_delpro.Click += new System.EventHandler(this.btn_delpro_Click);
-            // 
-            // btn_outCsharp
-            // 
-            this.btn_outCsharp.Location = new System.Drawing.Point(855, 18);
-            this.btn_outCsharp.Name = "btn_outCsharp";
-            this.btn_outCsharp.Size = new System.Drawing.Size(75, 23);
-            this.btn_outCsharp.TabIndex = 5;
-            this.btn_outCsharp.Text = "导出";
-            this.btn_outCsharp.UseVisualStyleBackColor = true;
-            this.btn_outCsharp.Click += new System.EventHandler(this.button5_Click_1);
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(380, 18);
@@ -133,6 +103,16 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(89, 18);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 11;
+            this.button7.Text = "修改目录";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // tb_content
             // 
             this.tb_content.Font = new System.Drawing.Font("宋体", 12F);
@@ -141,6 +121,16 @@
             this.tb_content.Name = "tb_content";
             this.tb_content.Size = new System.Drawing.Size(550, 262);
             this.tb_content.TabIndex = 5;
+            // 
+            // btn_delpro
+            // 
+            this.btn_delpro.Location = new System.Drawing.Point(255, 18);
+            this.btn_delpro.Name = "btn_delpro";
+            this.btn_delpro.Size = new System.Drawing.Size(75, 23);
+            this.btn_delpro.TabIndex = 8;
+            this.btn_delpro.Text = "删除协议";
+            this.btn_delpro.UseVisualStyleBackColor = true;
+            this.btn_delpro.Click += new System.EventHandler(this.btn_delpro_Click);
             // 
             // tb_shuoming
             // 
@@ -159,6 +149,16 @@
             this.tb_name.Name = "tb_name";
             this.tb_name.Size = new System.Drawing.Size(550, 26);
             this.tb_name.TabIndex = 3;
+            // 
+            // btn_outCsharp
+            // 
+            this.btn_outCsharp.Location = new System.Drawing.Point(855, 18);
+            this.btn_outCsharp.Name = "btn_outCsharp";
+            this.btn_outCsharp.Size = new System.Drawing.Size(75, 23);
+            this.btn_outCsharp.TabIndex = 5;
+            this.btn_outCsharp.Text = "导出";
+            this.btn_outCsharp.UseVisualStyleBackColor = true;
+            this.btn_outCsharp.Click += new System.EventHandler(this.button5_Click_1);
             // 
             // label3
             // 
@@ -179,15 +179,6 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "协议说明";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(378, 57);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "协议名字";
-            // 
             // treeView1
             // 
             this.treeView1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -196,6 +187,15 @@
             this.treeView1.Size = new System.Drawing.Size(321, 470);
             this.treeView1.TabIndex = 3;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(378, 57);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "协议名字";
             // 
             // button2
             // 
@@ -295,7 +295,7 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "枚举说明";
-            this.columnHeader3.Width = 200;
+            this.columnHeader3.Width = 250;
             // 
             // columnHeader4
             // 

@@ -1,3 +1,4 @@
+using Enum;
 using GameDb.Logic;
 using GameDb.Util;
 using GameLib.Database;
@@ -20,8 +21,8 @@ namespace messages
 
           register_req req = msg as register_req;
 
-          int err = 0;
-          string reason = "";
+          register_res res = new register_res();
+
           string id = "";
 
 
@@ -35,8 +36,7 @@ namespace messages
               if (dbselect.ListRecord != null && dbselect.ListRecord.Count != 0)
               {
                   //已经有这个手机号了
-                  err = -1;
-                  reason = "手机号已经存在";
+                  res.state = (int)EnumMsgState.reg_mob_exist;
               }
               else
               {
@@ -54,23 +54,15 @@ namespace messages
 
                   id = account.Id;
 
-                  err = 0;
               }
           }
           else
           {
-              err = -2;
-              reason = "手机号格式不正确";
+              //手机号格式不正确
+              res.state = (int)EnumMsgState.reg_mob_format_err;
           }
 
           //告诉客户端啊
-
-          register_res res = new register_res();
-
-          res.state = err;
-          res.token = id;
-          res.reason = reason;
-
           //发送
           msg.app.sendMsg(req.context, res);
       }

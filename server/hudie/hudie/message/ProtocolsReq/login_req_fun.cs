@@ -1,3 +1,4 @@
+using Enum;
 using GameDb.Logic;
 using GameDb.Util;
 using GameLib.Database;
@@ -15,13 +16,12 @@ namespace messages
   {
       static public void handle_login_req(MsgBase msg)
       {
-          login_req req = msg as login_req;
-
           Log.warn("收到了登陆消息");
 
-          int err = 0;
-          string id = "";
-          string reason = "";
+          login_req req = msg as login_req;
+
+          login_res res = new login_res();
+
 
           if (pf.IsMobile(req.tel))
           {
@@ -36,39 +36,29 @@ namespace messages
 
                   if (req.pass == dbselect.ListRecord[0].Pass)
                   {
-                      err = 0;
-                      id = dbselect.ListRecord[0].Id;
-                      reason = "登录成功";
+                      res.token = dbselect.ListRecord[0].Id;
                   }
                   else
                   {
-                      err = -1;
-                      reason = "密码错误...";
+                      //密码错误
+                      res.state = (int)EnumMsgState.login_password_err;
                   }
-
 
               }
               else
               {
-                  err = -2;
-                  reason = "手机没有注册";
+                  //没有注册
+                  res.state = (int)EnumMsgState.login_mob_not_reg;
               }
           }
           else
           {
-              err = -3;
-              reason = "手机号格式不正确";
+              //没有注册
+              res.state = (int)EnumMsgState.login_mob_not_reg;
           }
 
 
           //通知前端
-          login_res res = new login_res();
-
-          res.state = err;
-          res.token = id;
-          res.reason = reason;
-
-          //发送
           msg.app.sendMsg(req.context, res);
       }
   }

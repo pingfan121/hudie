@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cache\Cache.cs" />
+    <Compile Include="cache\TokenCache.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbAppJianyi.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitDiscuss.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitHead.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="dbfile\dblogic\benefit\TbBenefitPraise.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitProof.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbUser.cs" />
+    <Compile Include="enum\EnumMsgState.cs" />
     <Compile Include="error\MsgStateType.cs" />
     <Compile Include="app\GameApp.cs" />
     <Compile Include="message\ProtocolsReq\advise_cteate_req_fun.cs" />

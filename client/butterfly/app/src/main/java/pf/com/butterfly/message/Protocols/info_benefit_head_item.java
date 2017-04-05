@@ -14,6 +14,6 @@ import pf.com.butterfly.message.MsgCodeId;
       public String name;    ////被救助人的名字
       public String addr;    ////被救助人所在的地址
       public int needmoney;    //所需要救助的金额
-      public int nowmoney;    ////现在一斤募集的金额
+      public int nowmoney;    ////现在已经募集的金额
 
 }

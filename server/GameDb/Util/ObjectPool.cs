@@ -5,17 +5,8 @@ using System.Text;
 
 namespace GameLib.Util
 {
-    //存盘的接口
-    public interface ISave
-    {
-        string ToJson();//把对象序列化为字符串
-        bool Touched { get; set; }//是否发生改变，需要存盘
-        void FromJson(string data);// //把字符串反序列化为对象
-    }
-
     //回收的接口
     public interface IObject{
-//         void OnCreate();//从对象池取出的时自动调用
         void OnRecycle();// //回收到对象池时调用，清理对象
     }
     public class ObjectPool

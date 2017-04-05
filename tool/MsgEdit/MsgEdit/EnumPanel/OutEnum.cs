@@ -10,10 +10,12 @@ namespace MsgEdit
 {
     public class OutEnum
     {
-        public static string path="";
         public static void OutEnumFile(List<EnumList> list)
         {
-            path = GetSetverPath();
+
+            //----------------导出服务端的枚举文件---------------------
+
+            string path = GetServerPath();
 
 
             if(Directory.Exists(path+"\\enum\\")==false)
@@ -23,13 +25,26 @@ namespace MsgEdit
 
             foreach(var item in list)
             {
-                CreateEnumFile(item);
+                CreateServerEnumFile(path,item);
             }
 
+            //----------------导出android端的枚举文件---------------------
+            path = GetAndroidPath();
+
+
+            if(Directory.Exists(path + "\\enum\\") == false)
+            {
+                Directory.CreateDirectory(path + "\\enum\\");
+            }
+
+            foreach(var item in list)
+            {
+                CreateAndroidEnumFile(path,item);
+            }
 
         }
 
-        private static void CreateEnumFile(EnumList info)
+        private static void CreateServerEnumFile(string path,EnumList info)
         {
             StreamWriter sw = new StreamWriter(path + "\\enum\\" + info.name + ".cs", false, Encoding.Unicode);
 
@@ -56,11 +71,38 @@ namespace MsgEdit
          
         }
 
-        private static string GetSetverPath()
+        private static void CreateAndroidEnumFile(string path,EnumList info)
+        {
+            StreamWriter sw = new StreamWriter(path + "\\enum\\" + info.name + ".java", false, Encoding.UTF8);
+
+            sw.WriteLine("  public enum " + info.name);
+            sw.WriteLine("  {");
+
+            foreach(var item in info.info)
+            {
+                sw.WriteLine("      " + item.enumstr + " = " + item.index + ", //" + item.explain);
+            }
+
+            sw.WriteLine("  }");
+            sw.WriteLine("}");
+
+            sw.Close();
+
+
+        }
+
+        private static string GetServerPath()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             return config.AppSettings.Settings["serverpath"].Value;
+        }
+
+        private static string GetAndroidPath()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            return config.AppSettings.Settings["clientpath"].Value;
         }
     }
 }

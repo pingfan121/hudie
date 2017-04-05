@@ -310,7 +310,7 @@ namespace MsgEdit
 
         private static int ListSort2(EnumInfo data1, EnumInfo data2)
         {
-            return data1.index > data2.index ? 1 : 0;
+            return data1.index > data2.index ? 1 : -1;
         }
 
         //读取数据

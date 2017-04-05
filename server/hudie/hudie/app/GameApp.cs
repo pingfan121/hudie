@@ -81,7 +81,6 @@ namespace hudie
 
           
             backmsg.state = 0;
-            backmsg.reason = "";
             backmsg.msgid = (int)msg.CodeId;
             backmsg.msg=JSON.Encode(msg);
 
@@ -97,7 +96,6 @@ namespace hudie
 
 
             backmsg.state = err;
-            backmsg.reason = MsgStateType.getErrText(err);
             backmsg.msgid = 0;
             backmsg.msg = new object();
 

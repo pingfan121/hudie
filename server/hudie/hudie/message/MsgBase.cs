@@ -28,7 +28,6 @@ public class MsgBase
 public class BackMsg
 {
     public int state;   //处理状态
-    public String reason;  //处理原因
     public int msgid;
     public Object msg;
 }

@@ -43,7 +43,9 @@ namespace hudie
 
                 while(true)
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(60000);
+
+                   // OtherUpdate();
                 }
 
             }

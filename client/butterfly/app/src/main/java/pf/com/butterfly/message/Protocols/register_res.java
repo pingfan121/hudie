@@ -11,7 +11,5 @@ import pf.com.butterfly.message.MsgCodeId;
           CodeId = MsgCodeId.register_res;
       }
       public int state;    //
-      public String reason;    //
-      public String token;    //
 
 }

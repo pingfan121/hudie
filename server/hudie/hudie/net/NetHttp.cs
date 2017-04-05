@@ -1,4 +1,5 @@
-﻿using GameLib.Util;
+﻿using Enum;
+using GameLib.Util;
 using hudie.error;
 using messages;
 using System;
@@ -77,7 +78,7 @@ namespace hudie.net
                 {
                       log.error("数据长度错误");
 
-                      sendErrorMsg(context, 1000);
+                      sendErrorMsg(context, EnumMsgState.error);
                 }
 
             }
@@ -131,7 +132,7 @@ namespace hudie.net
                 log.error(data);
                 log.error(ex);
 
-                sendErrorMsg(context,1002);
+                sendErrorMsg(context,EnumMsgState.error);
             }
         }
 //         public static string Sign(string str)
@@ -141,14 +142,13 @@ namespace hudie.net
 
 
         static BackMsg backmsg = new BackMsg();
-        public static void sendErrorMsg(HttpListenerContext context,int err)
+        public static void sendErrorMsg(HttpListenerContext context,EnumMsgState err)
         {
             HttpListenerResponse reponse = context.Response;
             StreamWriter writer = new StreamWriter(reponse.OutputStream);
 
 
-            backmsg.state = err;
-            backmsg.reason = MsgStateType.getErrText(err);
+            backmsg.state = (int)err;
             backmsg.msgid = 0;
             backmsg.msg = new object();
 

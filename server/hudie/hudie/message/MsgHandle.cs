@@ -8,6 +8,7 @@ using GameLib.Util;
 using hudie.net;
 using System.Net;
 using GameDb.Util;
+using Enum;
 
 namespace messages
 {
@@ -61,7 +62,7 @@ namespace messages
             {
                 Log.error("解析协议出错--" + codeId);
 
-                NetHttp.sendErrorMsg(context,1001);
+                NetHttp.sendErrorMsg(context,EnumMsgState.pro_analysis_err);
             }
 
         }
