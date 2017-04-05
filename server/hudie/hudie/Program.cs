@@ -1,4 +1,5 @@
 ﻿using GameLib.Util;
+using hudie.cache;
 using hudie.net;
 using messages;
 using messages.Protocols;
@@ -44,8 +45,7 @@ namespace hudie
                 while(true)
                 {
                     Thread.Sleep(60000);
-
-                   // OtherUpdate();
+                    OtherUpdate();
                 }
 
             }
@@ -55,6 +55,13 @@ namespace hudie
             }
            
 
+        }
+
+        public static void OtherUpdate()
+        {
+            int time = DateUtil.ToUnixTime(DateTime.Now);
+
+            Cache.update(time);
         }
 
     }

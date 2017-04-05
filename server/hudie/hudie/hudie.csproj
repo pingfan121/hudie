@@ -60,7 +60,6 @@
     <Compile Include="dbfile\dblogic\benefit\TbBenefitProof.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbUser.cs" />
     <Compile Include="enum\EnumMsgState.cs" />
-    <Compile Include="error\MsgStateType.cs" />
     <Compile Include="app\GameApp.cs" />
     <Compile Include="message\ProtocolsReq\advise_cteate_req_fun.cs" />
     <Compile Include="message\ProtocolsReq\benefit_detail_req_fun.cs" />

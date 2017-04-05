@@ -25,7 +25,7 @@ public class register_res_fun implements IMsgCallback
             }
             else
             {
-                  Toast.makeText(MainActivity.main,res.reason,Toast.LENGTH_SHORT).show();
+                  Toast.makeText(MainActivity.main,"错误码:"+res.state,Toast.LENGTH_SHORT).show();
             }
 
 

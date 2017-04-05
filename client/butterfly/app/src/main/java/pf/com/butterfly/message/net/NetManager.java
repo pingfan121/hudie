@@ -56,7 +56,7 @@ public class NetManager
         else
         {
             //外网
-            url="http://www.pfkj.com:10012";
+            url="http://www.pfkj.online:10012";
         }
     }
 

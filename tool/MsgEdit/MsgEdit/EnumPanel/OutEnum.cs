@@ -32,9 +32,9 @@ namespace MsgEdit
             path = GetAndroidPath();
 
 
-            if(Directory.Exists(path + "\\enum\\") == false)
+            if(Directory.Exists(path + "\\enumfile\\") == false)
             {
-                Directory.CreateDirectory(path + "\\enum\\");
+                Directory.CreateDirectory(path + "\\enumfile\\");
             }
 
             foreach(var item in list)
@@ -56,14 +56,13 @@ namespace MsgEdit
             sw.WriteLine("namespace Enum");
             sw.WriteLine("{");
             sw.WriteLine("  public enum " + info.name);
-            sw.WriteLine("  {");
+            sw.WriteLine("{");
 
             foreach(var item in info.info)
             {
-                sw.WriteLine("      "+item.enumstr+" = "+item.index+", //"+item.explain);
+                sw.WriteLine("   "+item.enumstr+" = "+item.index+", //"+item.explain);
             }
 
-            sw.WriteLine("  }");
             sw.WriteLine("}");
 
             sw.Close();
@@ -73,17 +72,19 @@ namespace MsgEdit
 
         private static void CreateAndroidEnumFile(string path,EnumList info)
         {
-            StreamWriter sw = new StreamWriter(path + "\\enum\\" + info.name + ".java", false, Encoding.UTF8);
+            StreamWriter sw = new StreamWriter(path + "\\enumfile\\" + info.name + ".java", false);
 
-            sw.WriteLine("  public enum " + info.name);
-            sw.WriteLine("  {");
+            sw.WriteLine("package pf.com.butterfly.enumfile;");
+            sw.WriteLine("");
+
+            sw.WriteLine("public class " + info.name);
+            sw.WriteLine("{");
 
             foreach(var item in info.info)
             {
-                sw.WriteLine("      " + item.enumstr + " = " + item.index + ", //" + item.explain);
+                sw.WriteLine("   public static final int " + item.enumstr + " = " + item.index + "; //" + item.explain);
             }
 
-            sw.WriteLine("  }");
             sw.WriteLine("}");
 
             sw.Close();

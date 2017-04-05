@@ -3,6 +3,7 @@
 publish
 server/hudie/hudie/obj
 server/GameDb/obj
+tool/MsgEdit/MsgEdit/obj
 
 #android
 # Built application files

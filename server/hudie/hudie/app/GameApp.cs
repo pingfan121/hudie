@@ -1,7 +1,6 @@
 ﻿using GameDb.Util;
 using GameLib.Database;
 using GameLib.Util;
-using hudie.error;
 using hudie.net;
 using hudie.sql;
 using messages;

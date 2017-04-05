@@ -16,6 +16,7 @@ public abstract class AppBaseViewControl
 {
     protected int layout;
 
+    private FrameLayout father;
     protected View view;
 
     public String title;//界面标题
@@ -32,10 +33,12 @@ public abstract class AppBaseViewControl
 
     private void resetView()
     {
-        FrameLayout father = (FrameLayout)MainActivity.main.findViewById(R.id.control_view);
+
 
         if(view==null)
         {
+            father = (FrameLayout)MainActivity.main.findViewById(R.id.control_view);
+
             LayoutInflater inflater = LayoutInflater.from(father.getContext());
 
             view = inflater.inflate(layout, null);
@@ -46,6 +49,14 @@ public abstract class AppBaseViewControl
         }
         else
         {
+            FrameLayout father2 = (FrameLayout)MainActivity.main.findViewById(R.id.control_view);
+
+            if(father!=father2 && father!=null)
+            {
+                father.removeView(view);
+                father=father2;
+            }
+
             int count = father.getChildCount();
 
             int flag=0;

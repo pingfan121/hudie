@@ -35,7 +35,7 @@ public class UpdateModule
 {
 
    // public String updateurl ="http://pfkj.online/updateinfo.json";
-    public static String updateurl ="http://192.168.0.88:8080/UpdateInfo.txt";
+    public static String updateurl ="http://www.pfkj.online/UpdateInfo.txt";
 
 
     private static UpdateModule _instance=null;
