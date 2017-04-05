@@ -2,7 +2,7 @@
 # directory:
 publish
 server/hudie/hudie/obj
-
+server/GameDb/obj
 
 #android
 # Built application files
@@ -17,6 +17,7 @@ captures/
 
 # Intellij
 **/.idea
+**/.iml
 
 # Keystore files
 *.jks
