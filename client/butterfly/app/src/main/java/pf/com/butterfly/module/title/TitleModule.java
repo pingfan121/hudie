@@ -5,6 +5,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import pf.com.butterfly.ControlManager;
+import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.module.LogView;
 
@@ -36,9 +37,9 @@ public class TitleModule
 
 
 
-    public void init(View father)
+    public void init()
     {
-        view= father.findViewById(R.id.module_title);
+        view= MainActivity.main.findViewById(R.id.module_title);
 
         btn_backawd=(ImageButton)view.findViewById(R.id.btn_fanhui);
         btn_shuoming=(ImageButton)view.findViewById(R.id.btn_wenhao);

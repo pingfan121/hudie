@@ -38,15 +38,40 @@ public class MainActivity  extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
+        main=this;
 
-        //检测版本更新
-        UpdateModule.getInstance().init();
+        //日志视图
+        LogView.init();
 
-        //初始化支付
-        BP.init("a5a2688114fb06e9156acaaee76ca9a0");
+        try
+        {
+            //初始化标题栏
+            TitleModule.getInstance().init();
 
-        //初始化网络
-        NetManager.init();
+            //菜单视图
+            MenuModule.getInstance().init(this.findViewById(R.id.drawer_layout));
+
+            InitModule();
+
+            //初始化图片下载器
+            ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(MainActivity.this));
+
+            //初始化支付
+            BP.init("a5a2688114fb06e9156acaaee76ca9a0");
+
+            //测试
+            ControlManager.resetView();
+
+            //初始化网络
+            NetManager.init();
+
+            //检测版本更新
+            UpdateModule.getInstance().init();
+        }
+        catch (Exception ex)
+        {
+            HDLog.error(ex);
+        }
 
     }
 
@@ -88,123 +113,6 @@ public class MainActivity  extends AppCompatActivity
     {
         ControlManager.Rollback();
     }
-
-    //-------------------------------下面是测试---------------------------
-
-
-    //Activity创建或者从后台重新回到前台时被调用
-    @Override
-    protected void onStart() {
-        super.onStart();
-       HDLog.info("onStart called.");
-    }
-
-    //Activity从后台重新回到前台时被调用
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        HDLog.info("onRestart called.");
-
-    }
-
-    //测试
-    //Activity创建或者从被覆盖、后台重新回到前台时被调用
-    @Override
-    protected void onResume() {
-        super.onResume();
-        HDLog.info("onResume called.");
-
-        main=this;
-
-        //获取主视图
-        View view=this.findViewById(R.id.main_aaa);
-
-        LogView.init();
-
-
-        //嘿嘿
-        //创建函数在前后台切换的时候回多次调用 所以初始化函数要多多注意 不要重复创建视图
-
-        try
-        {
-
-            //初始化mainactivity内部的的各个的视图
-
-            InitModule();
-
-            //初始化菜单
-            MenuModule.getInstance().init(this.findViewById(R.id.drawer_layout));
-
-
-            //初始化标题栏
-            TitleModule.getInstance().init(view);
-
-
-            //初始化图片下载器
-            ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(MainActivity.this));
-
-            //初始化支付
-
-
-            //测试
-            ControlManager.resetView();
-
-
-        }
-        catch (Exception ex)
-        {
-            HDLog.error(ex);
-        }
-    }
-
-    //Activity被覆盖到下面或者锁屏时被调用
-    @Override
-    protected void onPause() {
-        super.onPause();
-        HDLog.info("onPause called.");
-        //有可能在执行完onPause或onStop后,系统资源紧张将Activity杀死,所以有必要在此保存持久数据
-    }
-
-    //退出当前Activity或者跳转到新Activity时被调用
-    @Override
-    protected void onStop() {
-        super.onStop();
-        HDLog.info("onStop called.");
-    }
-
-    //退出当前Activity时被调用,调用之后Activity就结束了
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        HDLog.info("onDestory called.");
-    }
-
-    /**
-     * Activity被系统杀死时被调用.
-     * 例如:屏幕方向改变时,Activity被销毁再重建;当前Activity处于后台,系统资源紧张将其杀死.
-     * 另外,当跳转到其他Activity或者按Home键回到主屏时该方法也会被调用,系统是为了保存当前View组件的状态.
-     * 在onPause之前被调用.
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        HDLog.info("onSaveInstanceState called. put param: ");
-        super.onSaveInstanceState(outState);
-    }
-
-    /**
-     * Activity被系统杀死后再重建时被调用.
-     * 例如:屏幕方向改变时,Activity被销毁再重建;当前Activity处于后台,系统资源紧张将其杀死,用户又启动该Activity.
-     * 这两种情况下onRestoreInstanceState都会被调用,在onStart之后.
-     */
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        HDLog.info("回复状态???");
-    }
-
-
-
 
 }
 
