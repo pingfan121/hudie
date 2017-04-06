@@ -65,6 +65,10 @@ namespace hudie.net
                 HttpListenerContext context = listener.EndGetContext(result);
                 HttpListenerRequest request = context.Request;
 
+                string token = context.Request.Headers["token2"];
+
+                Console.WriteLine("token2:" + token);
+
                 StreamReader sr = new StreamReader(request.InputStream);
                 
                 string webdata = sr.ReadToEnd();

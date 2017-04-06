@@ -19,3 +19,6 @@ E:\case\server\test\update\bin\Debug\log4net.xml
 E:\case\server\test\update\obj\Debug\update.csprojResolveAssemblyReference.cache
 E:\case\server\test\update\obj\Debug\update.exe
 E:\case\server\test\update\obj\Debug\update.pdb
+E:\hudie\server\test\update\bin\Debug\update.exe.config
+E:\hudie\server\test\update\obj\Debug\update.exe
+E:\hudie\server\test\update\obj\Debug\update.pdb

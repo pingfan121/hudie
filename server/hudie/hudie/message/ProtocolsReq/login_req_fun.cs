@@ -37,6 +37,8 @@ namespace messages
                   if (req.pass == dbselect.ListRecord[0].Pass)
                   {
                       res.token = dbselect.ListRecord[0].Id;
+
+                      //·Å½ø»º´æ
                   }
                   else
                   {

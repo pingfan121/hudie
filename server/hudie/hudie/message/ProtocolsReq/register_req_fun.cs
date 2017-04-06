@@ -28,7 +28,7 @@ namespace messages
 
           if (pf.IsMobile(req.tel))
           {
-              string str = String.Format("select * from account where mobile ='{0}'", req.tel);
+              string str = String.Format("select * from app_user where mobile ='{0}'", req.tel);
 
               DbSelect<TbUser> dbselect = new DbSelect<TbUser>(msg.db, str, null);
               dbselect.processRequest();
