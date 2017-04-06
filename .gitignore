@@ -1,9 +1,8 @@
 
 # directory:
 publish
-server/hudie/hudie/obj
-server/GameDb/obj
-tool/MsgEdit/MsgEdit/obj
+**/obj
+**/bin
 
 #android
 # Built application files
