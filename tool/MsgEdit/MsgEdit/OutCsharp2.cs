@@ -1,9 +1,13 @@
-﻿using System;
+﻿using GameLib.Util;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MsgEdit
@@ -76,12 +80,12 @@ namespace MsgEdit
             {
                 foreach(msgdata data in dir.protos)
                 {
-                    CreateProtoFiles2(data);
+                    CreateProtoFiles2(data,dir.dic_name);
                 }
             }
         }
 
-        private static void CreateProtoFiles2(msgdata data)
+        private static void CreateProtoFiles2(msgdata data,string dir_name)
         {
             //分割属性
 
@@ -118,12 +122,22 @@ namespace MsgEdit
 
             string path = GetSetverPath();
 
-            if(!Directory.Exists(path + "\\message\\Protocols\\"))
+            string path2 = "\\message\\Protocols\\";
+
+
+            if(!Directory.Exists(path + path2))
             {
-                Directory.CreateDirectory(path + "\\message\\Protocols\\");
+                Directory.CreateDirectory(path + path2);
             }
 
-            StreamWriter sw = new StreamWriter(path + "\\message\\Protocols\\" + data.name + ".cs", false, Encoding.Unicode);
+            path2 += dir_name + "\\";
+
+            if(!Directory.Exists(path + path2))
+            {
+                Directory.CreateDirectory(path + path2);
+            }
+
+            StreamWriter sw = new StreamWriter(path + path2 + data.name + ".cs", false, Encoding.Unicode);
 
             //使用命名空间
             sw.WriteLine("using messages;");
@@ -161,32 +175,43 @@ namespace MsgEdit
         {
             foreach(DirectoryData dir in protos)
             {
+              
                 foreach(msgdata data in dir.protos)
                 {
                     if(data.name.IndexOf("_req")!=-1)
                     {
-                        CreateProtoReq2(data);
+                        CreateProtoReq2(data,dir.dic_name);
                     }
                    
                 }
             }
         }
-        private static void CreateProtoReq2(msgdata data)
+        private static void CreateProtoReq2(msgdata data,string dir_name)
         {
             string path = GetSetverPath();
 
-            if(!Directory.Exists(path + "\\message\\ProtocolsReq\\"))
+            string path2 = "\\message\\ProtocolsReq\\";
+
+
+            if(!Directory.Exists(path +path2))
             {
-                Directory.CreateDirectory(path + "\\message\\ProtocolsReq\\");
+                Directory.CreateDirectory(path + path2);
             }
 
-            if(File.Exists(path + "\\message\\ProtocolsReq\\" + data.name + "_fun.cs"))
+            path2 += dir_name + "\\";
+
+            if(!Directory.Exists(path + path2))
+            {
+                Directory.CreateDirectory(path + path2);
+            }
+
+            if(File.Exists(path +path2 + data.name + "_fun.cs"))
             {
                 return;
             }
 
 
-            StreamWriter sw = new StreamWriter(path + "\\message\\ProtocolsReq\\" + data.name + "_fun.cs", false, Encoding.Unicode);
+            StreamWriter sw = new StreamWriter(path + path2 + data.name + "_fun.cs", false, Encoding.Unicode);
                 //使用命名空间
                 sw.WriteLine("using GameDb.Logic;");
                 sw.WriteLine("using GameDb.Util;");
@@ -281,6 +306,34 @@ namespace MsgEdit
             }
            
         }
+
+        public static string HanZiZhuanPinYin(string name)
+        {
+            WebClient web = new WebClient();
+
+            string showapi_appid = "35119";
+            string showapi_sign = "996ddf1386994f73b05292db6099f91e";
+            string content = name;
+
+            string str = String.Format("http://route.showapi.com/99-38?showapi_appid={0}&content={1}&showapi_sign={2}", showapi_appid, content, showapi_sign);
+
+            byte[] bt = web.DownloadData(str);
+
+            str = System.Text.Encoding.UTF8.GetString(bt);
+
+            Hashtable ht = JSON.Decode<Hashtable>(str);
+
+            string temp = ht["showapi_res_body"].ToString();
+
+            ht = JSON.Decode<Hashtable>(temp);
+
+            string py = ht["data"].ToString();
+
+            py = py.Replace(' ', '_');
+
+            return py;
+        }
+
     }
 
 

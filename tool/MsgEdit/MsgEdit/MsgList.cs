@@ -21,6 +21,7 @@ namespace MsgEdit
     {
         public int index;
         public string name = "";
+        public string dic_name = "";
         public List<msgdata> protos = new List<msgdata>();
     }
 
@@ -86,6 +87,8 @@ namespace MsgEdit
             DirectoryData dir = new DirectoryData();
             dir.index = index;
             dir.name = name;
+
+            dir.dic_name = OutCsharp2.HanZiZhuanPinYin(name);
 
             alldata.Add(dir);
 

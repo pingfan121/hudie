@@ -56,13 +56,14 @@ namespace MsgEdit
             sw.WriteLine("namespace Enum");
             sw.WriteLine("{");
             sw.WriteLine("  public enum " + info.name);
-            sw.WriteLine("{");
+            sw.WriteLine("  {");
 
             foreach(var item in info.info)
             {
-                sw.WriteLine("   "+item.enumstr+" = "+item.index+", //"+item.explain);
+                sw.WriteLine("     "+item.enumstr+" = "+item.index+", //"+item.explain);
             }
 
+            sw.WriteLine("  }");
             sw.WriteLine("}");
 
             sw.Close();

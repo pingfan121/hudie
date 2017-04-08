@@ -50,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="app\GlobalFun.cs" />
     <Compile Include="cache\Cache.cs" />
+    <Compile Include="cache\CacheData.cs" />
     <Compile Include="cache\TokenCache.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbAppJianyi.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitDiscuss.cs" />
@@ -61,38 +63,30 @@
     <Compile Include="dbfile\dblogic\benefit\TbUser.cs" />
     <Compile Include="enum\EnumMsgState.cs" />
     <Compile Include="app\GameApp.cs" />
-    <Compile Include="message\ProtocolsReq\advise_cteate_req_fun.cs" />
-    <Compile Include="message\ProtocolsReq\benefit_detail_req_fun.cs" />
-    <Compile Include="message\ProtocolsReq\benefit_head_req_fun.cs" />
-    <Compile Include="message\ProtocolsReq\benefit_proof_discuss_req_fun.cs" />
-    <Compile Include="message\ProtocolsReq\benefit_theme_req_fun.cs" />
-    <Compile Include="message\ProtocolsReq\login_req_fun.cs">
+    <Compile Include="message\ProtocolsReq\jian_yi\advise_cteate_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\gong_yi\benefit_detail_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\gong_yi\benefit_head_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\gong_yi\benefit_proof_discuss_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\gong_yi\benefit_theme_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\deng_lu\login_req_fun.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="message\ProtocolsReq\register_req_fun.cs">
+    <Compile Include="message\ProtocolsReq\deng_lu\register_req_fun.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="message\Protocols\advise_cteate_req.cs" />
-    <Compile Include="message\Protocols\advise_cteate_res.cs" />
-    <Compile Include="message\Protocols\benefit_detail_req.cs" />
-    <Compile Include="message\Protocols\benefit_detail_res.cs" />
-    <Compile Include="message\Protocols\benefit_head_req.cs" />
-    <Compile Include="message\Protocols\benefit_head_res.cs" />
-    <Compile Include="message\Protocols\benefit_proof_discuss_req.cs" />
-    <Compile Include="message\Protocols\benefit_proof_discuss_res.cs" />
-    <Compile Include="message\Protocols\info_benefit_head_item.cs" />
-    <Compile Include="message\Protocols\login_req.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="message\Protocols\login_res.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="message\Protocols\register_req.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="message\Protocols\register_res.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="message\Protocols\deng_lu\login_req.cs" />
+    <Compile Include="message\Protocols\deng_lu\login_res.cs" />
+    <Compile Include="message\Protocols\deng_lu\register_req.cs" />
+    <Compile Include="message\Protocols\deng_lu\register_res.cs" />
+    <Compile Include="message\Protocols\gong_yi\benefit_detail_req.cs" />
+    <Compile Include="message\Protocols\gong_yi\benefit_detail_res.cs" />
+    <Compile Include="message\Protocols\gong_yi\benefit_head_req.cs" />
+    <Compile Include="message\Protocols\gong_yi\benefit_head_res.cs" />
+    <Compile Include="message\Protocols\gong_yi\benefit_proof_discuss_req.cs" />
+    <Compile Include="message\Protocols\gong_yi\benefit_proof_discuss_res.cs" />
+    <Compile Include="message\Protocols\jian_yi\advise_cteate_req.cs" />
+    <Compile Include="message\Protocols\jian_yi\advise_cteate_res.cs" />
+    <Compile Include="message\Protocols\jie_gou\info_benefit_head_item.cs" />
     <Compile Include="message\MsgCodeId.cs" />
     <Compile Include="message\MsgHandle.cs" />
     <Compile Include="message\MsgProcessor.cs" />
