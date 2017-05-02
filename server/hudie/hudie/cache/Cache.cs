@@ -1,4 +1,5 @@
-﻿using GameLib.Util;
+﻿using GameDb.Logic;
+using GameLib.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,47 @@ namespace hudie.cache
 {
     public class Cache
     {
-        public static Dictionary<string, TokenCache> tokens = new Dictionary<string, TokenCache>();
+        public static Dictionary<string, CacheData> tokens = new Dictionary<string, CacheData>();
 
 
         //----------------------token的操作--------------------------
-        public static void AddTokenCache(string token,string userid)
+        //添加
+        public static void AddToken(string token,TbUser user)
         {
-            TokenCache temp =ObjectPool.getObject<TokenCache>();
-            temp.useid = userid;
-            temp.lasttime = DateUtil.ToUnixTime(DateTime.Now);
+            CacheData temp = ObjectPool.getObject<CacheData>();
+            temp.setData(user);
+
+            lock(tokens)
+            {
+                tokens[token] = temp;
+            }
+          
+            
+        }
+        //更新
+        public static void updateToken(string token)
+        {
+            lock(tokens)
+            {
+
+                if(tokens.ContainsKey(token))
+                {
+                    tokens[token].updateTime();
+                }
+            }
+        }
+
+        //删除
+        public static void removeToken(string token)
+        {
+            lock(tokens)
+            {
+                if(tokens.ContainsKey(token))
+                {
+                    tokens.Remove(token);
+                }
+            }
+         
         }
 
 

@@ -3,7 +3,6 @@
 publish
 **/obj
 **/bin
-**/.suo
 
 #android
 # Built application files
