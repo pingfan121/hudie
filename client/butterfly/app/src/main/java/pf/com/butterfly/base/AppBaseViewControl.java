@@ -29,7 +29,10 @@ public abstract class AppBaseViewControl
     }
 
 
-    protected abstract void initValue();
+    protected void initValue()
+    {
+
+    }
 
     private void resetView()
     {
@@ -80,7 +83,10 @@ public abstract class AppBaseViewControl
     }
 
     //初始化子控件
-    protected abstract void initControl();
+    protected void initControl()
+    {
+
+    }
 
     public void resetState()
     {
