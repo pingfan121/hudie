@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.1'
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "pf.com.butterfly"
@@ -43,6 +43,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.4.0'
     compile files('libs/BmobPay_v3.1.1_170111.jar')
     compile files('libs/gson-2.3.jar')
+    compile 'com.makeramen:roundedimageview:2.3.0'
 }
 
 

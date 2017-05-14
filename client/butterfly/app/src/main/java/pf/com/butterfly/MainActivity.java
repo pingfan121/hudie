@@ -38,7 +38,6 @@ public class MainActivity  extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
-
         //检测版本更新
         UpdateModule.getInstance().init();
 
