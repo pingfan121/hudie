@@ -28,4 +28,8 @@
     </string>
     <string name="title_activity_register">注册</string>
 
+    <string name="btn_recorder_normal">好无聊,我也来说两句</string>
+    <string name="btn_recorder_recording">松开结束</string>
+    <string name="btn_recorder_want_cancel">松开手指 取消发送</string>
+
 </resources>

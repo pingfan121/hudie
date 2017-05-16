@@ -12,6 +12,7 @@ import pf.com.butterfly.component.ItemAdapter;
 import pf.com.butterfly.model.ItemData;
 import pf.com.butterfly.module.advise.AdviseHead;
 import pf.com.butterfly.module.benefit.BenefitHead;
+import pf.com.butterfly.module.bored.BoredHead;
 import pf.com.butterfly.module.set.SetingHead;
 import pf.com.butterfly.module.user.UserHead;
 
@@ -96,6 +97,7 @@ public class MenuModule  implements IItemClick
          adapter1.setItemClick(this);
          adapter1.setLayout(R.layout.itemlayout);
          adapter1.addData(new ItemData(R.drawable.hudie,"蝴蝶"));
+         adapter1.addData(new ItemData(R.drawable.hudie,"好无聊啊"));
 
          adapter2=new ItemAdapter();
          adapter2.setItemClick(this);
@@ -113,6 +115,11 @@ public class MenuModule  implements IItemClick
              case "蝴蝶":
              {
                  BenefitHead.getInstance().show();
+                 break;
+             }
+             case "好无聊啊":
+             {
+                 BoredHead.getInstance().show();
                  break;
              }
              case "建议":
