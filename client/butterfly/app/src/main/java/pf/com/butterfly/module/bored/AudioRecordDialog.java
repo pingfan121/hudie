@@ -42,7 +42,7 @@ public class AudioRecordDialog
 			textHint.setVisibility(View.VISIBLE);
 
 			imageRecord.setImageResource(R.drawable.icon_dialog_recording);
-			textHint.setText("��ָ�ϻ���ȡ������");
+			textHint.setText("手指上滑，取消发送");
 		}
 	}
 
@@ -52,7 +52,7 @@ public class AudioRecordDialog
 			imageRecord.setImageResource(R.drawable.icon_dialog_cancel);
 			imageVolume.setVisibility(View.GONE);
 			textHint.setVisibility(View.VISIBLE);
-			textHint.setText("�ɿ���ָ��ȡ������");
+			textHint.setText("松开手指，取消发送");
 		}
 	}
 
@@ -62,7 +62,7 @@ public class AudioRecordDialog
 			imageRecord.setImageResource(R.drawable.icon_dialog_length_short);
 			imageVolume.setVisibility(View.GONE);
 			textHint.setVisibility(View.VISIBLE);
-			textHint.setText("¼��ʱ�����");
+			textHint.setText("录音时间过短");
 		}
 	}
 
@@ -73,11 +73,7 @@ public class AudioRecordDialog
 		}
 	}
 
-	/**
-	 * ��������
-	 * 
-	 * @param level
-	 */
+
 	public void updateVolumeLevel(int level) {
 		if (dialog != null && dialog.isShowing()) {
 			// imageRecord.setVisibility(View.VISIBLE);

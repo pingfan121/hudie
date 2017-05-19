@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:background="@color/app_ground"
+              android:background="@color/app_mod_ground"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -22,14 +22,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
+
     </LinearLayout>
 
     <pf.com.butterfly.module.bored.AudioRecordButton
         android:id="@+id/btn_record"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center"
-        android:minHeight="51dp"
+        android:background="@color/app_green"
         android:text="@string/btn_recorder_normal"
         android:textColor="#727272">
     </pf.com.butterfly.module.bored.AudioRecordButton>

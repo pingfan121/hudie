@@ -18,6 +18,7 @@ import pf.com.butterfly.module.menu.MenuModule;
 import pf.com.butterfly.module.title.TitleModule;
 import pf.com.butterfly.module.update.UpdateModule;
 import pf.com.butterfly.util.HDLog;
+import pf.com.butterfly.util.PermissionManager;
 import pf.com.butterfly.util.PhotoChoose;
 import pf.com.butterfly.module.LogView;
 import pf.com.butterfly.module.ShowPhoto;
@@ -173,6 +174,12 @@ public class MainActivity  extends AppCompatActivity
         MediaManager.pause();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults)
+    {
+        PermissionManager.onRequestPermissionsResult(requestCode,permissions,grantResults);
+    }
 
 
 

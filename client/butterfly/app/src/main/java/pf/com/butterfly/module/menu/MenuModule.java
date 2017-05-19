@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.component.IItemClick;
 import pf.com.butterfly.component.ItemAdapter;
@@ -104,6 +105,7 @@ public class MenuModule  implements IItemClick
          adapter2.setLayout(R.layout.itemlayout);
          adapter2.addData(new ItemData(R.drawable.jianyi,"建议"));
          adapter2.addData(new ItemData(R.drawable.shezhi,"设置"));
+         adapter2.addData(new ItemData(R.drawable.shezhi,"退出"));
      }
 
      public void onItemClick(View view, ItemData data)
@@ -130,6 +132,11 @@ public class MenuModule  implements IItemClick
              case "设置":
              {
                  SetingHead.getInstance().show();
+                 break;
+             }
+             case "退出":
+             {
+                 MainActivity.main.finish();
                  break;
              }
          }

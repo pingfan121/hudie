@@ -1,5 +1,6 @@
 package pf.com.butterfly.module.bored;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Environment;
 import android.os.Handler;
@@ -8,8 +9,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import pf.com.butterfly.module.bored.AudioManager.AudioStateChangeListener;
 import pf.com.butterfly.R;
+import pf.com.butterfly.util.HDLog;
+import pf.com.butterfly.util.PermissionManager;
 
 public class AudioRecordButton extends AppCompatButton
 {
@@ -20,13 +22,22 @@ public class AudioRecordButton extends AppCompatButton
 	private static final int DISTANCE_CANCEL_Y = 50;
 
 	private int currentState = STATE_NORMAL;
-	private boolean isRecording = false;
+
+	private boolean isRecording = false;  //是不是正在录音
+	private boolean isReady = false;      //是不是准备好了
+	private boolean downflag=false;        //按钮是不是按下状态
+
+
 	private AudioRecordDialog dialogManager;
 	private AudioManager audioManager;
 
 	private float mTime;
-	// �Ƿ񴥷�LongClick
-	private boolean isReady = false;
+
+	public interface RecordFinishCallback
+	{
+		void callback(float second, String filePath);
+	}
+
 
 	public AudioRecordButton(Context context) {
 		this(context, null);
@@ -34,35 +45,70 @@ public class AudioRecordButton extends AppCompatButton
 
 	public AudioRecordButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
+
 		dialogManager = new AudioRecordDialog(getContext());
 
 		String dir = Environment.getExternalStorageDirectory()
-				+ "/zms_chat_audios";
+				+ "/butterfly/chat_audios";
+
 		audioManager = AudioManager.getInstance(dir);
-		audioManager.setOnAudioStateChangeListener(new MyOnAudioStateChangeListener());
 
 		setOnLongClickListener(new OnLongClickListener() {
 
 			@Override
 			public boolean onLongClick(View v) {
-				isReady = true;
-				audioManager.prepareAudio();
+				try
+				{
+					PermissionManager.applyForPermission(Manifest.permission.RECORD_AUDIO,new MyPermissionCallback());
+				}
+				catch (Exception ex)
+				{
+					HDLog.error(ex);
+				}
+
 				return false;
 			}
 		});
 	}
 
-	class MyOnAudioStateChangeListener implements AudioStateChangeListener {
+	//录音权限申请之后的回调
+	class MyPermissionCallback implements PermissionManager.PermissionCallback
+	{
 
 		@Override
-		public void wellPrepared() {
-			mHanlder.sendEmptyMessage(MSG_AUDIO_PREPARED);
+		public void callback(String permissions, Boolean result)
+		{
+			if(downflag==true)
+			{
+				if (result == true)
+				{
+					isReady = true;
 
+					boolean flag = audioManager.prepareAudio();
+
+					if(flag==false)
+					{
+						HDLog.Toast("初始化录音设备失败");
+					}
+					else
+					{
+						//发送准备好了的消息
+						mHanlder.sendEmptyMessage(MSG_AUDIO_PREPARED);
+					}
+				}
+				else
+				{
+					HDLog.Toast("未同意录音权限,无法进行录音");
+
+					//修改按钮状态
+				}
+			}
 		}
 	}
 
 
-	public interface AudioRecordFinishListener {
+	public interface AudioRecordFinishListener
+	{
 		void onFinish(float second, String filePath);
 	}
 
@@ -98,28 +144,37 @@ public class AudioRecordButton extends AppCompatButton
 
 	private Handler mHanlder = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case MSG_AUDIO_PREPARED:
-				dialogManager.showDialog();
-				isRecording = true;
 
-				// ����
-				new Thread(getVolumeRunnable).start();
+			try
+			{
+				switch (msg.what) {
+					case MSG_AUDIO_PREPARED:
+						dialogManager.showDialog();
+						isRecording = true;
 
-				break;
-			case MSG_VOLUME_CHAMGED:
-				dialogManager.updateVolumeLevel(audioManager.getVoiceLevel(7));
-				break;
-			case MSG_DIALOG_DISMISS:
-				dialogManager.dismissDialog();
 
-				break;
+						new Thread(getVolumeRunnable).start();
 
-			default:
-				break;
+						break;
+					case MSG_VOLUME_CHAMGED:
+						dialogManager.updateVolumeLevel(audioManager.getVoiceLevel(7));
+						break;
+					case MSG_DIALOG_DISMISS:
+						dialogManager.dismissDialog();
+
+						break;
+
+					default:
+						break;
+				}
+			}
+			catch (Exception ex)
+			{
+				HDLog.error(ex);
 			}
 		};
 	};
+
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -127,64 +182,66 @@ public class AudioRecordButton extends AppCompatButton
 		int action = event.getAction();
 		int x = (int) event.getX();
 		int y = (int) event.getY();
-		switch (action) {
-		case MotionEvent.ACTION_DOWN:
-			changeState(STATE_RECORDING);
-			break;
-		case MotionEvent.ACTION_MOVE:
+		switch (action)
+		{
+			case MotionEvent.ACTION_DOWN:
+			{
+				changeState(STATE_RECORDING);
+				downflag = true;
 
-			// �Ѿ���ʼ¼��
-			if (isRecording) {
-				// ����X��Y�������ж��Ƿ���Ҫȡ��
-				if (wantCancel(x, y)) {
+				break;
+			}
+			case MotionEvent.ACTION_MOVE:
+			{
+				if (wantCancel(x, y))
+				{
 					changeState(STATE_WANT_CANCEL);
-					dialogManager.stateWantCancel();
-				} else {
-					changeState(STATE_RECORDING);
-					dialogManager.stateRecording();
 				}
+				break;
 			}
+			case MotionEvent.ACTION_UP:
+			{
+				downflag = false;
 
-			break;
+				if (isReady==false)
+				{
+					resetState();
+					return super.onTouchEvent(event);
+				}
 
-		case MotionEvent.ACTION_UP:
-			// û�д���longClick
-			if (!isReady) {
+				if (isRecording ==false || mTime < 0.6f)
+				{
+					dialogManager.stateLengthShort();
+					audioManager.cancel();
+					mHanlder.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 1300);
+				}
+				else if (currentState == STATE_RECORDING)
+				{
+					dialogManager.dismissDialog();
+					audioManager.release();
+
+					// callbackToActivity
+					if (audioRecordFinishListener != null)
+					{
+						audioRecordFinishListener.onFinish(mTime,
+								audioManager.getCurrentPath());
+					}
+
+				} else if (currentState == STATE_WANT_CANCEL)
+				{
+					dialogManager.dismissDialog();
+					audioManager.cancel();
+
+				}
 				resetState();
-				return super.onTouchEvent(event);
+				break;
 			}
-			// prepareδ��ɾ�up,¼��ʱ�����
-			if (!isRecording || mTime < 0.6f) {
-				dialogManager.stateLengthShort();
-				audioManager.cancel();
-				mHanlder.sendEmptyMessageDelayed(MSG_DIALOG_DISMISS, 1300);
-			} else if (currentState == STATE_RECORDING) { // ����¼�ƽ���
-				dialogManager.dismissDialog();
-				audioManager.release();
-
-				// callbackToActivity
-				if (audioRecordFinishListener != null) {
-					audioRecordFinishListener.onFinish(mTime,
-							audioManager.getCurrentPath());
-				}
-
-			} else if (currentState == STATE_WANT_CANCEL) {
-				dialogManager.dismissDialog();
-				audioManager.cancel();
-
-			}
-			resetState();
-			break;
-
-		default:
-			break;
+			default:
+				break;
 		}
 		return super.onTouchEvent(event);
 	}
 
-	/**
-	 * �ָ���־λ
-	 */
 	private void resetState() {
 
 		isRecording = false;
@@ -210,19 +267,16 @@ public class AudioRecordButton extends AppCompatButton
 			currentState = state;
 			switch (state) {
 			case STATE_NORMAL:
-				setBackgroundResource(R.drawable.btn_recorder_normal);
 				setText(R.string.btn_recorder_normal);
 
 				break;
 			case STATE_RECORDING:
-				setBackgroundResource(R.drawable.btn_recorder_normal);
 				setText(R.string.btn_recorder_recording);
 				if (isRecording) {
 					dialogManager.stateRecording();
 				}
 				break;
 			case STATE_WANT_CANCEL:
-				setBackgroundResource(R.drawable.btn_recorder_normal);
 				setText(R.string.btn_recorder_want_cancel);
 				dialogManager.stateWantCancel();
 				break;

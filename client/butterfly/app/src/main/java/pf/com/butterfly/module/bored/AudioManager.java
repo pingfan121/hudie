@@ -21,16 +21,6 @@ public class AudioManager
 		this.dir = dir;
 	}
 
-	public interface AudioStateChangeListener {
-		void wellPrepared();
-	}
-
-	public AudioStateChangeListener audioStateChangeListener;
-
-	public void setOnAudioStateChangeListener(AudioStateChangeListener listener) {
-		audioStateChangeListener = listener;
-	}
-
 	public static AudioManager getInstance(String dir) {
 		if (audioInstance == null) {
 			synchronized (AudioManager.class) {
@@ -42,12 +32,18 @@ public class AudioManager
 		return audioInstance;
 	}
 
-	public void prepareAudio() {
-		try {
+	//准备录音
+	public boolean prepareAudio()
+	{
+		try
+		{
 			isPrepared = false;
+
 			File fileDir = new File(dir);
+
 			if (!fileDir.exists())
 				fileDir.mkdirs();
+
 			String fileName = generateFileName();
 			File file = new File(fileDir, fileName);
 
@@ -64,47 +60,55 @@ public class AudioManager
 
 			mediaRecorder.prepare();
 			mediaRecorder.start();
-			// ׼������
+
 			isPrepared = true;
-			//
-			if (audioStateChangeListener != null) {
-				audioStateChangeListener.wellPrepared();
-			}
-		} catch (IllegalStateException | IOException e) {
-			// TODO Auto-generated catch block
+
+
+
+		} catch (Exception e)
+		{
+
 			e.printStackTrace();
 		}
+
+		return isPrepared;
 	}
 
-	/**
-	 * ��������ļ�����
-	 * 
-	 * @return
-	 */
+	//录音名字
 	private String generateFileName() {
 		return UUID.randomUUID().toString() + ".amr";
 	}
 
+	//得到音量等级
 	public int getVoiceLevel(int maxLevel) {
 		if (isPrepared) {
-			try {
-				// �����ΧmediaRecorder.getMaxAmplitude():1-32767
+			try
+			{
 				return maxLevel * mediaRecorder.getMaxAmplitude() / 32768 + 1;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 			}
 		}
 		return 1;
 	}
 
-	public void release() {
-		mediaRecorder.stop();
-		mediaRecorder.release();
-		mediaRecorder = null;
+	public void release()
+	{
+		if(isPrepared==true)
+		{
+			mediaRecorder.stop();
+			mediaRecorder.release();
+			mediaRecorder = null;
+		}
 
 	}
 
-	public void cancel() {
+	//取消录音
+	public void cancel()
+	{
 		release();
+
 		if (currentFilePath != null) {
 			File file = new File(currentFilePath);
 			file.delete();
