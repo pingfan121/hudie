@@ -4,6 +4,7 @@ import android.view.View;
 
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
+import pf.com.butterfly.module.ControlLayer;
 import pf.com.butterfly.module.LogView;
 import pf.com.butterfly.module.TestEditView;
 import pf.com.butterfly.module.TestTextView;
@@ -33,6 +34,10 @@ public class MainTest extends AppBaseViewControl
     {
         title="测试";
         layout=R.layout.main_view;
+
+        layer= ControlLayer.main_layers;
+
+
     }
 
     @Override

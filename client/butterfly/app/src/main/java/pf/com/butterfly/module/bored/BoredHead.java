@@ -4,22 +4,18 @@ import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
-import pf.com.butterfly.adapter.Adapter;
-import pf.com.butterfly.base.AppBaseControl;
-import pf.com.butterfly.base.AppBaseFragment;
+import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
-import pf.com.butterfly.message.Protocols.login_req;
-import pf.com.butterfly.message.net.NetManager;
-import pf.com.butterfly.module.title.TitleModule;
+import pf.com.butterfly.input.TextInput;
+import pf.com.butterfly.module.bored.BoredDetail;
+import pf.com.butterfly.module.bored.BoredItemView;
+import pf.com.butterfly.module.bored.MediaManager;
+import pf.com.butterfly.module.bored.Recorder;
+import pf.com.butterfly.util.HDLog;
 
 /**
  * Created by admin on 2017/3/3.
@@ -38,71 +34,81 @@ public class BoredHead extends AppBaseViewControl
         return _instance;
     }
 
-    protected void initValue()
+    public void initValue()
     {
         title="无聊";
         layout=R.layout.bored_head;
     }
 
-    private ListView voiceList;
-    private AudioRecordButton btn_record;
+    private ListViewAdapter adapter;
 
-    private Adapter<Recorder> mAdapter;
+    private EditText et_text;
 
-    private AnimationDrawable animation;
-    private View voiceAnim;
+    private ListView listView;
 
     @Override
     public void initControl()
     {
+        view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnTiJiao();
+            }
+        });
 
-        voiceList=(ListView)view.findViewById(R.id.listView);
+        listView=(ListView)view.findViewById(R.id.listView);
 
-        btn_record=(AudioRecordButton)view.findViewById(R.id.btn_record);
+        adapter=new ListViewAdapter(R.layout.bored_head_item, BoredItemView.class.getName());
 
-        btn_record.setAudioRecordFinishListener(new MyAudioRecordFinishListener());
-
-        mAdapter = new Adapter<Recorder>(R.layout.list_item_voice,AudioItem.class.getName());
-        voiceList.setAdapter(mAdapter);
-        voiceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                if (animation != null) {
-                    voiceAnim
-                            .setBackgroundResource(R.drawable.icon_voice_ripple);
-                    voiceAnim = null;
-                }
-                voiceAnim = view.findViewById(R.id.voiceAnim);
-                voiceAnim.setBackgroundResource(R.drawable.anim_play_audio);
-                animation = (AnimationDrawable) voiceAnim.getBackground();
-                animation.start();
-
-                MediaManager.playSound(((Recorder)mAdapter.getItem(position)).filePath,
-                        new MediaPlayer.OnCompletionListener() {
-                            @Override
-                            public void onCompletion(MediaPlayer mp) {
-                                voiceAnim.setBackgroundResource(R.drawable.icon_voice_ripple);
-                            }
-                        });
+              //点击了列表
+                BoredDetail.getInstance().show();
 
             }
         });
+
+        et_text=(EditText)view.findViewById(R.id.et_text);
     }
 
-    class MyAudioRecordFinishListener implements AudioRecordButton.AudioRecordFinishListener
+    public void OnTiJiao()
     {
+        //检测文本是否合法
 
-        @Override
-        public void onFinish(float second, String filePath)
+        String str=et_text.getText().toString();
+
+        if(str.equals(""))
         {
-            // TODO Auto-generated method stub
-            Recorder recorder = new Recorder(second, filePath);
-            mAdapter.AddOneItem(recorder);
+            HDLog.Toast("请输入您的文本");
+            return ;
         }
 
+        if(str.length()>30)
+        {
+            HDLog.Toast("文本长度过长,请重新输入");
+            return ;
+        }
+
+        //发送给服务器....
+        OnMsgBack();
+
+    }
+
+    public void OnMsgBack()
+    {
+        BoredHeadItemData data=new BoredHeadItemData();
+        data.icon="";
+        data.name="我是一个平凡的人";
+        data.text=et_text.getText().toString();
+        data.num=20;
+
+        adapter.addOneItem(data);
+        listView.smoothScrollToPosition(listView.getCount() - 1);//移动到尾部
     }
 
 }

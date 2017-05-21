@@ -63,5 +63,6 @@ public class HDLog
     public static void Toast(String str)
     {
         Toast.makeText(MainActivity.main,str,Toast.LENGTH_SHORT).show();
+        HDLog.error(str);
     }
 }

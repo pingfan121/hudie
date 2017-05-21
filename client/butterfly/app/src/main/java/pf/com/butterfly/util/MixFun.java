@@ -1,10 +1,15 @@
 package pf.com.butterfly.util;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import java.io.FileInputStream;
+import java.util.Comparator;
 
 import pf.com.butterfly.MainActivity;
 
@@ -67,5 +72,78 @@ public class MixFun
                 dialog.dismiss();
             } catch (Exception e) {
             }
+    }
+
+
+    //读SD中的文件
+    public static byte[] readFileSdcardFile(String fileName)
+    {
+
+        byte[] buffer=null;
+
+        try
+        {
+            FileInputStream fin = new FileInputStream(fileName);
+
+            int length = fin.available();
+
+            buffer = new byte[length];
+            fin.read(buffer);
+            fin.close();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return buffer;
+    }
+
+    public static String getContentType(String str)
+    {
+        if(str.equals(".png"))
+        {
+            return "image/png";
+        }
+        else if(str.equals(".gif"))
+        {
+            return "image/gif";
+        }
+        else if(str.equals(".jpg"))
+        {
+            return "image/jpeg";
+        }
+        else if(str.equals(".amr"))
+        {
+            return "audio/AMR";
+        }
+        return "";
+    }
+
+    public static String randName(String suffix)
+    {
+        return ""+System.currentTimeMillis()+suffix;
+    }
+
+
+
+    //关闭键盘
+
+    public static void closeInputMethod() {
+        InputMethodManager imm = (InputMethodManager)MainActivity.main.getSystemService(Context.INPUT_METHOD_SERVICE);
+        boolean isOpen = imm.isActive();
+        if (isOpen)
+        {
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    //打开键盘
+    public static void openInputMethod() {
+        InputMethodManager imm = (InputMethodManager) MainActivity.main.getSystemService(Context.INPUT_METHOD_SERVICE);
+        boolean isOpen = imm.isActive();
+        if (isOpen==false)
+        {
+             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);//没有显示则显示
+        }
     }
 }

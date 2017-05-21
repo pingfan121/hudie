@@ -201,7 +201,7 @@ public class AudioRecordButton extends AppCompatButton
 		if (x < 0 || x > getWidth()) {
 			return true;
 		}
-		// ��������½ǣ�
+
 		if (y < -DISTANCE_CANCEL_Y || y > getHeight() + DISTANCE_CANCEL_Y) {
 			return true;
 		}

@@ -1,11 +1,14 @@
 package pf.com.butterfly.module.bored;
 
+import pf.com.butterfly.adapter.AdapterItemData;
+
 /**
  * Created by admin on 2017/5/15.
  */
 
 
-public class Recorder {
+public class Recorder extends AdapterItemData
+{
     float audioLength;
     String filePath;
 

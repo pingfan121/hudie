@@ -14,6 +14,7 @@ import pf.com.butterfly.model.ItemData;
 import pf.com.butterfly.module.advise.AdviseHead;
 import pf.com.butterfly.module.benefit.BenefitHead;
 import pf.com.butterfly.module.bored.BoredHead;
+import pf.com.butterfly.module.bored.BoredDetail;
 import pf.com.butterfly.module.set.SetingHead;
 import pf.com.butterfly.module.user.UserHead;
 

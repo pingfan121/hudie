@@ -14,6 +14,7 @@ import pf.com.butterfly.R;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.util.HDLog;
+import pf.com.butterfly.util.MixFun;
 import pf.com.butterfly.util.SendPost;
 
 /**
@@ -100,16 +101,16 @@ public class ShowPhoto implements IMsgHandler
     {
         try
         {
-            byte[] data=readFileSdcardFile(tupian_path);
+            byte[] data= MixFun.readFileSdcardFile(tupian_path);
 
             HDLog.error("图片地址2:"+tupian_path);
 
             String type=tupian_path.substring(tupian_path.length()-4,tupian_path.length());
-            type=getContentType(type);
+            type=MixFun.getContentType(type);
 
             if(data!=null)
             {
-                SendPost send=new SendPost(url+getupname(tupian_path),WhatId,readFileSdcardFile(tupian_path),type);
+                SendPost send=new SendPost(url+getupname(tupian_path),WhatId,MixFun.readFileSdcardFile(tupian_path),type);
                 send.start();
             }
 
@@ -131,29 +132,29 @@ public class ShowPhoto implements IMsgHandler
     }
 
 
-
-    //读SD中的文件
-    public byte[] readFileSdcardFile(String fileName)
-    {
-
-        byte[] buffer=null;
-
-        try
-        {
-            FileInputStream fin = new FileInputStream(fileName);
-
-            int length = fin.available();
-
-            buffer = new byte[length];
-            fin.read(buffer);
-            fin.close();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        return buffer;
-    }
+//
+//    //读SD中的文件
+//    public byte[] readFileSdcardFile(String fileName)
+//    {
+//
+//        byte[] buffer=null;
+//
+//        try
+//        {
+//            FileInputStream fin = new FileInputStream(fileName);
+//
+//            int length = fin.available();
+//
+//            buffer = new byte[length];
+//            fin.read(buffer);
+//            fin.close();
+//        }
+//        catch(Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        return buffer;
+//    }
 
     public static String getupname(String filename)
     {
@@ -166,22 +167,7 @@ public class ShowPhoto implements IMsgHandler
     }
 
 
-    public static String getContentType(String str)
-    {
-        if(str.equals(".png"))
-        {
-            return "image/png";
-        }
-        else if(str.equals(".gif"))
-        {
-            return "image/gif";
-        }
-        else if(str.equals(".jpg"))
-        {
-            return "image/jpeg";
-        }
-        return "";
-    }
+
 
     //上传图片返回
     private String img_url;

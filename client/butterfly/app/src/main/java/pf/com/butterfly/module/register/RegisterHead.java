@@ -115,7 +115,7 @@ public class RegisterHead extends AppBaseViewControl
 
         String str=new Gson().toJson(data);
        //去获取验证码
-        http.send("https://api.bmob.cn/1/requestSmsCode",str,1);
+        http.send(BmobHttp.YZM_url,str,1);
 
     }
 
@@ -123,31 +123,12 @@ public class RegisterHead extends AppBaseViewControl
     //处理http返回
     private void OnMessage(Message msg)
     {
-        if(msg.arg2==-100)
+        if(msg.arg2==-99 ||msg.arg2==-100 )
         {
-            //请求出现异常了....
-            HDLog.Toast(msg.obj.toString());
+            http.errerDispose(msg);
             return ;
         }
 
-        if(msg.arg2==-99)
-        {
-            if(msg.arg1==2)
-            {
-
-                resdata res =new Gson().fromJson(msg.obj.toString(),resdata.class);
-
-                if(res!=null)
-                {
-                    HDLog.Toast(GetErrText(res.code));
-                    return;
-                }
-
-            }
-
-            HDLog.Toast(msg.obj.toString());
-            return ;
-        }
 
         if(msg.arg1==1)  //获取验证码
         {
@@ -184,18 +165,6 @@ public class RegisterHead extends AppBaseViewControl
         NetManager.SendMsg(req);
     }
 
-    private String GetErrText(int code)
-    {
-        if(code==207)
-        {
-            return "验证码错误";
-        }
-        else
-        {
-            return "验证错误码:"+code;
-        }
-    }
-
 
 }
 
@@ -208,8 +177,4 @@ class reqdata2
 {
     public String mobilePhoneNumber;
 }
-class resdata
-{
-    public int code;
-    public String error;
-}
+

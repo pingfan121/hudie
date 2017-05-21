@@ -33,8 +33,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		voiceList = (ListView) findViewById(R.id.voiceList);
 		btnRecord = (AudioRecordButton) findViewById(R.id.btnRecord);
-		btnRecord
-				.setAudioRecordFinishListener(new MyAudioRecordFinishListener());
+		btnRecord.setAudioRecordFinishListener(new MyAudioRecordFinishListener());
 
 		mAdapter = new VoiceListAdapter(this, mDatas);
 		voiceList.setAdapter(mAdapter);

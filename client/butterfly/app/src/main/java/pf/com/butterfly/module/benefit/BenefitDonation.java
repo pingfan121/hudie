@@ -72,9 +72,6 @@ public class BenefitDonation extends AppBaseViewControl
             }
         });
 
-
-        view.setVisibility(View.INVISIBLE);
-
     }
 
     //确认按钮

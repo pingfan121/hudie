@@ -24,10 +24,6 @@ public class HttpBase extends Thread
 
     private byte[] data;
 
-    public HttpBase(int what)
-    {
-        this.what=what;
-    }
 
     public HttpBase(IMsgHandler handler)
     {
@@ -135,17 +131,10 @@ class SendThread extends Thread
 
         try
         {
-
-
-
-
             realurl = new URL(url);
             conn = (HttpURLConnection)realurl.openConnection();
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
-//            conn.setRequestProperty("X-Bmob-Application-Id","a5a2688114fb06e9156acaaee76ca9a0");
-//            conn.setRequestProperty("X-Bmob-REST-API-Key","603fc86123b6ad09a9e9c264103fb5a4");
-//            conn.setRequestProperty("Content-Type","application/json");
             http.SetHttpHeader(conn);
 
             OutputStream temp_out = conn.getOutputStream();
@@ -167,8 +156,6 @@ class SendThread extends Thread
         catch (Exception ex)
         {
             HDLog.error("SendPost出现异常");
-
-
 
             try
             {
