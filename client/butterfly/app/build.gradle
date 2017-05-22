@@ -2,14 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.1'
+    buildToolsVersion '25.0.0'
+
 
     defaultConfig {
         applicationId "pf.com.butterfly"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0.0.1"
+        versionName "1.0.0.2"
 
         multiDexEnabled true
     }
@@ -26,13 +27,6 @@ android {
         }
     }
 }
-//allprojects {
-//    gradle.projectsEvaluated {
-//        tasks.withType(JavaCompile) {
-//            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-//        }
-//    }
-//}
 
 dependencies {
     compile files('libs/universal-image-loader-1.9.5.jar')
@@ -43,6 +37,8 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.4.0'
     compile files('libs/BmobPay_v3.1.1_170111.jar')
     compile files('libs/gson-2.3.jar')
+    compile 'com.makeramen:roundedimageview:2.3.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 

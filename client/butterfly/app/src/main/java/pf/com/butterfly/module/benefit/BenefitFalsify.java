@@ -62,8 +62,6 @@ public class BenefitFalsify extends AppBaseViewControl
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(adapter);
-
-        view.setVisibility(View.INVISIBLE);
     }
 
     public void OnAddInfo()

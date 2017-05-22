@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
+import pf.com.butterfly.module.ControlLayer;
 import pf.com.butterfly.module.title.TitleModule;
 
 /**
@@ -21,6 +22,7 @@ public class MainHead extends AppBaseViewControl
             _instance=new MainHead();
         }
 
+
         return _instance ;
     }
 
@@ -30,7 +32,7 @@ public class MainHead extends AppBaseViewControl
 
         layout=R.layout.main_head;
 
-
+        layer= ControlLayer.main_layers;
     }
 
     private TextView tv;

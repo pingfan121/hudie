@@ -61,8 +61,6 @@ public class BenefitDetail extends AppBaseViewControl
             }
         });
 
-        view.setVisibility(View.INVISIBLE);
-
     }
 
     //论真按钮事件

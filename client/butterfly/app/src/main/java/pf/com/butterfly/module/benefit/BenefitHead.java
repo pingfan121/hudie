@@ -38,7 +38,6 @@ public class BenefitHead extends AppBaseViewControl
     public void initControl()
     {
 
-        View listshow=view.findViewById(R.id.listView);
 
         view.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
             @Override

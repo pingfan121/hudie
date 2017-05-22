@@ -3,15 +3,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
+import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.component.IItemClick;
 import pf.com.butterfly.component.ItemAdapter;
 import pf.com.butterfly.model.ItemData;
 import pf.com.butterfly.module.advise.AdviseHead;
 import pf.com.butterfly.module.benefit.BenefitHead;
+import pf.com.butterfly.module.bored.BoredHead;
+import pf.com.butterfly.module.bored.BoredDetail;
 import pf.com.butterfly.module.set.SetingHead;
+import pf.com.butterfly.module.user.UserHead;
 
 
 /**
@@ -35,6 +40,8 @@ public class MenuModule  implements IItemClick
     private static DrawerLayout slide;//菜单布局
     private View view;  //菜单视图
 
+    private ImageView iv_head;
+
     public void init( View father)
     {
 
@@ -53,7 +60,19 @@ public class MenuModule  implements IItemClick
         ListView listView2=(ListView)view.findViewById(R.id.menu_item_list2);
 
         listView2.setAdapter(adapter2);
+
+        view.findViewById(R.id.iv_head).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                UserHead.getInstance().show();
+            }
+        });
+
+
     }
+
 
     public void ShowMenu(boolean flag)
     {
@@ -80,12 +99,14 @@ public class MenuModule  implements IItemClick
          adapter1.setItemClick(this);
          adapter1.setLayout(R.layout.itemlayout);
          adapter1.addData(new ItemData(R.drawable.hudie,"蝴蝶"));
+         adapter1.addData(new ItemData(R.drawable.hudie,"好无聊啊"));
 
          adapter2=new ItemAdapter();
          adapter2.setItemClick(this);
          adapter2.setLayout(R.layout.itemlayout);
          adapter2.addData(new ItemData(R.drawable.jianyi,"建议"));
          adapter2.addData(new ItemData(R.drawable.shezhi,"设置"));
+         adapter2.addData(new ItemData(R.drawable.shezhi,"退出"));
      }
 
      public void onItemClick(View view, ItemData data)
@@ -99,6 +120,11 @@ public class MenuModule  implements IItemClick
                  BenefitHead.getInstance().show();
                  break;
              }
+             case "好无聊啊":
+             {
+                 BoredHead.getInstance().show();
+                 break;
+             }
              case "建议":
              {
                  AdviseHead.getInstance().show();
@@ -107,6 +133,11 @@ public class MenuModule  implements IItemClick
              case "设置":
              {
                  SetingHead.getInstance().show();
+                 break;
+             }
+             case "退出":
+             {
+                 MainActivity.main.finish();
                  break;
              }
          }

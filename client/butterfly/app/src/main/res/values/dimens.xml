@@ -6,4 +6,5 @@
     <dimen name="size16">16dp</dimen>
     <dimen name="size18">18dp</dimen>
     <dimen name="size20">20dp</dimen>
+    <dimen name="btn_height">50dp</dimen>
 </resources>
