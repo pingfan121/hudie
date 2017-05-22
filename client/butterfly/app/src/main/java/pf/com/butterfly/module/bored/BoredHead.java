@@ -7,10 +7,20 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pf.com.butterfly.R;
+import pf.com.butterfly.adapter.AdapterItemData;
 import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
+import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.input.TextInput;
+import pf.com.butterfly.message.Protocols.bored_head_item_add_req;
+import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
+import pf.com.butterfly.message.Protocols.bored_head_items_req;
+import pf.com.butterfly.message.Protocols.bored_head_items_res;
+import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.bored.BoredDetail;
 import pf.com.butterfly.module.bored.BoredItemView;
 import pf.com.butterfly.module.bored.MediaManager;
@@ -68,12 +78,14 @@ public class BoredHead extends AppBaseViewControl
                                     int position, long id) {
 
               //点击了列表
-                BoredDetail.getInstance().show();
+                BoredDetail.getInstance().ShowView(((BoredHeadItemData)view.getTag()).id);
 
             }
         });
 
         et_text=(EditText)view.findViewById(R.id.et_text);
+
+        updateData();
     }
 
     public void OnTiJiao()
@@ -94,21 +106,67 @@ public class BoredHead extends AppBaseViewControl
             return ;
         }
 
-        //发送给服务器....
-        OnMsgBack();
+        //提交
+        bored_head_item_add_req req=new bored_head_item_add_req();
+        req.content=str;
+        NetManager.SendMsg(req);
 
     }
 
-    public void OnMsgBack()
+//    public void OnMsgBack()
+//    {
+//        BoredHeadItemData data=new BoredHeadItemData();
+//        data.icon="";
+//        data.name="我是一个平凡的人";
+//        data.text=et_text.getText().toString();
+//        data.num=20;
+//
+//        adapter.addOneItem(data);
+//        listView.smoothScrollToPosition(listView.getCount() - 1);//移动到尾部
+//    }
+
+    public void updateData()
+    {
+        bored_head_items_req req=new bored_head_items_req();
+
+        NetManager.SendMsg(req);
+
+        //播放发送动画.....
+    }
+
+    //-----------------网络返回处理-------------------
+    public void updateAdapter(bored_head_items_res res)
+    {
+
+        List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
+
+        for(int i=0;i<res.infos.length;i++)
+        {
+            BoredHeadItemData data=new BoredHeadItemData();
+            data.id=res.infos[i].id;
+            data.icon="";
+            data.name="我是一个平凡的人";
+            data.text=res.infos[i].content;
+            data.num=res.infos[i].rownum;
+
+            datas.add(data);
+        }
+
+        adapter.datas=datas;
+        adapter.notifyDataSetChanged();
+    }
+
+    //提交返回
+    public void tijiaoBack(bored_head_item_add_res res)
     {
         BoredHeadItemData data=new BoredHeadItemData();
+        data.id=res.info.id;
         data.icon="";
         data.name="我是一个平凡的人";
-        data.text=et_text.getText().toString();
-        data.num=20;
+        data.text=res.info.content;
+        data.num=res.info.rownum;
 
         adapter.addOneItem(data);
-        listView.smoothScrollToPosition(listView.getCount() - 1);//移动到尾部
     }
 
 }

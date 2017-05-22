@@ -15,6 +15,7 @@ public class AdapterItemView
 {
     public void setData(AdapterItemData obj)
     {
+
     }
 
     public void init(View view)

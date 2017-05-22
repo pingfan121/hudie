@@ -54,12 +54,19 @@
     <Compile Include="cache\Cache.cs" />
     <Compile Include="cache\CacheData.cs" />
     <Compile Include="cache\TokenCache.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbAccount.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbAppJianyi.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbAppUser.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitDiscuss.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitHead.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitJuankuan.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitPraise.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitProof.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBenefitProofDiscuss.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBenefitProofPraise.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBenefitTheme.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBoredHead.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBoredHeadDetail.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbUser.cs" />
     <Compile Include="enum\EnumMsgState.cs" />
     <Compile Include="app\GameApp.cs" />
@@ -74,6 +81,10 @@
     <Compile Include="message\ProtocolsReq\deng_lu\register_req_fun.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="message\ProtocolsReq\wu_liao\bored_head_items_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\wu_liao\bored_head_item_add_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\wu_liao\bored_record_items_req_fun.cs" />
+    <Compile Include="message\ProtocolsReq\wu_liao\bored_record_item_add_req_fun.cs" />
     <Compile Include="message\Protocols\deng_lu\login_req.cs" />
     <Compile Include="message\Protocols\deng_lu\login_res.cs" />
     <Compile Include="message\Protocols\deng_lu\register_req.cs" />
@@ -91,6 +102,16 @@
     <Compile Include="message\MsgHandle.cs" />
     <Compile Include="message\MsgProcessor.cs" />
     <Compile Include="message\MsgBase.cs" />
+    <Compile Include="message\Protocols\jie_gou\info_bored_head_item.cs" />
+    <Compile Include="message\Protocols\jie_gou\info_bored_record_item.cs" />
+    <Compile Include="message\Protocols\wu_liao\bored_head_items_req.cs" />
+    <Compile Include="message\Protocols\wu_liao\bored_head_items_res.cs" />
+    <Compile Include="message\Protocols\wu_liao\bored_head_item_add_req.cs" />
+    <Compile Include="message\Protocols\wu_liao\bored_head_item_add_res.cs" />
+    <Compile Include="message\Protocols\wu_liao\bored_record_items_req.cs" />
+    <Compile Include="message\Protocols\wu_liao\bored_record_items_res.cs" />
+    <Compile Include="message\Protocols\wu_liao\bored_record_item_add_req.cs" />
+    <Compile Include="message\Protocols\wu_liao\bored_record_item_add_res.cs" />
     <Compile Include="net\NetHttp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,16 +124,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\GameDb\GameDb.csproj">
-      <Project>{0acc664e-12fc-4daa-af22-d7810ce661af}</Project>
-      <Name>GameDb</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="dbfile\1文件夹说明.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dbfile\data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\GameDb\GameDb.csproj">
+      <Project>{0acc664e-12fc-4daa-af22-d7810ce661af}</Project>
+      <Name>GameDb</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

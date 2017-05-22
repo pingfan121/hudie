@@ -9,11 +9,23 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pf.com.butterfly.R;
+import pf.com.butterfly.adapter.AdapterItemData;
 import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.http.BmobHttp;
+import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
+import pf.com.butterfly.message.Protocols.bored_head_items_req;
+import pf.com.butterfly.message.Protocols.bored_head_items_res;
+import pf.com.butterfly.message.Protocols.bored_record_item_add_req;
+import pf.com.butterfly.message.Protocols.bored_record_item_add_res;
+import pf.com.butterfly.message.Protocols.bored_record_items_req;
+import pf.com.butterfly.message.Protocols.bored_record_items_res;
+import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.util.HDLog;
 import pf.com.butterfly.util.MixFun;
 
@@ -102,15 +114,32 @@ public class BoredDetail extends AppBaseViewControl
         http.setContentType(MixFun.getContentType(".amr"));
     }
 
+    private  String headid="";
+
+    public void ShowView(String bored_head_id)
+    {
+        if( headid!=bored_head_id)
+        {
+            mAdapter.datas.clear();
+            mAdapter.notifyDataSetChanged();
+
+            headid=bored_head_id;
+
+            updateData();
+
+            this.show();
+        }
+    }
+
     class MyAudioRecordFinishListener implements AudioRecordButton.AudioRecordFinishListener
     {
 
         @Override
         public void onFinish(float second, String filePath)
         {
-            // TODO Auto-generated method stub
-            Recorder recorder = new Recorder(second, filePath);
-            mAdapter.addOneItem(recorder);
+//            // TODO Auto-generated method stub
+//            Recorder recorder = new Recorder(second, filePath);
+//            mAdapter.addOneItem(recorder);
 
             try
             {
@@ -136,7 +165,6 @@ public class BoredDetail extends AppBaseViewControl
         String name= ""+System.currentTimeMillis()+type;
 
         return name;
-
     }
 
     //处理http返回
@@ -156,6 +184,53 @@ public class BoredDetail extends AppBaseViewControl
             return;
         }
 
+        //把数据发送给服务器
+        bored_record_item_add_req req=new bored_record_item_add_req();
+
+        req.head_id=headid;
+        req.time=1;
+        req.url=res.url;
+
+        NetManager.SendMsg(req);
+
     }
+
+    //发送网络消息
+    public void updateData()
+    {
+        bored_record_items_req req=new bored_record_items_req();
+        req.head_id=headid;
+
+        NetManager.SendMsg(req);
+
+        //播放发送动画.....
+    }
+
+
+    //-----------------网络返回处理-------------------
+    public void updateAdapter(bored_record_items_res res)
+    {
+
+        List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
+
+        for(int i=0;i<res.infos.length;i++)
+        {
+            Recorder data=new Recorder(res.infos[i].recordlength,res.infos[i].recordurl);
+            datas.add(data);
+        }
+
+        mAdapter.datas=datas;
+        mAdapter.notifyDataSetChanged();
+    }
+
+    //添加录音返回...
+    public void boredRecordAddback(bored_record_item_add_res res)
+    {
+        Recorder data=new Recorder(res.info.recordlength,res.info.recordurl);
+
+        mAdapter.addOneItem(data);
+    }
+
+
 
 }

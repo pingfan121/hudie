@@ -19,6 +19,7 @@ namespace messages
       static public void handle_login_req(MsgBase msg)
       {
           Log.warn("收到了登陆消息");
+          
 
           login_req req = msg as login_req;
 

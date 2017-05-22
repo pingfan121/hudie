@@ -88,6 +88,7 @@ public class ListViewAdapter extends BaseAdapter
         this.notifyDataSetChanged();
     }
 
+
     public void SubOneItem(AdapterItemData t)
     {
         if(datas.size()>0)
