@@ -26,6 +26,7 @@ import pf.com.butterfly.message.Protocols.bored_record_item_add_res;
 import pf.com.butterfly.message.Protocols.bored_record_items_req;
 import pf.com.butterfly.message.Protocols.bored_record_items_res;
 import pf.com.butterfly.message.net.NetManager;
+import pf.com.butterfly.module.ControlLayer;
 import pf.com.butterfly.util.HDLog;
 import pf.com.butterfly.util.MixFun;
 
@@ -50,6 +51,7 @@ public class BoredDetail extends AppBaseViewControl
     {
         title="无聊";
         layout=R.layout.bored_detail;
+        layer= ControlLayer.module_view1;
     }
 
     private ListView voiceList;
@@ -118,6 +120,9 @@ public class BoredDetail extends AppBaseViewControl
 
     public void ShowView(String bored_head_id)
     {
+        //必须先调用显示..
+        this.show();
+
         if( headid!=bored_head_id)
         {
             mAdapter.datas.clear();
@@ -126,8 +131,6 @@ public class BoredDetail extends AppBaseViewControl
             headid=bored_head_id;
 
             updateData();
-
-            this.show();
         }
     }
 

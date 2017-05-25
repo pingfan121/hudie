@@ -14,4 +14,6 @@ public class BoredHeadItemData extends AdapterItemData
     public String text;
     public int num;
 
+    public boolean downflag=false;
+
 }

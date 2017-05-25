@@ -77,8 +77,10 @@ public class BoredHead extends AppBaseViewControl
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
+                Object obj=view.getTag();
+
               //点击了列表
-                BoredDetail.getInstance().ShowView(((BoredHeadItemData)view.getTag()).id);
+                BoredDetail.getInstance().ShowView(((BoredHeadItemData)adapter.getItem(position)).id);
 
             }
         });

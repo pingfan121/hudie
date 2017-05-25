@@ -11,6 +11,10 @@ public class ControlLayer
     public static int main_layers =-100;  //首页层
 
     public static int module_layers =0;  //模块层
+    public static int module_view1 =1;  //模块层内的视图
+    public static int module_view2 =2;  //模块层内的视图的视图
+    public static int module_view3 =3;  //模块层内的视图的视图的视图
+    public static int module_view4 =4;  //模块层内的视图的视图的视图的视图
 
     public static int input_layers =100;  //输入层
 }

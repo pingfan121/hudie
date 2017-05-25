@@ -13,9 +13,16 @@ import pf.com.butterfly.model.BenefitItemData;
 
 public class AdapterItemView
 {
+    public AdapterItemData data;
+
     public void setData(AdapterItemData obj)
     {
 
+    }
+
+    public AdapterItemData getData()
+    {
+          return data;
     }
 
     public void init(View view)

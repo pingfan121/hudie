@@ -43,17 +43,13 @@
                 android:text="TextView"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_text"
+        <pf.com.butterfly.component.ComQiPao_Text
+            android:id="@+id/com_qipao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/sound"
-            android:paddingBottom="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="15dp"
-            android:paddingTop="20dp"
-            android:text="阿侬IE熬过IDan导购ID好搜爱国ID"
-            android:textSize="@dimen/size18"/>
+            android:layout_marginTop="5dp">
+
+        </pf.com.butterfly.component.ComQiPao_Text>
 
     </LinearLayout>
 
