@@ -7,7 +7,7 @@ publish
 
 #android
 # Built application files
-**/.rawproto
+*.rawproto
 *.apk
 *.ap_
 
