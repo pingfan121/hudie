@@ -82,8 +82,9 @@ public class RegisterHead extends AppBaseViewControl
 
         http=new BmobHttp(new IMsgHandler() {
             @Override
-            public void onMsgDispose(Message msg) {
-                OnMessage(msg);
+            public void onMsgDispose(int err,String result,Object userToken)
+            {
+                OnMessage(err,result,userToken);
             }
         });
     }
@@ -121,23 +122,24 @@ public class RegisterHead extends AppBaseViewControl
 
 
     //处理http返回
-    private void OnMessage(Message msg)
+    private void OnMessage(int err,String result,Object userToken)
     {
-        if(msg.arg2==-99 ||msg.arg2==-100 )
+        if(err==-99 ||err==-100 )
         {
-            http.errerDispose(msg);
+            http.errerDispose(err,result);
             return ;
         }
 
+        int token=(int)userToken;
 
-        if(msg.arg1==1)  //获取验证码
+        if(token==1)  //获取验证码
         {
-            HDLog.info(msg.obj.toString());
+            HDLog.info(result);
             HDLog.Toast("验证码已发送");
         }
-        else if(msg.arg1==2) //验证验证码
+        else if(token==2) //验证验证码
         {
-            HDLog.Toast(msg.obj.toString());
+            HDLog.Toast(result);
 
             //提交服务器注册....
             RegisterUser();

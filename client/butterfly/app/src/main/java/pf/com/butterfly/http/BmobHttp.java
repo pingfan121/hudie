@@ -58,18 +58,18 @@ public class BmobHttp extends HttpBase
 
     }
 
-    public void errerDispose(Message msg)
+    public void errerDispose(int err,String result)
     {
-        if(msg.arg2==-100)
+        if(err==-100)
         {
             //请求出现异常了....
-            HDLog.Toast(msg.obj.toString());
+            HDLog.Toast(result);
             return ;
         }
 
-        if(msg.arg2==-99)
+        if(err==-99)
         {
-            errinfo res =new Gson().fromJson(msg.obj.toString(),errinfo.class);
+            errinfo res =new Gson().fromJson(result,errinfo.class);
 
             if(res!=null)
             {

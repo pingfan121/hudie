@@ -7,5 +7,5 @@ import android.os.Message;
  */
 public interface IMsgHandler
 {
-    void onMsgDispose(Message msg);
+    void onMsgDispose(int err,String result,Object userToken);
 }

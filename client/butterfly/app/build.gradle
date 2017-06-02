@@ -37,8 +37,10 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.4.0'
     compile files('libs/BmobPay_v3.1.1_170111.jar')
     compile files('libs/gson-2.3.jar')
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile files('libs/libammsdk.jar')
 }
 
 

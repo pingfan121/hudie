@@ -37,9 +37,9 @@ public class NetManager
         hdsend=new HDSend(new IMsgHandler()
         {
             @Override
-            public void onMsgDispose(Message msg)
+            public void onMsgDispose(int err,String result,Object userToken)
             {
-                onDispose(msg);
+                onDispose(err,result,userToken);
             }
         });
 
@@ -68,22 +68,20 @@ public class NetManager
     }
 
     //处理消息
-    public static void onDispose(Message msg)
+    public static void onDispose(int err,String result,Object userToken)
     {
-        if(msg.arg2==-100)
+        if(err==-100)
         {
             //网络异常
-            HDLog.Toast(msg.obj.toString());
+            HDLog.Toast(result);
 
             return;
         }
 
-        String context=msg.obj.toString();
 
-
-        if(context!="")
+        if(result != "")
         {
-            CSMsg csmsg=gson.fromJson(context, CSMsg.class);
+            CSMsg csmsg=gson.fromJson(result, CSMsg.class);
 
             if(csmsg.state==0)
             {

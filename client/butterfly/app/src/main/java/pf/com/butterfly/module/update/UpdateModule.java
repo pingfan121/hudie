@@ -25,6 +25,8 @@ import java.net.URL;
 import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.hander.MsgHandler;
+import pf.com.butterfly.http.BmobHttp;
+import pf.com.butterfly.http.HttpBase;
 import pf.com.butterfly.message.net.HttpSend;
 import pf.com.butterfly.util.HDLog;
 
@@ -36,6 +38,8 @@ public class UpdateModule
 
    // public String updateurl ="http://pfkj.online/updateinfo.json";
     public static String updateurl ="http://www.pfkj.online/UpdateInfo.txt";
+
+
 
 
     private static UpdateModule _instance=null;
@@ -50,39 +54,41 @@ public class UpdateModule
         return _instance ;
     }
 
+    private HttpBase http;
+
     public void init()
     {
-        int what = MsgHandler.getInstance().getNewWhat();
 
-        //绑定获取更新文件返回函数
-        MsgHandler.getInstance().addOneDispose(what, new IMsgHandler() {
+
+        http=new HttpBase(new IMsgHandler() {
             @Override
-            public void onMsgDispose(Message msg){
-                OnUpdateInfoBack(msg);
+            public void onMsgDispose(int err,String result,Object userToken)
+            {
+                OnUpdateInfoBack(err,result,userToken);
             }
         });
 
-        HttpSend send=new HttpSend(updateurl,what);
+        http.setGet();
 
-        send.sendGet();
+        http.send(updateurl,"");
 
     }
 
 
     //下载更新文件的返回
-    public void OnUpdateInfoBack(Message msg)
+    public void OnUpdateInfoBack(int err,String result,Object userToken)
     {
         HDLog.error("收到了消息....");
-        HDLog.error("收到了消息:"+(String)msg.obj);
+        HDLog.error("收到了消息:"+result);
 
-        String msgstr=(String)msg.obj;
-
-        if(msgstr.equals("-100"))
+        if(err==-100)
         {
             //判断更新文件出现问题.....
             HDLog.Toast("获取服务器更新信息失败");
             return;
         }
+
+        String msgstr=result;
 
         UpdateInfo info=new Gson().fromJson(msgstr,UpdateInfo.class);
 

@@ -106,9 +106,9 @@ public class BoredDetail extends AppBaseViewControl
         http=new BmobHttp(new IMsgHandler()
         {
             @Override
-            public void onMsgDispose(Message msg)
+            public void onMsgDispose(int err,String result,Object userToken)
             {
-                OnMessage(msg);
+                OnMessage(err,result,userToken);
             }
         });
 
@@ -171,15 +171,15 @@ public class BoredDetail extends AppBaseViewControl
     }
 
     //处理http返回
-    private void OnMessage(Message msg)
+    private void OnMessage(int err,String result,Object userToken)
     {
-        if(msg.arg2==-99 ||msg.arg2==-100 )
+        if(err==-99 ||err==-100 )
         {
-            http.errerDispose(msg);
+            http.errerDispose(err,result);
             return ;
         }
 
-        BmobHttp.fileback res =new Gson().fromJson(msg.obj.toString(),BmobHttp.fileback.class);
+        BmobHttp.fileback res =new Gson().fromJson(result,BmobHttp.fileback.class);
 
         if(res==null)
         {

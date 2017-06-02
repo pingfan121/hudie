@@ -145,6 +145,8 @@ public abstract class AppBaseViewControl
             resetTitle();
             reShow();
         }
+
+       // view.setFocusable(true);
     }
 
     protected void reShow()

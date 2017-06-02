@@ -1,5 +1,6 @@
 package pf.com.butterfly.hander;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -67,7 +68,9 @@ public class MsgHandler extends Handler
 
         if(dises.containsKey(msg.what))
         {
-            dises.get(msg.what).onMsgDispose(msg);
+            Bundle bundle =msg.getData();
+
+            dises.get(msg.what).onMsgDispose(bundle.getInt("error"),bundle.getString("result"),msg.obj);
         }
         else
         {

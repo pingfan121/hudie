@@ -171,9 +171,9 @@ public class ShowPhoto implements IMsgHandler
 
     //上传图片返回
     private String img_url;
-    public void onMsgDispose(Message msg)
+    public void onMsgDispose(int err,String result,Object userToken)
     {
-        String data=msg.obj.toString();
+        String data=result;
 
         if(data == "" )
         {

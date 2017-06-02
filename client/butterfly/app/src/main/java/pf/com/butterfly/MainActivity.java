@@ -25,6 +25,7 @@ import pf.com.butterfly.module.ShowPhoto;
 import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.TestEditView;
 import pf.com.butterfly.module.TestTextView;
+import pf.com.butterfly.wxapi.WeiXinHead;
 
 public class MainActivity  extends AppCompatActivity
 {
@@ -35,6 +36,8 @@ public class MainActivity  extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        main=this;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -48,6 +51,29 @@ public class MainActivity  extends AppCompatActivity
 
         //初始化网络
         NetManager.init();
+
+        //微信注册
+        WeiXinHead.registToWX();
+
+        //其他activity切换回来..
+        //新页面接收数据
+        Bundle bundle = this.getIntent().getExtras();
+        //接收name值
+
+        if(bundle!=null)
+        {
+            String str = bundle.getString("oper");
+
+            if(str.equals("weixin_login")==true)
+            {
+                //是从微信登录返回的  做一些事情....
+
+                OnWeiXinLoginResult(bundle);
+
+            }
+        }
+
+
 
     }
 
@@ -179,6 +205,31 @@ public class MainActivity  extends AppCompatActivity
                                            String[] permissions, int[] grantResults)
     {
         PermissionManager.onRequestPermissionsResult(requestCode,permissions,grantResults);
+    }
+
+
+
+
+    //微信登录返回结果
+    private void OnWeiXinLoginResult(Bundle bundle)
+    {
+        HDLog.Toast("code = " + WeiXinHead.code);
+
+        if(WeiXinHead.err.equals("OK"))
+        {
+            HDLog.Toast("登录成功");
+
+            //去请求token...
+            WeiXinHead.getAccessToken();
+        }
+        else  if(WeiXinHead.err.equals("ERR"))
+        {
+            HDLog.Toast("登录失败");
+        }
+        else  if(WeiXinHead.err.equals("weizhi"))
+        {
+            HDLog.Toast("微信登录出现未知错误");
+        }
     }
 
 

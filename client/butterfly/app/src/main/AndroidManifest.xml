@@ -25,6 +25,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!--微信登录相关权限-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -39,11 +46,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".module.login.view.RegisterActivity"
-            android:label="@string/title_activity_register" />
 
+        <!--bmob支付activity-->
         <activity android:name="cn.bmob.pay.v3.act.PayAct" />
+
+        <!--微信登录activity-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:label="微信登录"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
