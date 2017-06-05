@@ -11,8 +11,10 @@ public class MsgProcessor
 				 MsgMap.reslutmap.put(MsgCodeId.info_benefit_head_item,new info_benefit_head_item_fun());
 				 MsgMap.reslutmap.put(MsgCodeId.info_bored_head_item,new info_bored_head_item_fun());
 				 MsgMap.reslutmap.put(MsgCodeId.info_bored_record_item,new info_bored_record_item_fun());
+				 MsgMap.reslutmap.put(MsgCodeId.info_user,new info_user_fun());
 				 MsgMap.reslutmap.put(MsgCodeId.login_res,new login_res_fun());
 				 MsgMap.reslutmap.put(MsgCodeId.register_res,new register_res_fun());
+				 MsgMap.reslutmap.put(MsgCodeId.login_weixin_res,new login_weixin_res_fun());
 				 MsgMap.reslutmap.put(MsgCodeId.benefit_head_res,new benefit_head_res_fun());
 				 MsgMap.reslutmap.put(MsgCodeId.benefit_detail_res,new benefit_detail_res_fun());
 				 MsgMap.reslutmap.put(MsgCodeId.benefit_proof_discuss_res,new benefit_proof_discuss_res_fun());
@@ -28,8 +30,10 @@ public class MsgProcessor
 				 MsgMap.msgmap.put(MsgCodeId.info_benefit_head_item, info_benefit_head_item.class);
 				 MsgMap.msgmap.put(MsgCodeId.info_bored_head_item, info_bored_head_item.class);
 				 MsgMap.msgmap.put(MsgCodeId.info_bored_record_item, info_bored_record_item.class);
+				 MsgMap.msgmap.put(MsgCodeId.info_user, info_user.class);
 				 MsgMap.msgmap.put(MsgCodeId.login_res, login_res.class);
 				 MsgMap.msgmap.put(MsgCodeId.register_res, register_res.class);
+				 MsgMap.msgmap.put(MsgCodeId.login_weixin_res, login_weixin_res.class);
 				 MsgMap.msgmap.put(MsgCodeId.benefit_head_res, benefit_head_res.class);
 				 MsgMap.msgmap.put(MsgCodeId.benefit_detail_res, benefit_detail_res.class);
 				 MsgMap.msgmap.put(MsgCodeId.benefit_proof_discuss_res, benefit_proof_discuss_res.class);

@@ -5,13 +5,13 @@ import android.widget.TextView;
 
 import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.AdapterItemData;
-import pf.com.butterfly.adapter.AdapterItemView;
+import pf.com.butterfly.adapter.AdapterItemControl;
 
 /**
  * Created by admin on 2017/5/17.
  */
 
-public class AudioItemView extends AdapterItemView
+public class AudioItemView extends AdapterItemControl
 {
     private TextView t_time;//时间
 

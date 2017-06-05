@@ -1,24 +1,19 @@
 package pf.com.butterfly.module.bored;
 
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.AdapterItemData;
-import pf.com.butterfly.adapter.AdapterItemView;
+import pf.com.butterfly.adapter.AdapterItemControl;
 import pf.com.butterfly.component.ComQiPao_Text;
-import pf.com.butterfly.util.HDLog;
 
 /**
  * Created by admin on 2017/5/20.
  */
 
-public class BoredItemView extends AdapterItemView
+public class BoredItemView extends AdapterItemControl
 {
 
     public ImageView iv_icon;

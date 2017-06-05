@@ -23,6 +23,7 @@ import pf.com.butterfly.http.BmobHttp;
 import pf.com.butterfly.message.Protocols.register_req;
 import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.model.ItemData;
+import pf.com.butterfly.module.DebugHead;
 import pf.com.butterfly.module.benefit.BenefitDonationPayItemData;
 import pf.com.butterfly.module.title.TitleModule;
 import pf.com.butterfly.util.HDLog;
@@ -93,6 +94,15 @@ public class SetingHead extends AppBaseViewControl
         ListView lv=(ListView)view.findViewById(R.id.lv_net);
 
         lv.setAdapter(adapter);
+
+        view.findViewById(R.id.btn_debug).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                DebugHead.getInstance().show();
+            }
+        });
 
     }
 }

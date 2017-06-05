@@ -81,7 +81,7 @@ public class UpdateModule
         HDLog.error("收到了消息....");
         HDLog.error("收到了消息:"+result);
 
-        if(err==-100)
+        if(err==-99 || err==-100)
         {
             //判断更新文件出现问题.....
             HDLog.Toast("获取服务器更新信息失败");

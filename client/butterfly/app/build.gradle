@@ -41,6 +41,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile files('libs/libammsdk.jar')
+    compile 'com.makeramen:roundedimageview:2.3.0'
 }
 
 

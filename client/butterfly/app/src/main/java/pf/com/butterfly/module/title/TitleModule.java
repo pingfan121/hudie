@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import pf.com.butterfly.ControlManager;
 import pf.com.butterfly.R;
-import pf.com.butterfly.module.LogView;
 
 /**
  * Created by admin on 2017/3/5.
@@ -75,7 +74,7 @@ public class TitleModule
 //           explain.TitleExplain();
 //       }
 
-        LogView.Show();
+//        LogView.Show();
     }
     //其他事件
 

@@ -5,7 +5,7 @@ import android.view.View;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.module.ControlLayer;
-import pf.com.butterfly.module.LogView;
+import pf.com.butterfly.module.DebugHead;
 import pf.com.butterfly.module.TestEditView;
 import pf.com.butterfly.module.TestTextView;
 import pf.com.butterfly.module.login.LoginHead;
@@ -102,7 +102,7 @@ public class MainTest extends AppBaseViewControl
         view.findViewById(R.id.btn_log).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LogView.Show();
+                DebugHead.getInstance().show();
             }
         });
 

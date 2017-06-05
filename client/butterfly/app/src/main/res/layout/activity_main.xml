@@ -109,11 +109,6 @@
                 android:layout_height="match_parent"
                 android:id="@+id/layer5">
 
-                <include
-                    android:id="@+id/show_log"
-                    layout="@layout/test_log"
-                    >
-                </include>
             </FrameLayout>
 
         </FrameLayout>

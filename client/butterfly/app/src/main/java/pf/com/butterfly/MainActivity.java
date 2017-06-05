@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.media.MediaRouter;
 import android.view.View;
 import android.view.Window;
 
@@ -20,7 +19,6 @@ import pf.com.butterfly.module.update.UpdateModule;
 import pf.com.butterfly.util.HDLog;
 import pf.com.butterfly.util.PermissionManager;
 import pf.com.butterfly.util.PhotoChoose;
-import pf.com.butterfly.module.LogView;
 import pf.com.butterfly.module.ShowPhoto;
 import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.TestEditView;
@@ -64,13 +62,15 @@ public class MainActivity  extends AppCompatActivity
         {
             String str = bundle.getString("oper");
 
-            if(str.equals("weixin_login")==true)
-            {
-                //是从微信登录返回的  做一些事情....
 
-                OnWeiXinLoginResult(bundle);
+                if ("weixin_login".equals(str) == true)
+                {
+                    //是从微信登录返回的  做一些事情....
 
-            }
+                    OnWeiXinLoginResult(bundle);
+
+                }
+
         }
 
 
@@ -147,8 +147,6 @@ public class MainActivity  extends AppCompatActivity
 
         //获取主视图
         View view=this.findViewById(R.id.main_aaa);
-
-        LogView.init();
 
 
         //嘿嘿

@@ -86,6 +86,7 @@
     <Compile Include="dbfile\dblogic\benefit\TbUser.cs" />
     <Compile Include="enum\EnumMsgState.cs" />
     <Compile Include="app\GameApp.cs" />
+    <Compile Include="message\ProtocolsReq\deng_lu\login_weixin_req_fun.cs" />
     <Compile Include="message\ProtocolsReq\jian_yi\advise_cteate_req_fun.cs" />
     <Compile Include="message\ProtocolsReq\gong_yi\benefit_detail_req_fun.cs" />
     <Compile Include="message\ProtocolsReq\gong_yi\benefit_head_req_fun.cs" />
@@ -103,6 +104,8 @@
     <Compile Include="message\ProtocolsReq\wu_liao\bored_record_item_add_req_fun.cs" />
     <Compile Include="message\Protocols\deng_lu\login_req.cs" />
     <Compile Include="message\Protocols\deng_lu\login_res.cs" />
+    <Compile Include="message\Protocols\deng_lu\login_weixin_req.cs" />
+    <Compile Include="message\Protocols\deng_lu\login_weixin_res.cs" />
     <Compile Include="message\Protocols\deng_lu\register_req.cs" />
     <Compile Include="message\Protocols\deng_lu\register_res.cs" />
     <Compile Include="message\Protocols\gong_yi\benefit_detail_req.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="message\MsgBase.cs" />
     <Compile Include="message\Protocols\jie_gou\info_bored_head_item.cs" />
     <Compile Include="message\Protocols\jie_gou\info_bored_record_item.cs" />
+    <Compile Include="message\Protocols\jie_gou\info_user.cs" />
     <Compile Include="message\Protocols\wu_liao\bored_head_items_req.cs" />
     <Compile Include="message\Protocols\wu_liao\bored_head_items_res.cs" />
     <Compile Include="message\Protocols\wu_liao\bored_head_item_add_req.cs" />

@@ -9,8 +9,11 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.hander.IMsgHandler;
+import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.http.BmobHttp;
 import pf.com.butterfly.http.HttpBase;
+import pf.com.butterfly.message.Protocols.login_weixin_req;
+import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.util.HDLog;
 
 /**
@@ -104,6 +107,13 @@ public class WeiXinHead
         wx_result res =new Gson().fromJson(result,wx_result.class);
 
         HDLog.Toast(res.access_token);
+
+        login_weixin_req req=new login_weixin_req();
+
+        req.acc_token=res.access_token;
+
+        NetManager.SendMsg(req);
+
     }
 
     class wx_result

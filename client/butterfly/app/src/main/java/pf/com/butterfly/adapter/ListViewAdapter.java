@@ -56,11 +56,11 @@ public class ListViewAdapter extends BaseAdapter
 
             view= inflater.inflate(layoutid,null);
 
-            AdapterItemView item=null;
+            AdapterItemControl item=null;
             try
             {
                 Class cc=Class.forName(itemclassname);
-                item=(AdapterItemView)cc.newInstance();
+                item=(AdapterItemControl)cc.newInstance();
             }
             catch (Exception ex)
             {
@@ -75,7 +75,7 @@ public class ListViewAdapter extends BaseAdapter
         }
         else
         {
-            ((AdapterItemView) view.getTag()).setData(datas.get(i));
+            ((AdapterItemControl) view.getTag()).setData(datas.get(i));
         }
         return view;
     }
