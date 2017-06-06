@@ -41,9 +41,54 @@ namespace GameDb.Logic
 			changedKeys.Add("Pass");}
 		} 
 
-		private DateTime _createtime;
+		private string _wx_id;
+		[Column(Name = "wx_id")]
+		public string WxId{ 
+			get{ return _wx_id;}
+			 set{if(_wx_id==value)return;
+			_wx_id=value;
+			changedKeys.Add("WxId");}
+		} 
+
+		private string _wb_id;
+		[Column(Name = "wb_id")]
+		public string WbId{ 
+			get{ return _wb_id;}
+			 set{if(_wb_id==value)return;
+			_wb_id=value;
+			changedKeys.Add("WbId");}
+		} 
+
+		private string _name;
+		[Column(Name = "name")]
+		public string Name{ 
+			get{ return _name;}
+			 set{if(_name==value)return;
+			_name=value;
+			changedKeys.Add("Name");}
+		} 
+
+		private string _head;
+		[Column(Name = "head")]
+		public string Head{ 
+			get{ return _head;}
+			 set{if(_head==value)return;
+			_head=value;
+			changedKeys.Add("Head");}
+		} 
+
+		private int _sex;
+		[Column(Name = "sex")]
+		public int Sex{ 
+			get{ return _sex;}
+			 set{if(_sex==value)return;
+			_sex=value;
+			changedKeys.Add("Sex");}
+		} 
+
+		private long _createtime;
 		[Column(Name = "createtime")]
-		public DateTime Createtime{ 
+		public long Createtime{ 
 			get{ return _createtime;}
 			 set{if(_createtime==value)return;
 			_createtime=value;
@@ -57,6 +102,11 @@ namespace GameDb.Logic
 			Mobile=t.Mobile;
 			Mail=t.Mail;
 			Pass=t.Pass;
+			WxId=t.WxId;
+			WbId=t.WbId;
+			Name=t.Name;
+			Head=t.Head;
+			Sex=t.Sex;
 			Createtime=t.Createtime;
        }	 } 
 }    

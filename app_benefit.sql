@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50091
 File Encoding         : 65001
 
-Date: 2017-05-22 17:38:48
+Date: 2017-06-06 18:14:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,22 +45,29 @@ CREATE TABLE `app_user` (
   `mobile` char(11) NOT NULL COMMENT '手机号',
   `mail` char(48) NOT NULL default '' COMMENT '邮件',
   `pass` char(48) NOT NULL default '' COMMENT '密码',
-  `createtime` datetime NOT NULL COMMENT '创建时间',
+  `wx_id` char(32) NOT NULL,
+  `wb_id` char(32) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `head` varchar(255) NOT NULL COMMENT '头像图片url',
+  `sex` int(11) NOT NULL default '0' COMMENT '性别 1是男 2是女',
+  `createtime` bigint(20) NOT NULL COMMENT '创建时间',
   PRIMARY KEY  (`id`),
-  KEY `mobile` USING BTREE (`mobile`)
+  KEY `mobile` USING BTREE (`mobile`),
+  KEY `wx_id` (`wx_id`),
+  KEY `wb_id` (`wb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of app_user
 -- ----------------------------
-INSERT INTO `app_user` VALUES ('123', '123', '123', '123', '0000-00-00 00:00:00');
-INSERT INTO `app_user` VALUES ('124', '123', '123', '123', '0000-00-00 00:00:00');
-INSERT INTO `app_user` VALUES ('77237803aeddbf4c1f000000', '18789061261', '', '111111', '2016-08-18 00:10:05');
-INSERT INTO `app_user` VALUES ('89ddfa01eb2d78b455000000', '13242423411', '', '111111', '2016-07-08 17:13:37');
-INSERT INTO `app_user` VALUES ('ac524003aeddbf588b000000', '18789081811', '', '111111', '2016-11-24 23:09:07');
-INSERT INTO `app_user` VALUES ('c7fba403aeddbff443000000', '18789061263', '', '111111', '2016-08-18 00:59:04');
-INSERT INTO `app_user` VALUES ('cf486c03aeddbf3012000000', '12345678', '', '111111', '2016-08-17 23:57:08');
-INSERT INTO `app_user` VALUES ('f912a103aeddbfc832000000', '18789061262', '', '111', '2016-08-18 00:54:47');
+INSERT INTO `app_user` VALUES ('123', '123', '123', '123', '', '', '', '', '0', '0');
+INSERT INTO `app_user` VALUES ('124', '123', '123', '123', '', '', '', '', '0', '0');
+INSERT INTO `app_user` VALUES ('77237803aeddbf4c1f000000', '18789061261', '', '111111', '', '', '', '', '0', '2016');
+INSERT INTO `app_user` VALUES ('89ddfa01eb2d78b455000000', '13242423411', '', '111111', '', '', '', '', '0', '2016');
+INSERT INTO `app_user` VALUES ('ac524003aeddbf588b000000', '18789081811', '', '111111', '', '', '', '', '0', '2016');
+INSERT INTO `app_user` VALUES ('c7fba403aeddbff443000000', '18789061263', '', '111111', '', '', '', '', '0', '2016');
+INSERT INTO `app_user` VALUES ('cf486c03aeddbf3012000000', '12345678', '', '111111', '', '', '', '', '0', '2016');
+INSERT INTO `app_user` VALUES ('f912a103aeddbfc832000000', '18789061262', '', '111', '', '', '', '', '0', '2016');
 
 -- ----------------------------
 -- Table structure for benefit_discuss
@@ -180,7 +187,9 @@ CREATE TABLE `bored_head` (
 DROP TABLE IF EXISTS `bored_head_detail`;
 CREATE TABLE `bored_head_detail` (
   `id` char(32) NOT NULL,
+  `headid` char(32) NOT NULL,
   `useid` char(32) NOT NULL,
+  `record_len` int(11) NOT NULL,
   `record_url` varchar(512) NOT NULL,
   `createtime` bigint(255) NOT NULL default '0' COMMENT '//创建时间全部使用 long类型  毫秒级',
   PRIMARY KEY  (`id`)

@@ -32,15 +32,6 @@ namespace GameDb.Logic
 			changedKeys.Add("Useid");}
 		} 
 
-		private string _record_url;
-		[Column(Name = "record_url")]
-		public string RecordUrl{ 
-			get{ return _record_url;}
-			 set{if(_record_url==value)return;
-			_record_url=value;
-			changedKeys.Add("RecordUrl");}
-		} 
-
 		private int _record_len;
 		[Column(Name = "record_len")]
 		public int RecordLen{ 
@@ -48,6 +39,15 @@ namespace GameDb.Logic
 			 set{if(_record_len==value)return;
 			_record_len=value;
 			changedKeys.Add("RecordLen");}
+		} 
+
+		private string _record_url;
+		[Column(Name = "record_url")]
+		public string RecordUrl{ 
+			get{ return _record_url;}
+			 set{if(_record_url==value)return;
+			_record_url=value;
+			changedKeys.Add("RecordUrl");}
 		} 
 
 		private long _createtime;
@@ -65,8 +65,8 @@ namespace GameDb.Logic
          TbBoredHeadDetail t=tblogic as TbBoredHeadDetail;
 			Headid=t.Headid;
 			Useid=t.Useid;
-			RecordUrl=t.RecordUrl;
 			RecordLen=t.RecordLen;
+			RecordUrl=t.RecordUrl;
 			Createtime=t.Createtime;
        }	 } 
 }    

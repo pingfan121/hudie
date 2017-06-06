@@ -32,7 +32,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\publish\server\</OutputPath>
+    <OutputPath>..\..\..\publish\server\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -70,7 +70,6 @@
     <Compile Include="cache\Cache.cs" />
     <Compile Include="cache\CacheData.cs" />
     <Compile Include="cache\TokenCache.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbAccount.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbAppJianyi.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbAppUser.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitDiscuss.cs" />
@@ -83,7 +82,6 @@
     <Compile Include="dbfile\dblogic\benefit\TbBenefitTheme.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBoredHead.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBoredHeadDetail.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbUser.cs" />
     <Compile Include="enum\EnumMsgState.cs" />
     <Compile Include="app\GameApp.cs" />
     <Compile Include="message\ProtocolsReq\deng_lu\login_weixin_req_fun.cs" />
@@ -136,9 +134,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="dbfile\DBManager.cs" />
-    <Compile Include="dbfile\dblogic\benefit\DbBenefitThemeProc.cs" />
-    <Compile Include="dbfile\dblogic\user\DbLoginProc.cs" />
-    <Compile Include="dbfile\dblogic\user\DbRegisterProc.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

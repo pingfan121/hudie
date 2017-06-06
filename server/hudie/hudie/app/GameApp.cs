@@ -1,4 +1,5 @@
-﻿using GameDb.Util;
+﻿using GameDb.Logic;
+using GameDb.Util;
 using GameLib.Database;
 using GameLib.Util;
 using hudie.net;
@@ -102,6 +103,22 @@ namespace hudie
 
             writer.Close();
             reponse.Close();
+        }
+
+        //----------数据库读取---------
+        public List<T> db_Select<T>(string req) where T : TbLogic,new()
+        {
+            DbSelect<T> dbselect = new DbSelect<T>(connect, req, null);
+            dbselect.processRequest();
+
+            return dbselect.ListRecord;
+        }
+
+        //数据库插入
+        public void db_Insert<T>(T t) where T : TbLogic, new()
+        {
+            DbInsert<T> dbinsert = new DbInsert<T>(connect, t, null);
+            dbinsert.processRequest();
         }
 
     }

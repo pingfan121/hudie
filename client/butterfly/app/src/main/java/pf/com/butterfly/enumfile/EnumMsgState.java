@@ -12,4 +12,5 @@ public class EnumMsgState
    public static final int reg_mob_format_err = 1002; //手机号格式不正确
    public static final int login_password_err = 1003; //密码错误
    public static final int login_mob_not_reg = 1004; //手机号没有注册
+   public static final int login_wx_error = 1005; //微信登陆错误
 }

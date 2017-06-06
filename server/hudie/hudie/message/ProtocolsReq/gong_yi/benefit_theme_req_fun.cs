@@ -2,7 +2,6 @@ using GameDb.Logic;
 using GameLib.Database;
 using hudie.net;
 using hudie.sql;
-using hudie.sql.proc;
 using messages;
 using messages.Protocols;
 using System;

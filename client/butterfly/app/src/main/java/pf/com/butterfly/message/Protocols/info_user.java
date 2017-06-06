@@ -11,7 +11,7 @@ import pf.com.butterfly.message.MsgCodeId;
           CodeId = MsgCodeId.info_user;
       }
       public String name;    //
-      public String sex;    //
+      public int sex;    //
       public String face;    //
 
 }
