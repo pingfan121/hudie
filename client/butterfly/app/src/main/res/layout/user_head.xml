@@ -15,23 +15,23 @@
         android:paddingBottom="10dp">
 
         <ImageView
+            android:id="@+id/iv_face"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/imageView"
-            android:src="@drawable/haha"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"/>
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/haha"/>
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="风起"
-            android:id="@+id/textView6"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:text="风起"/>
 
         <TextView
             android:layout_width="wrap_content"

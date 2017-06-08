@@ -86,7 +86,7 @@ public class ComQiPao_Text extends LinearLayout
                 break;
         }
 
-        return false;
+        return true;
     }
 
     public void setBackground(boolean flag)

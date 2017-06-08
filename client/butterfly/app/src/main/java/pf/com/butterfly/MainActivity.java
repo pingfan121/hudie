@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import c.b.BP;
+import pf.com.butterfly.manager.ImageManager;
 import pf.com.butterfly.module.bored.MediaManager;
 import pf.com.butterfly.module.menu.MenuModule;
 import pf.com.butterfly.module.title.TitleModule;
@@ -40,6 +41,9 @@ public class MainActivity  extends AppCompatActivity
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main);
+
+        //初始化图片管理器
+        ImageManager.init();
 
         //检测版本更新
         UpdateModule.getInstance().init();
