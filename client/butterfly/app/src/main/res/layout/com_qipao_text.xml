@@ -12,7 +12,7 @@
         android:id="@+id/tv_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/qipao2_2"
+        android:background="@drawable/qipao4"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="15dp"
@@ -20,17 +20,6 @@
         android:text="需要更长达搜狗地扫给打死 阿迪欧的法律框架hi对方会弄得覅更好的四莎打死gasoline个"
         android:textSize="@dimen/size18"
         tools:layout_editor_absoluteX="80dp"
-        tools:layout_editor_absoluteY="35dp"/>
-
-    <ImageView
-        android:id="@+id/iv_jiao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="8dp"
-        app:srcCompat="@drawable/qipao2_1"
-        tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="35dp"/>
 
 

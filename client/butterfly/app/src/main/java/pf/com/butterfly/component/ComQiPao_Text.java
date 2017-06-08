@@ -41,7 +41,6 @@ public class ComQiPao_Text extends LinearLayout
     private int width;
 
     private View view;
-    private ImageView iv_jiao;
     private TextView tv_text;
 
     private void init(Context context) {
@@ -54,7 +53,6 @@ public class ComQiPao_Text extends LinearLayout
         this.addView(view);
 
         tv_text=(TextView)view.findViewById(R.id.tv_text);
-        iv_jiao=(ImageView)view.findViewById(R.id.iv_jiao);
 
     }
 
@@ -93,13 +91,11 @@ public class ComQiPao_Text extends LinearLayout
     {
         if(flag==false)
         {
-            iv_jiao.setImageResource(R.drawable.qipao1_1);
-            tv_text.setBackgroundResource(R.drawable.qipao1_2);
+            tv_text.setBackgroundResource(R.drawable.qipao4);
         }
         else
         {
-            iv_jiao.setImageResource(R.drawable.qipao2_1);
-            tv_text.setBackgroundResource(R.drawable.qipao2_2);
+            tv_text.setBackgroundResource(R.drawable.qipao3);
         }
     }
 }
