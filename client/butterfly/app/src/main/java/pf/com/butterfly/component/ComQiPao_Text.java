@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pf.com.butterfly.R;
+import pf.com.butterfly.util.MixFun;
 
 /**
  * Created by admin on 2017/5/25.
@@ -97,5 +98,6 @@ public class ComQiPao_Text extends LinearLayout
         {
             tv_text.setBackgroundResource(R.drawable.qipao3);
         }
+        tv_text.setPadding(MixFun.dip2px(20),MixFun.dip2px(20),MixFun.dip2px(10),MixFun.dip2px(20));
     }
 }

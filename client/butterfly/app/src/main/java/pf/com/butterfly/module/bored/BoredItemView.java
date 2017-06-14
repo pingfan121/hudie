@@ -37,17 +37,6 @@ public class BoredItemView extends AdapterItemControl
 
         com_qipao=(ComQiPao_Text)view.findViewById(R.id.com_qipao);
 
-//
-//        //按下
-//        ly_qipao.setOnTouchListener(new View.OnTouchListener()
-//        {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent)
-//            {
-//                //return false;
-//                return OnViewTouch(view, motionEvent);
-//            }
-//        });
     }
 
     @Override
@@ -64,60 +53,5 @@ public class BoredItemView extends AdapterItemControl
         com_qipao.setBackground(false);
 
     }
-
-//    public static void setBackground(BoredItemView control , boolean flag)
-//    {
-//        if(control==null)
-//        {
-//            return;
-//        }
-//
-//        if(control.data==null)
-//        {
-//            return ;
-//        }
-//
-//        ((BoredHeadItemData)control.data).downflag=flag;
-//
-//
-//        if(flag==false)
-//        {
-//            control.iv_jiao.setImageResource(R.drawable.qipao1_1);
-//            control.tv_text.setBackgroundResource(R.drawable.qipao1_2);
-//        }
-//        else
-//        {
-//            control.iv_jiao.setImageResource(R.drawable.qipao2_1);
-//            control.tv_text.setBackgroundResource(R.drawable.qipao2_2);
-//        }
-//    }
-
-
-
-//    private static boolean OnViewTouch(View view, MotionEvent event)
-//    {
-//        int action = event.getAction();
-////        int x = (int) event.getX();
-////        int y = (int) event.getY();
-//        HDLog.error("输出事件类型:"+action);
-//        switch (action)
-//        {
-//            case MotionEvent.ACTION_DOWN:
-//            {
-//                setBackground((BoredItemView)view.getTag(),true);
-//
-//                break;
-//            }
-//            case MotionEvent.ACTION_CANCEL:
-//            case MotionEvent.ACTION_UP:
-//            {
-//                setBackground((BoredItemView)view.getTag(),false);
-//                break;
-//            }
-//            default:
-//                break;
-//        }
-//        return false;
-//    }
 }
 

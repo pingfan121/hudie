@@ -2,7 +2,6 @@ package pf.com.butterfly.module.bored;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
-import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,9 +17,6 @@ import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.http.BmobHttp;
-import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
-import pf.com.butterfly.message.Protocols.bored_head_items_req;
-import pf.com.butterfly.message.Protocols.bored_head_items_res;
 import pf.com.butterfly.message.Protocols.bored_record_item_add_req;
 import pf.com.butterfly.message.Protocols.bored_record_item_add_res;
 import pf.com.butterfly.message.Protocols.bored_record_items_req;
@@ -74,31 +70,31 @@ public class BoredDetail extends AppBaseViewControl
 
         btn_record.setAudioRecordFinishListener(new MyAudioRecordFinishListener());
 
-        mAdapter = new ListViewAdapter(R.layout.list_item_voice,AudioItemView.class.getName());
+        mAdapter = new ListViewAdapter(R.layout.list_item_voice,BoredAudioItemView.class.getName());
         voiceList.setAdapter(mAdapter);
         voiceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-//
-//                if (animation != null) {
-//                    voiceAnim
-//                            .setBackgroundResource(R.drawable.icon_voice_ripple);
-//                    voiceAnim = null;
-//                }
-//                voiceAnim = view.findViewById(R.id.voiceAnim);
-//                voiceAnim.setBackgroundResource(R.drawable.anim_play_audio);
-//                animation = (AnimationDrawable) voiceAnim.getBackground();
-//                animation.start();
-//
-//                MediaManager.playSound(((Recorder)mAdapter.getItem(position)).filePath,
-//                        new MediaPlayer.OnCompletionListener() {
-//                            @Override
-//                            public void onCompletion(MediaPlayer mp) {
-//                                voiceAnim.setBackgroundResource(R.drawable.icon_voice_ripple);
-//                            }
-//                        });
+
+                if (animation != null)
+                {
+                    voiceAnim.setBackgroundResource(R.drawable.icon_voice_ripple);
+                    voiceAnim = null;
+                }
+                voiceAnim = view.findViewById(R.id.iv);
+                voiceAnim.setBackgroundResource(R.drawable.anim_play_audio);
+                animation = (AnimationDrawable) voiceAnim.getBackground();
+                animation.start();
+
+                MediaManager.playSound(((BoredAudioItemData)mAdapter.getItem(position)).iteminfo.recordurl,
+                        new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                voiceAnim.setBackgroundResource(R.drawable.icon_voice_ripple);
+                            }
+                        });
 
             }
         });
@@ -140,10 +136,6 @@ public class BoredDetail extends AppBaseViewControl
         @Override
         public void onFinish(float second, String filePath)
         {
-//            // TODO Auto-generated method stub
-//            Recorder recorder = new Recorder(second, filePath);
-//            mAdapter.addOneItem(recorder);
-
             try
             {
                 HDLog.error("录音地址:"+filePath);
@@ -218,7 +210,8 @@ public class BoredDetail extends AppBaseViewControl
 
         for(int i=0;i<res.infos.length;i++)
         {
-            Recorder data=new Recorder(res.infos[i].recordlength,res.infos[i].recordurl);
+            BoredAudioItemData data=new BoredAudioItemData();
+            data.iteminfo=res.infos[i];
             datas.add(data);
         }
 

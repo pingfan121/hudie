@@ -3,7 +3,6 @@ package pf.com.butterfly.module.bored;
 import android.media.MediaRecorder;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 
 public class AudioManager

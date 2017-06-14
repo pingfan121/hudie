@@ -86,7 +86,11 @@ public class BoredHead extends AppBaseViewControl
         });
 
         et_text=(EditText)view.findViewById(R.id.et_text);
+    }
 
+    @Override
+    public void reShow()
+    {
         updateData();
     }
 
@@ -115,20 +119,12 @@ public class BoredHead extends AppBaseViewControl
 
     }
 
-//    public void OnMsgBack()
-//    {
-//        BoredHeadItemData data=new BoredHeadItemData();
-//        data.icon="";
-//        data.name="我是一个平凡的人";
-//        data.text=et_text.getText().toString();
-//        data.num=20;
-//
-//        adapter.addOneItem(data);
-//        listView.smoothScrollToPosition(listView.getCount() - 1);//移动到尾部
-//    }
 
     public void updateData()
     {
+        if(adapter.datas.size()!=0)
+            return ;
+
         bored_head_items_req req=new bored_head_items_req();
 
         NetManager.SendMsg(req);

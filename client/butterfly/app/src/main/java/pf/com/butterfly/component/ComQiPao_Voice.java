@@ -35,31 +35,19 @@ public class ComQiPao_Voice extends LinearLayout
         init(context);
     }
 
-    private Context context;
-    private ImageView choose;
-    private EditText et;
-    private int width;
 
     private View view;
-    private TextView tv_text;
 
     private void init(Context context) {
-        this.context = context;
 
         LayoutInflater inflater= LayoutInflater.from(context);
 
-        view= inflater.inflate(R.layout.com_qipao_text,null);
+        view= inflater.inflate(R.layout.com_qipao_voice,null);
 
         this.addView(view);
 
-        tv_text=(TextView)view.findViewById(R.id.tv_text);
-
     }
 
-    public void setText(String text)
-    {
-        tv_text.setText(text);
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event)
@@ -75,6 +63,10 @@ public class ComQiPao_Voice extends LinearLayout
                 break;
             }
             case MotionEvent.ACTION_CANCEL:
+            {
+                setBackground(false);
+                break;
+            }
             case MotionEvent.ACTION_UP:
             {
                 setBackground(false);
@@ -91,11 +83,11 @@ public class ComQiPao_Voice extends LinearLayout
     {
         if(flag==false)
         {
-            tv_text.setBackgroundResource(R.drawable.qipao4);
+           // tv_text.setBackgroundResource(R.drawable.qipao4);
         }
         else
         {
-            tv_text.setBackgroundResource(R.drawable.qipao3);
+          //  tv_text.setBackgroundResource(R.drawable.qipao3);
         }
     }
 }

@@ -12,7 +12,8 @@ public class Recorder extends AdapterItemData
     float audioLength;
     String filePath;
 
-    public Recorder(float audioLength, String filePath) {
+    public Recorder(float audioLength, String filePath)
+    {
         super();
         this.audioLength = audioLength;
         this.filePath = filePath;
