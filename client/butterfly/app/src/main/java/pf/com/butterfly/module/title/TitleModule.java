@@ -2,6 +2,8 @@ package pf.com.butterfly.module.title;
 
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pf.com.butterfly.ControlManager;
@@ -26,8 +28,11 @@ public class TitleModule
 
 
     private View view;
-    private ImageButton btn_backawd ;//返回按钮
-    private ImageButton btn_shuoming;  //说明按钮
+    private View btn_backawd ;//返回
+    private View btn_shuoming;  //说明
+    private ImageView iv_fanhui;  //返回
+    private ImageView iv_shuoming;  //说明
+
     private TextView t_title;  //标题
 
     private ITitleExplain explain;  //说明按钮的接口
@@ -39,8 +44,11 @@ public class TitleModule
     {
         view= father.findViewById(R.id.module_title);
 
-        btn_backawd=(ImageButton)view.findViewById(R.id.btn_fanhui);
-        btn_shuoming=(ImageButton)view.findViewById(R.id.btn_wenhao);
+        iv_fanhui=(ImageView) view.findViewById(R.id.iv1);
+        iv_shuoming=(ImageView) view.findViewById(R.id.iv2);
+
+        btn_backawd=(LinearLayout)view.findViewById(R.id.ll_fanhui);
+        btn_shuoming=(LinearLayout)view.findViewById(R.id.ll_shuoming);
         t_title=(TextView)view.findViewById(R.id.t_title);
 
         btn_backawd.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +94,7 @@ public class TitleModule
 
     //    btn_shuoming.setVisibility(View.INVISIBLE);
 
-        btn_backawd.setImageResource(R.drawable.fanhui);
+        iv_fanhui.setImageResource(R.drawable.fanhui);
     }
     public void SetTitle(String title,ITitleExplain explain)
     {
@@ -102,12 +110,13 @@ public class TitleModule
 //            btn_shuoming.setVisibility(View.VISIBLE);
 //        }
 
-        btn_backawd.setImageResource(R.drawable.fanhui);
+
+        iv_fanhui.setImageResource(R.drawable.fanhui);
     }
 
     public void SetCatalogIcon()
     {
-        btn_backawd.setImageResource(R.drawable.sanheng);
+        iv_fanhui.setImageResource(R.drawable.mulu);
     }
 
 }

@@ -143,7 +143,7 @@ public class MenuModule  implements IItemClick
          adapter1=new ListViewAdapter(R.layout.itemlayout,MenuItemControl.class.getName());
 
 
-         adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"蝴蝶",BenefitHead.getInstance()));
+       //  adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"蝴蝶",BenefitHead.getInstance()));
          adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"好无聊啊",BoredHead.getInstance()));
          adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"中午吃什么",BoredHead.getInstance()));
          adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"晚上吃什么",BoredHead.getInstance()));

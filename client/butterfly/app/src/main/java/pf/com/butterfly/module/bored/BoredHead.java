@@ -2,6 +2,7 @@ package pf.com.butterfly.module.bored;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -56,6 +57,8 @@ public class BoredHead extends AppBaseViewControl
 
     private ListView listView;
 
+    private SwipeRefreshLayout srl;
+
     @Override
     public void initControl()
     {
@@ -65,6 +68,25 @@ public class BoredHead extends AppBaseViewControl
                 OnTiJiao();
             }
         });
+
+
+        //下拉刷新布局
+
+        srl=(SwipeRefreshLayout)view.findViewById(R.id.sr_update);
+
+        //设置卷内的颜色
+        srl.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //设置下拉刷新监听
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+               updateData(true);
+            }
+        });
+
+
 
         listView=(ListView)view.findViewById(R.id.listView);
 
@@ -91,7 +113,9 @@ public class BoredHead extends AppBaseViewControl
     @Override
     public void reShow()
     {
-        updateData();
+        srl.setRefreshing(false);
+
+        updateData(false);
     }
 
     public void OnTiJiao()
@@ -120,21 +144,28 @@ public class BoredHead extends AppBaseViewControl
     }
 
 
-    public void updateData()
+    public void updateData(boolean flag)
     {
-        if(adapter.datas.size()!=0)
-            return ;
+        if(flag==false)
+        {
+            if (adapter.datas.size() != 0)
+                return;
+
+            srl.setProgressViewOffset(false, 0, 30);
+            srl.setRefreshing(true);
+        }
 
         bored_head_items_req req=new bored_head_items_req();
 
         NetManager.SendMsg(req);
 
-        //播放发送动画.....
+
     }
 
     //-----------------网络返回处理-------------------
     public void updateAdapter(bored_head_items_res res)
     {
+
 
         List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
 
@@ -152,6 +183,8 @@ public class BoredHead extends AppBaseViewControl
 
         adapter.datas=datas;
         adapter.notifyDataSetChanged();
+
+        srl.setRefreshing(false);
     }
 
     //提交返回
