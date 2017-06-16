@@ -164,7 +164,7 @@ public class RegisterHead extends AppBaseViewControl
         req.pass=pass;
         req.nickname=name;
 
-        NetManager.SendMsg(req);
+    //    NetManager.SendMsg(req);
     }
 
 

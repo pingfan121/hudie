@@ -17,10 +17,13 @@ import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.http.BmobHttp;
+import pf.com.butterfly.message.MsgBase;
+import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
 import pf.com.butterfly.message.Protocols.bored_record_item_add_req;
 import pf.com.butterfly.message.Protocols.bored_record_item_add_res;
 import pf.com.butterfly.message.Protocols.bored_record_items_req;
 import pf.com.butterfly.message.Protocols.bored_record_items_res;
+import pf.com.butterfly.message.net.IMsgResult;
 import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.ControlLayer;
 import pf.com.butterfly.util.HDLog;
@@ -186,7 +189,7 @@ public class BoredDetail extends AppBaseViewControl
         req.time=1;
         req.url=res.url;
 
-        NetManager.SendMsg(req);
+        NetManager.SendMsg(req,add_result);
 
     }
 
@@ -196,28 +199,11 @@ public class BoredDetail extends AppBaseViewControl
         bored_record_items_req req=new bored_record_items_req();
         req.head_id=headid;
 
-        NetManager.SendMsg(req);
+        NetManager.SendMsg(req,update_result);
 
         //播放发送动画.....
     }
 
-
-    //-----------------网络返回处理-------------------
-    public void updateAdapter(bored_record_items_res res)
-    {
-
-        List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
-
-        for(int i=0;i<res.infos.length;i++)
-        {
-            BoredAudioItemData data=new BoredAudioItemData();
-            data.iteminfo=res.infos[i];
-            datas.add(data);
-        }
-
-        mAdapter.datas=datas;
-        mAdapter.notifyDataSetChanged();
-    }
 
     //添加录音返回...
     public void boredRecordAddback(bored_record_item_add_res res)
@@ -226,6 +212,53 @@ public class BoredDetail extends AppBaseViewControl
 
         mAdapter.addOneItem(data);
     }
+
+
+    //消息返回处理.......
+
+    private IMsgResult add_result=new IMsgResult()
+    {
+        @Override
+        public void onError(int err, String msg)
+        {
+            HDLog.Toast(msg);
+        }
+
+        @Override
+        public void onResult(MsgBase msg)
+        {
+            HDLog.Toast("已提交");
+        }
+    };
+
+    private IMsgResult update_result=new IMsgResult()
+    {
+        @Override
+        public void onError(int err, String msg)
+        {
+            HDLog.Toast(msg);
+        }
+
+        @Override
+        public void onResult(MsgBase msg)
+        {
+            HDLog.Toast("已刷新");
+
+            List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
+
+            bored_record_items_res res=(bored_record_items_res)msg;
+
+            for(int i=0;i<res.infos.length;i++)
+            {
+                BoredAudioItemData data=new BoredAudioItemData();
+                data.iteminfo=res.infos[i];
+                datas.add(data);
+            }
+
+            mAdapter.datas=datas;
+            mAdapter.notifyDataSetChanged();
+        }
+    };
 
 
 

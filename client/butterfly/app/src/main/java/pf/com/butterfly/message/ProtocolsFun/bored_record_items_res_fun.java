@@ -11,6 +11,6 @@ public class bored_record_items_res_fun implements IMsgCallback
     
       public void MsgCallback(MsgBase msg)
       {
-            BoredDetail.getInstance().updateAdapter((bored_record_items_res)msg);
+          //  BoredDetail.getInstance().updateAdapter((bored_record_items_res)msg);
       }
 }

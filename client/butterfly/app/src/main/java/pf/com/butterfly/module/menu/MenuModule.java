@@ -24,7 +24,7 @@ import pf.com.butterfly.module.user.UserHead;
 /**
  * A fragment with a Google +1 button.
  */
-public class MenuModule  implements IItemClick
+public class MenuModule
  {
 
     private static MenuModule _instance=null;
@@ -65,12 +65,18 @@ public class MenuModule  implements IItemClick
         listView2.setAdapter(adapter2);
         listView2.setOnItemClickListener(aa);
 
+        ListView listView3=(ListView)view.findViewById(R.id.menu_item_list3);
+
+        listView3.setAdapter(adapter3);
+        listView3.setOnItemClickListener(aa);
+
 
         view.findViewById(R.id.iv_head).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
+                ShowMenu(false);
                 UserHead.getInstance().show();
             }
         });
@@ -119,101 +125,38 @@ public class MenuModule  implements IItemClick
          return  slide.isDrawerOpen(Gravity.LEFT);
      }
 
-   //  private ItemAdapter adapter1;
-   //  private ItemAdapter adapter2;
-
      private ListViewAdapter adapter1;
      private ListViewAdapter adapter2;
+     private ListViewAdapter adapter3;
 
      private void initValue()
      {
-//         adapter1=new ItemAdapter();
-//         adapter1.setItemClick(this);
-//         adapter1.setLayout(R.layout.itemlayout);
-//         adapter1.addData(new ItemData(R.drawable.hudie,"蝴蝶"));
-//         adapter1.addData(new ItemData(R.drawable.hudie,"好无聊啊"));
-//
-//         adapter2=new ItemAdapter();
-//         adapter2.setItemClick(this);
-//         adapter2.setLayout(R.layout.itemlayout);
-//         adapter2.addData(new ItemData(R.drawable.jianyi,"建议"));
-//         adapter2.addData(new ItemData(R.drawable.shezhi,"设置"));
-//         adapter2.addData(new ItemData(R.drawable.shezhi,"退出"));
-
          adapter1=new ListViewAdapter(R.layout.itemlayout,MenuItemControl.class.getName());
 
 
        //  adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"蝴蝶",BenefitHead.getInstance()));
-         adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"好无聊啊",BoredHead.getInstance()));
-         adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"中午吃什么",BoredHead.getInstance()));
-         adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"晚上吃什么",BoredHead.getInstance()));
+         adapter1.addOneItem(new MenuItemData(R.drawable.bored,"好无聊啊",BoredHead.getInstance()));
+         adapter1.addOneItem(new MenuItemData(R.drawable.rou,"有鱼想吃肉",BoredHead.getInstance()));
+         adapter1.addOneItem(new MenuItemData(R.drawable.yu,"有肉想吃鱼",BoredHead.getInstance()));
 
          adapter2=new ListViewAdapter(R.layout.itemlayout,MenuItemControl.class.getName());
 
 
-         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"建议",AdviseHead.getInstance()));
-         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"设置",SetingHead.getInstance()));
-         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"退出",SetingHead.getInstance()));
+         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"回不去",AdviseHead.getInstance()));
+         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"舍不得",SetingHead.getInstance()));
+         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"来不及",SetingHead.getInstance()));
+         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"乌托邦",SetingHead.getInstance()));
+
+
+         adapter3=new ListViewAdapter(R.layout.itemlayout,MenuItemControl.class.getName());
+
+
+         adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"建议",AdviseHead.getInstance()));
+         adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"设置",SetingHead.getInstance()));
+         adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"退出",SetingHead.getInstance()));
 
 
      }
-
-     public void onItemClick(View view, ItemData data)
-     {
-         MenuModule.getInstance().ShowMenu(false);
-
-         switch(data.text)
-         {
-             case "蝴蝶":
-             {
-                 BenefitHead.getInstance().show();
-                 break;
-             }
-             case "好无聊啊":
-             {
-                 BoredHead.getInstance().show();
-                 break;
-             }
-             case "建议":
-             {
-                 AdviseHead.getInstance().show();
-                 break;
-             }
-             case "设置":
-             {
-                 SetingHead.getInstance().show();
-                 break;
-             }
-             case "退出":
-             {
-                 MainActivity.main.finish();
-                 break;
-             }
-         }
-     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

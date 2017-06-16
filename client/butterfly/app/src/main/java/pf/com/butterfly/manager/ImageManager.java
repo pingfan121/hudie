@@ -17,7 +17,6 @@ import java.util.Queue;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.http.HeadHttp;
 import pf.com.butterfly.http.HttpBase;
-import pf.com.butterfly.message.net.HttpSend;
 import pf.com.butterfly.util.BitmapAndStringUtils;
 
 /**

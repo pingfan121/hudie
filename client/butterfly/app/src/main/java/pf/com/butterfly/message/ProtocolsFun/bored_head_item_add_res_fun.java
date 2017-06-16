@@ -11,6 +11,6 @@ public class bored_head_item_add_res_fun implements IMsgCallback
     
       public void MsgCallback(MsgBase msg)
       {
-            BoredHead.getInstance().tijiaoBack((bored_head_item_add_res)msg);
+          //  BoredHead.getInstance().tijiaoBack((bored_head_item_add_res)msg);
       }
 }

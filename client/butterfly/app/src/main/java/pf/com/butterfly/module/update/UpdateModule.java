@@ -27,7 +27,6 @@ import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.http.BmobHttp;
 import pf.com.butterfly.http.HttpBase;
-import pf.com.butterfly.message.net.HttpSend;
 import pf.com.butterfly.util.HDLog;
 
 /**

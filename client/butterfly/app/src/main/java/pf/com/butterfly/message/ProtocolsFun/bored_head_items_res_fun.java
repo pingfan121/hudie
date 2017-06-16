@@ -10,6 +10,6 @@ public class bored_head_items_res_fun implements IMsgCallback
     
       public void MsgCallback(MsgBase msg)
       {
-            BoredHead.getInstance().updateAdapter((bored_head_items_res)msg);
+          //  BoredHead.getInstance().updateAdapter((bored_head_items_res)msg);
       }
 }

@@ -1,11 +1,14 @@
 package pf.com.butterfly.module.main;
 
+import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.TextView;
 
+import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.module.ControlLayer;
+import pf.com.butterfly.module.bored.MediaManager;
 import pf.com.butterfly.module.title.TitleModule;
 
 /**
@@ -14,6 +17,8 @@ import pf.com.butterfly.module.title.TitleModule;
 public class MainHead extends AppBaseViewControl
 {
     private static MainHead _instance=null;
+
+    private MediaPlayer player;
 
     public static MainHead getInstance()
     {
@@ -36,6 +41,7 @@ public class MainHead extends AppBaseViewControl
     }
 
     private TextView tv;
+
 
     protected void initControl()
     {
@@ -72,4 +78,6 @@ public class MainHead extends AppBaseViewControl
             "　　“哦？那你为什么还在扔？谁在乎呢？”\n" +
             "　　“这条小鱼在乎！”小男孩一边回答，一边捡起一条小鱼扔进大海，“这条在乎，这条也在乎！还有这一条、这一条、这一条……”\n" +
             "\n";
+
+
 }

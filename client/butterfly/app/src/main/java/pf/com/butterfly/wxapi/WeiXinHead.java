@@ -1,19 +1,31 @@
 package pf.com.butterfly.wxapi;
 
 import android.os.Message;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.SendAuth;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import pf.com.butterfly.GlobalData;
 import pf.com.butterfly.MainActivity;
+import pf.com.butterfly.adapter.AdapterItemData;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.http.BmobHttp;
 import pf.com.butterfly.http.HttpBase;
+import pf.com.butterfly.message.MsgBase;
+import pf.com.butterfly.message.Protocols.bored_record_items_res;
 import pf.com.butterfly.message.Protocols.login_weixin_req;
+import pf.com.butterfly.message.Protocols.login_weixin_res;
+import pf.com.butterfly.message.net.IMsgResult;
 import pf.com.butterfly.message.net.NetManager;
+import pf.com.butterfly.module.bored.BoredAudioItemData;
+import pf.com.butterfly.module.user.UserHead;
 import pf.com.butterfly.util.HDLog;
 
 /**
@@ -62,10 +74,6 @@ public class WeiXinHead
     //获取token
     public static void getAccessToken(){
 
-//        SharedPreferences WX_Sp = getApplicationContext().getSharedPreferences(PrefParams.spName, Context.MODE_PRIVATE);
-//        String code = WX_Sp.getString(PrefParams.CODE, "");
-//        final SharedPreferences.Editor WX_SpEditor = WX_Sp.edit();
-
         HDLog.Toast("获取token....");
 
         String url  = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="
@@ -112,7 +120,7 @@ public class WeiXinHead
 
         req.acc_token=res.access_token;
 
-        NetManager.SendMsg(req);
+        NetManager.SendMsg(req,msg_result);
 
     }
 
@@ -125,5 +133,33 @@ public class WeiXinHead
         public String scope;
         public String unionid;
     }
+
+
+    //消息返回..................
+    private static IMsgResult msg_result=new IMsgResult()
+    {
+        @Override
+        public void onError(int err, String msg)
+        {
+          //  HDLog.Toast(msg);
+
+            HDLog.Toast("微信登录错误,错误码:"+err);
+        }
+
+        @Override
+        public void onResult(MsgBase msg)
+        {
+            login_weixin_res res=(login_weixin_res)msg;
+
+            //注册成功
+            HDLog.Toast("微信登录成功");
+
+            GlobalData.login_flag=true;
+            GlobalData.userinfo=res.info;
+
+            //更新个人信息
+            UserHead.getInstance().updateInfo();
+        }
+    };
 
 }

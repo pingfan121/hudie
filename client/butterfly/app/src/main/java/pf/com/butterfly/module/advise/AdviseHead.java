@@ -7,8 +7,11 @@ import android.widget.Toast;
 import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
+import pf.com.butterfly.message.MsgBase;
 import pf.com.butterfly.message.Protocols.advise_cteate_req;
+import pf.com.butterfly.message.net.IMsgResult;
 import pf.com.butterfly.message.net.NetManager;
+import pf.com.butterfly.util.HDLog;
 
 /**
  * Created by admin on 2017/3/13.
@@ -65,10 +68,25 @@ public class AdviseHead extends AppBaseViewControl
         advise_cteate_req req=new advise_cteate_req();
         req.content=str;
         req.userid="111111";
-        NetManager.SendMsg(req);
+        NetManager.SendMsg(req,msg_result);
 
 
     }
+    private IMsgResult msg_result=new IMsgResult()
+    {
+        @Override
+        public void onError(int err, String msg)
+        {
+            HDLog.Toast(msg);
+        }
+
+        @Override
+        public void onResult(MsgBase msg)
+        {
+            HDLog.Toast("建议提交成功,谢谢您的支持");
+            AdviseHead.getInstance().CleanText();
+        }
+    };
 
     public void CleanText()
     {

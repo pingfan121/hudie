@@ -17,10 +17,12 @@ import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.input.TextInput;
+import pf.com.butterfly.message.MsgBase;
 import pf.com.butterfly.message.Protocols.bored_head_item_add_req;
 import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
 import pf.com.butterfly.message.Protocols.bored_head_items_req;
 import pf.com.butterfly.message.Protocols.bored_head_items_res;
+import pf.com.butterfly.message.net.IMsgResult;
 import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.bored.BoredDetail;
 import pf.com.butterfly.module.bored.BoredItemView;
@@ -139,10 +141,9 @@ public class BoredHead extends AppBaseViewControl
         //提交
         bored_head_item_add_req req=new bored_head_item_add_req();
         req.content=str;
-        NetManager.SendMsg(req);
+        NetManager.SendMsg(req,add_result);
 
     }
-
 
     public void updateData(boolean flag)
     {
@@ -157,47 +158,73 @@ public class BoredHead extends AppBaseViewControl
 
         bored_head_items_req req=new bored_head_items_req();
 
-        NetManager.SendMsg(req);
+        NetManager.SendMsg(req,update_result);
 
 
     }
 
     //-----------------网络返回处理-------------------
-    public void updateAdapter(bored_head_items_res res)
+
+    private IMsgResult add_result=new IMsgResult()
     {
-
-
-        List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
-
-        for(int i=0;i<res.infos.length;i++)
+        @Override
+        public void onError(int err, String msg)
         {
-            BoredHeadItemData data=new BoredHeadItemData();
-            data.id=res.infos[i].id;
-            data.icon="";
-            data.name="我是一个平凡的人";
-            data.text=res.infos[i].content;
-            data.num=res.infos[i].rownum;
-
-            datas.add(data);
+            HDLog.Toast(msg);
         }
 
-        adapter.datas=datas;
-        adapter.notifyDataSetChanged();
+        @Override
+        public void onResult(MsgBase msg)
+        {
+            HDLog.Toast("提交成功");
 
-        srl.setRefreshing(false);
-    }
+            bored_head_item_add_res res=(bored_head_item_add_res)msg;
 
-    //提交返回
-    public void tijiaoBack(bored_head_item_add_res res)
+            BoredHeadItemData data=new BoredHeadItemData();
+            data.id=res.info.id;
+            data.icon="";
+            data.name="我是一个平凡的人";
+            data.text=res.info.content;
+            data.num=res.info.rownum;
+
+            adapter.addOneItem(data);
+        }
+    };
+
+
+    private IMsgResult update_result=new IMsgResult()
     {
-        BoredHeadItemData data=new BoredHeadItemData();
-        data.id=res.info.id;
-        data.icon="";
-        data.name="我是一个平凡的人";
-        data.text=res.info.content;
-        data.num=res.info.rownum;
+        @Override
+        public void onError(int err, String msg)
+        {
+            HDLog.Toast(msg);
+        }
 
-        adapter.addOneItem(data);
-    }
+        @Override
+        public void onResult(MsgBase msg)
+        {
+            HDLog.Toast("已刷新");
 
+            bored_head_items_res res=(bored_head_items_res)msg;
+
+            List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
+
+            for(int i=0;i<res.infos.length;i++)
+            {
+                BoredHeadItemData data=new BoredHeadItemData();
+                data.id=res.infos[i].id;
+                data.icon="";
+                data.name="我是一个平凡的人";
+                data.text=res.infos[i].content;
+                data.num=res.infos[i].rownum;
+
+                datas.add(data);
+            }
+
+            adapter.datas=datas;
+            adapter.notifyDataSetChanged();
+
+            srl.setRefreshing(false);
+        }
+    };
 }

@@ -4,6 +4,8 @@ import android.os.Message;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.http.HttpBase;
 import pf.com.butterfly.message.CSMsg;
@@ -18,8 +20,7 @@ import pf.com.butterfly.util.HDLog;
  */
 public class NetManager
 {
-
-    private static HDSend hdsend;
+    private static HttpBase http;
 
     private static Gson gson;
 
@@ -34,7 +35,7 @@ public class NetManager
 
         gson=new Gson();
 
-        hdsend=new HDSend(new IMsgHandler()
+        http=new HttpBase(new IMsgHandler()
         {
             @Override
             public void onMsgDispose(int err,String result,Object userToken)
@@ -61,23 +62,26 @@ public class NetManager
     }
 
     //发送数据
-    public static void SendMsg(MsgBase msg)
+    public static void SendMsg(MsgBase msg,IMsgResult result)
     {
-        hdsend.send(url,gson.toJson(msg));
-
+        http.send(url,gson.toJson(msg),result);
     }
 
     //处理消息
     public static void onDispose(int err,String result,Object userToken)
     {
+
+        IMsgResult i_result=(IMsgResult)userToken;
+
         if(err==-100)
         {
             //网络异常
             HDLog.Toast(result);
 
+            i_result.onError(err,result);
+
             return;
         }
-
 
         if(result != "")
         {
@@ -89,12 +93,15 @@ public class NetManager
 
                 MsgBase msg2=(MsgBase)gson.fromJson(csmsg.msg,cl);
 
-                MsgMap.GetResultClass(msg2.CodeId).MsgCallback(msg2);
+           //     MsgMap.GetResultClass(msg2.CodeId).MsgCallback(msg2);
+
+                i_result.onResult(msg2);
 
             }
             else
             {
                 //这里显示错误状态
+                i_result.onError(csmsg.state,csmsg.state+"");
             }
         }
     }
