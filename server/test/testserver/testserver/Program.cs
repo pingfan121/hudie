@@ -51,7 +51,7 @@ namespace testserver
             web.Headers.Add("token", "111111");
 
             byte[] data = Encoding.UTF8.GetBytes(JSON.Encode(mb));
-            byte[] bt = web.UploadData(url, "post", data);
+            byte[] bt = web.UploadData(url + "/app/module/user/login?data=" + JSON.Encode(mb), "post", new byte[0]);
 
             string str = System.Text.Encoding.UTF8.GetString(bt);
             Console.WriteLine(str);

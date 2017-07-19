@@ -3,6 +3,7 @@ using GameLib.Util;
 using messages;
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,13 @@ using System.Threading.Tasks;
 
 namespace hudie.net
 {
+    public class HttpInfo
+    {
+        public string modpath;
+        public string funpath;
+        public HttpListenerContext context;
+        public Hashtable ht = new Hashtable();
+    }
     class NetHttp
     {
         private static LogImplement log = LogFactory.getLogger(typeof(GameApp));
@@ -24,8 +32,8 @@ namespace hudie.net
 
       //  private static string key = "123456";
 
-       
 
+        public static ConcurrentQueue<HttpInfo> http_data = new ConcurrentQueue<HttpInfo>();
         //开始启动
         public static void Start()
         {
@@ -37,10 +45,8 @@ namespace hudie.net
 
                 for(int i = 0; i < ips.Length; i++)                                              //设定域名
                 {
-
                     if(ips[i].AddressFamily == AddressFamily.InterNetwork) //IPv4地址 
                     {
-
                         listener.Prefixes.Add("http://" + ips[i].ToString() + ":" + port.ToString() + "/");
                     }
                 }
@@ -65,23 +71,23 @@ namespace hudie.net
                 HttpListenerContext context = listener.EndGetContext(result);
                 HttpListenerRequest request = context.Request;
 
-                string token = context.Request.Headers["token2"];
-
-                Console.WriteLine("token2:" + token);
-
                 StreamReader sr = new StreamReader(request.InputStream);
-                
-                string webdata = sr.ReadToEnd();
 
-                if(webdata.Length > 2)
+                string param = request.RawUrl;
+
+                HttpInfo info= new HttpInfo();
+
+                info.context = context;
+
+                EnumMsgState msgerr= analysisParam(param, info);
+
+                if(msgerr != EnumMsgState.ok)
                 {
-                    AnalysisData(context,webdata);
+                    sendErrorMsg(info.context, msgerr);
                 }
                 else
                 {
-                      log.error("数据长度错误");
-
-                      sendErrorMsg(context, EnumMsgState.error);
+                    http_data.Enqueue(info);
                 }
 
             }
@@ -114,51 +120,100 @@ namespace hudie.net
         }
 
 
-        public static void AnalysisData(HttpListenerContext context, string data)
-        {
-
-            try
-            {
-                Hashtable ht = JSON.Decode<Hashtable>(data);
-
-                if(ht.ContainsKey("CodeId"))
-                {
-                    int msgid = int.Parse(ht["CodeId"].ToString());
-
-                    log.error("收到了协议号为 " + msgid + " 的消息");
-
-                    MsgHandle.getInstance().analysis(context, msgid, data);
-                }
-            }
-            catch(Exception ex)
-            {
-                log.error(data);
-                log.error(ex);
-
-                sendErrorMsg(context,EnumMsgState.error);
-            }
-        }
-//         public static string Sign(string str)
-//         {
-//             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "md5");
-//         }
-
 
         static BackMsg backmsg = new BackMsg();
         public static void sendErrorMsg(HttpListenerContext context,EnumMsgState err)
         {
             HttpListenerResponse reponse = context.Response;
-            StreamWriter writer = new StreamWriter(reponse.OutputStream);
+            StreamWriter writer = new StreamWriter(reponse.OutputStream, Encoding.UTF8);
 
-
-            backmsg.state = (int)err;
-            backmsg.msgid = 0;
+            backmsg.error = (int)err;
             backmsg.msg = new object();
 
             writer.Write(JSON.Encode(backmsg));
 
             writer.Close();
             reponse.Close();
+        }
+
+
+        public static Dictionary<string, int> mod_flag = new Dictionary<string, int>();  //模块对应标志
+
+        public static Dictionary<string, int> fun_flag = new Dictionary<string, int>();  //模块对应标志
+
+        public static EnumMsgState analysisParam(string urlparam,HttpInfo info)
+        {
+            if(urlparam.Length < 2)
+            {
+                return EnumMsgState.param_err;
+            }
+
+            if(urlparam.Substring(0, 1) == "/")
+            {
+                urlparam = urlparam.Substring(1);
+            }
+
+            int index=urlparam.IndexOf('?');
+
+            string fun_path="";
+            string param="";
+
+            if(index==-1)
+            {
+                fun_path = urlparam;
+            }
+            else
+            {
+                fun_path = urlparam.Substring(0, index);
+                param=urlparam.Substring(index+1);
+            }
+
+            //检测是否有处理模块
+            fun_path = "hudie." + fun_path.Replace('/', '.');
+
+            index=fun_path.LastIndexOf('.');
+            string mod_path = fun_path.Substring(0, index);
+
+            if(mod_flag.ContainsKey(mod_path) == false)
+            {
+                //检测有没有这个模块
+                Type t = Type.GetType(mod_path);
+
+                if(t != null)
+                {
+                    mod_flag.Add(mod_path, 1);
+                }
+                else
+                {
+                    mod_flag.Add(mod_path, 0);
+                }
+            }
+
+            if(mod_flag[mod_path] == 0)
+            {
+                return EnumMsgState.module_err;
+            }
+
+            string[] temp=param.Split('&');
+
+            //验证参数
+
+            foreach(var str in temp)
+            {
+                string[] temp2 = str.Split('=');
+
+                if(temp2.Length != 2)
+                {
+                    return EnumMsgState.param_err;
+                }
+
+                info.ht.Add(temp2[0], temp2[1]);
+            }
+
+            info.funpath = fun_path;
+            info.modpath = mod_path;
+            
+            return EnumMsgState.ok;
         }
     }
 }

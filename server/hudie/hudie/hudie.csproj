@@ -66,7 +66,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="app\GlobalFun.cs" />
+    <Compile Include="app\GlobalApp.cs" />
+    <Compile Include="app\MapAppMsg.cs" />
+    <Compile Include="app\module\user\user.cs" />
+    <Compile Include="app\module\user\user_login.cs" />
     <Compile Include="cache\Cache.cs" />
     <Compile Include="cache\CacheData.cs" />
     <Compile Include="cache\TokenCache.cs" />

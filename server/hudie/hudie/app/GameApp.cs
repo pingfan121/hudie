@@ -1,11 +1,14 @@
-﻿using GameDb.Logic;
+﻿using Enum;
+using GameDb.Logic;
 using GameDb.Util;
 using GameLib.Database;
 using GameLib.Util;
+using hudie.app;
 using hudie.net;
 using hudie.sql;
 using messages;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +25,11 @@ namespace hudie
 
         public BackMsg backmsg;
 
+        private MapAppMsg msg_map = new MapAppMsg();
+
+        public ConcurrentQueue<HttpInfo> msg_data = new ConcurrentQueue<HttpInfo>();
+        
+
         public void init()
         {
             backmsg = new BackMsg();
@@ -31,6 +39,14 @@ namespace hudie
             Thread thread = new Thread(Run);
             thread.IsBackground = true;
             thread.Start();
+
+            //消息映射
+            msg_map.init();
+        }
+
+        public void addMsg(HttpInfo info)
+        {
+            msg_data.Enqueue(info);
         }
        
 
@@ -39,29 +55,36 @@ namespace hudie
 
             while (true)
             {
-                MsgBase msg = MsgHandle.getInstance().getMessage();
+                HttpInfo msg = null;
 
-                if (msg != null)
+                if (msg_data.TryDequeue(out msg)==true)
                 {
                    
-                    MsgCodeId codeId = msg.CodeId;
-                    if ( MsgHandle.getInstance().profuns.ContainsKey(codeId))
+                    if (msg_map.class_map.ContainsKey(msg.modpath)==true)
                     {
-                        try
+                        if(msg_map.msg_map.ContainsKey(msg.funpath) == true)
                         {
-                            msg.db = connect;
-                            msg.app = this;
-                            MsgHandle.getInstance().profuns[codeId](msg);
-                            msg.db = null;
+                            try
+                            {
+                                msg_map.msg_map[msg.funpath](this,msg);
+                            }
+                            catch(Exception ex)
+                            {
+                                Log.error("处理" + msg.funpath + "出现异常");
+                                Log.error(ex.Message);
+                                Log.error(ex.StackTrace);
 
-                            //消息可以使用对象池  这里暂时不使用...
+                                sendErrorMsg(msg.context, (int)EnumMsgState.fun_err);
+                            }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            Log.error("处理" + codeId + "出现异常");
-                            Log.error(ex.Message);
-                            Log.error(ex.StackTrace);
+                            sendErrorMsg(msg.context, (int)EnumMsgState.fun_err);
                         }
+                    }
+                    else
+                    {
+                        sendErrorMsg(msg.context, (int)EnumMsgState.module_err);
                     }
                 }
                 else
@@ -74,15 +97,13 @@ namespace hudie
 
         //返回消息
       
-        public void sendMsg(HttpListenerContext context, MsgBase msg)
+        public void sendMsg(HttpListenerContext context, Object msg)
         {
             HttpListenerResponse reponse = context.Response;
-            StreamWriter writer = new StreamWriter(reponse.OutputStream);
+            StreamWriter writer = new StreamWriter(reponse.OutputStream,Encoding.UTF8);
 
-          
-            backmsg.state = 0;
-            backmsg.msgid = (int)msg.CodeId;
-            backmsg.msg=JSON.Encode(msg);
+            backmsg.error = 0;
+            backmsg.msg = msg;
 
             writer.Write(JSON.Encode(backmsg));
 
@@ -94,9 +115,7 @@ namespace hudie
             HttpListenerResponse reponse = context.Response;
             StreamWriter writer = new StreamWriter(reponse.OutputStream);
 
-
-            backmsg.state = err;
-            backmsg.msgid = 0;
+            backmsg.error = err;
             backmsg.msg = new object();
 
             writer.Write(JSON.Encode(backmsg));

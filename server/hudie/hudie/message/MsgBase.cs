@@ -27,8 +27,7 @@ public class MsgBase
 
 public class BackMsg
 {
-    public int state;   //处理状态
-    public int msgid;
+    public int error;   //处理状态
     public Object msg;
 }
 
