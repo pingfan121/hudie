@@ -4,6 +4,9 @@ public class EnumMsgState
 {
    public static final int ok = 0; //没有错误
    public static final int error = 1; //通用错误
+   public static final int param_err = 2; //参数错误
+   public static final int module_err = 3; //找不到处理模块
+   public static final int fun_err = 4; //找不到处理函数
    public static final int sign_err = 100; //签名错误(100-200)属于通信错误
    public static final int pro_analysis_err = 101; //协议解析错误
    public static final int token_past = 200; //token过期了
