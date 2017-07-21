@@ -1,4 +1,5 @@
 ﻿using GameLib.Util;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,29 +11,41 @@ using System.Windows.Forms;
 
 namespace MsgEdit
 {
-    class msgdata
+    //树节点
+    public class tree_data
     {
-        public int index;
-        public string name="";
-        public string explain="";
-        public string content="";
+        public bool isdir;  //是不是目录节点
+        public string name;//节点名字
+        [JsonIgnore]
+        public tree_data prev_node;  //上一个节点
+        public node_data data;
+        public List<tree_data> nodes;
     }
-    class DirectoryData
+
+    public class node_data
     {
-        public int index;
-        public string name = "";
-        public string dic_name = "";
-        public List<msgdata> protos = new List<msgdata>();
+        public List<info_data> req_params = new List<info_data>();
+        public List<info_data> res_params = new List<info_data>();
     }
+
+    //返回定义
+    public class info_data
+    {
+        public string param_name;
+        public string param_type;
+        public string param_explain;
+    }
+
+    //目录节点
 
     class MsgList
     {
         public static  TreeView tv;
 
-        public static List<DirectoryData> alldata = new List<DirectoryData>();
+        public static tree_data alldata = new tree_data();
 
-        public static Dictionary<TreeNode, DirectoryData> dir_map = new Dictionary<TreeNode, DirectoryData>();
-        public static Dictionary<TreeNode, msgdata> proto_map = new Dictionary<TreeNode, msgdata>();
+        public static Stack<string> back_data = new Stack<string>();
+        public static Stack<string> forward_data = new Stack<string>();
 
         public static void SetTreeView(TreeView treeview)
         {
@@ -42,17 +55,15 @@ namespace MsgEdit
 
             tv.DrawMode = TreeViewDrawMode.OwnerDrawText;
             tv.DrawNode += new DrawTreeNodeEventHandler(treeView1_DrawNode);
+
+            tv.Font = new Font(tv.Font.FontFamily, tv.Font.Size + 2);
         }
 
         //在绘制节点事件中，按自已想的绘制
         private static void treeView1_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
-            //e.DrawDefault = true; //我这里用默认颜色即可，只需要在TreeView失去焦点时选中节点仍然突显
-            //return;
-
             if((e.State & TreeNodeStates.Selected) != 0)
             {
-                //演示为绿底白字
                 e.Graphics.FillRectangle(Brushes.DarkBlue, e.Node.Bounds);
 
                 Font nodeFont = e.Node.NodeFont;
@@ -79,133 +90,296 @@ namespace MsgEdit
 
         }
 
-        //添加一个目录
-        public static void AddDirectory(int index,string name)
+        //添加目录节点
+        public static void AddDirNode(string name)
         {
-            Dictionary<string, msgdata> temp = new Dictionary<string, msgdata>();
+            //添加回退
+            addBackData();
 
-            DirectoryData dir = new DirectoryData();
-            dir.index = index;
-            dir.name = name;
+            TreeNode node = tv.SelectedNode;
 
-            dir.dic_name = OutCsharp2.HanZiZhuanPinYin(name);
+            if(node.ImageIndex == 1)
+            {
+                node = node.Parent;
+            }
 
-            alldata.Add(dir);
+            tree_data nodedata = new tree_data();
+
+            nodedata.isdir = true;
+            nodedata.name = name;
+
+            tree_data datanode = gettreedata(node);
+
+            if(datanode.nodes == null)
+            {
+                datanode.nodes = new List<tree_data>();
+            }
+            datanode.nodes.Add(nodedata);
+            nodedata.prev_node = datanode;
 
             UpdateTree();
         }
 
-        //删除一个目录
-        public static void SubDirectory(DirectoryData dir)
+        //添加文件节点
+        public static void AddFileNode(string name)
         {
-            alldata.Remove(dir);
+            //添加回退
+            addBackData();
+
+            TreeNode node = tv.SelectedNode;
+
+            if(node.ImageIndex == 1)
+            {
+                node = node.Parent;
+            }
+
+            tree_data nodedata = new tree_data();
+
+            nodedata.isdir = false;
+            nodedata.name = name;
+            nodedata.data = new node_data();
+
+            tree_data datanode = gettreedata(node);
+
+            if(datanode.nodes == null)
+            {
+                datanode.nodes = new List<tree_data>();
+            }
+            datanode.nodes.Add(nodedata);
+            nodedata.prev_node = datanode;
 
             UpdateTree();
+
         }
 
-        //添加一个协议
-        public static void AddMsg(string name)
+        //删除一个节点
+        public static void delNode()
         {
-            msgdata msg = new msgdata();
-            msg.name = name;
+            TreeNode node = tv.SelectedNode;
 
-            DirectoryData dir = GetCurrDir();
+            if(node == null)
+                return;
 
-            dir.protos.Add(msg);
+            //添加回退
+            addBackData();
 
-            UpdateTree();
+            tree_data data_node = gettreedata(node);
 
-            tv.SelectedNode = GetNodeForProto(msg);
-
-            tv.SelectedNode.ExpandAll();
+            if(data_node != null)
+            {
+                if(data_node.prev_node != null)
+                {
+                    data_node.prev_node.nodes.Remove(data_node);
+                    UpdateTree();
+                }
+            }
         }
 
-        //删除一个协议
-        public static void SubMsg()
+        public static void SelectNodeChange(TreeNode node)
         {
+            //变更展示界面
+            tree_data treedata = gettreedata(node);
 
-            DirectoryData dir = GetCurrDir();
-
-            msgdata msg = GetCurrProto();
-
-            dir.protos.Remove(msg);
-
-            UpdateTree();
-
-            tv.SelectedNode = GetNodeForDir(dir);
+            if(treedata.isdir == false)
+            {
+                //设置数据
+                InfoShow.SetMsgInfo(gettreepath(node), treedata);
+            }
+            else
+            {
+                InfoShow.SetMsgInfo("", null);
+            }
         }
        
 
         
-        public static  msgdata GetMsgInfo(string name)
+
+        //得到某个视图树节点的位置
+        public static string gettreepath(TreeNode node)
         {
-            foreach(DirectoryData dir in alldata)
+            string path=node.Text;
+
+            TreeNode node2=node.Parent;
+
+            while(node2 != null)
             {
-                foreach(msgdata msg in dir.protos)
+                path = node2.Text +"\\"+ path;
+
+                node2 = node2.Parent;
+            }
+
+            return path;
+        }
+
+        public static tree_data gettreedata(TreeNode node)
+        {
+            string path = gettreepath(node);
+
+            string[] names = path.Split('\\');
+
+            if(names.Length == 1)
+            {
+                return alldata;
+            }
+
+            List<tree_data> temp = alldata.nodes;
+
+            int index = 1;
+
+            while(temp != null)
+            {
+                foreach(var item in temp)
                 {
-                    if(msg.name == name)
-                        return msg;
+                    if(item.name == names[index])
+                    {
+                        if(index == names.Length - 1)
+                        {
+                            return item;
+                        }
+                        else
+                        {
+                            temp = item.nodes;
+                            index++;
+                            break;
+                        }
+                    }
                 }
             }
+
             return null;
         }
 
-        public static void ResetMsgData()
+        public static TreeNode gettreenode(tree_data node)
         {
-            msgdata msg = GetCurrProto();
 
-            UpdateTree();
+            string path = node.name;
 
-            tv.SelectedNode = GetNodeForProto(msg);
+            tree_data node2 = node.prev_node;
+
+            while(node2 != null)
+            {
+                path = node2.name + "/" + path;
+
+                node2 = node2.prev_node;
+            }
+
+
+            string[] names = path.Split('/');
+
+          
+            TreeNodeCollection temp = tv.Nodes;
+
+            int index = 0;
+
+            while(temp != null)
+            {
+                foreach(TreeNode item in temp)
+                {
+                    if(item.Text == names[index])
+                    {
+                        if(index == names.Length - 1)
+                        {
+                            return item;
+                        }
+                        else
+                        {
+                            temp = item.Nodes;
+                            index++;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
 
-        //获取当前目录
-        public static DirectoryData GetCurrDir()
+
+
+        //更新树
+
+        public static void UpdateTree()
         {
-            if(tv.SelectedNode.ImageIndex == 0)
+            tv.Nodes.Clear();
+
+            TreeNode node = fillNode(alldata);
+
+            tv.Nodes.Add(node);
+
+            tv.HideSelection = false;
+
+            WriteFileData();
+
+            //获取显示
+            if(InfoShow.treedata == null)
             {
-                return dir_map[tv.SelectedNode];
+                tv.ExpandAll();
             }
             else
             {
-                return dir_map[tv.SelectedNode.Parent];
-            }
-        }
+                tree_data temp=InfoShow.treedata.prev_node;
 
-        //获取当前协议
-        public static msgdata GetCurrProto()
-        {
-            if(tv.SelectedNode.ImageIndex == 1)
-            {
-                return proto_map[tv.SelectedNode];
-            }
-            return null;
-        }
-
-        //根据目录 获取节点
-        public static TreeNode GetNodeForDir(DirectoryData dir)
-        {
-            foreach(var item in dir_map)
-            {
-                if(item.Value == dir)
+                if(temp==null)
                 {
-                    return item.Key;
+                     tv.ExpandAll();
+                }
+
+                foreach(var item in temp.nodes)
+                {
+                    if(item == InfoShow.treedata)
+                    {
+                        //找到树节点
+                        tv.SelectedNode=gettreenode(item);
+                        return;
+                    }
+                }
+
+                tv.ExpandAll();
+                InfoShow.SetMsgInfo("", null);
+
+            }
+        }
+
+        public static TreeNode fillNode(tree_data nodedata)
+        {
+            TreeNode node = new TreeNode();
+
+            node.Text = nodedata.name;
+
+            if(nodedata.isdir == true)
+            {
+                node.ImageIndex = 0;
+                node.SelectedImageIndex = 0;
+
+                if(nodedata.nodes != null)
+                {
+                    foreach(var data in nodedata.nodes)
+                    {
+                        if(data.isdir == true)
+                        {
+                            TreeNode tempnode = fillNode(data);
+                            node.Nodes.Add(tempnode);
+                        }
+                       
+                    }
+                    foreach(var data in nodedata.nodes)
+                    {
+                        if(data.isdir == false)
+                        {
+                            TreeNode tempnode = fillNode(data);
+                            node.Nodes.Add(tempnode);
+                        }
+
+                    }
                 }
             }
-            return null;
-        }
-
-        //根据目录 获取节点
-        public static TreeNode GetNodeForProto(msgdata msg)
-        {
-            foreach(var item in proto_map)
+            else
             {
-                if(item.Value == msg)
-                {
-                    return item.Key;
-                }
+                node.ImageIndex = 1;
+                node.SelectedImageIndex = 1;
             }
-            return null;
+
+            return node;
         }
 
 
@@ -217,74 +391,16 @@ namespace MsgEdit
                 StreamReader sr = new StreamReader("data/data.txt");
                 string str = sr.ReadToEnd();
 
-                try
-                {
-                    alldata = JSON.Decode<List<DirectoryData>>(str);
-                }
-                catch(Exception ex)
-                {
-                    alldata = new List<DirectoryData>();
-                }
-
-                if(alldata == null)
-                {
-                    alldata = new List<DirectoryData>();
-                }
-               
-
                 sr.Close();
 
-                UpdateTree();
+                BuildTree(str);
             }
-        }
-
-
-
-        //更新树
-
-        public static void UpdateTree()
-        {
-            tv.Nodes.Clear();
-
-            dir_map.Clear();
-            proto_map.Clear();
-
-            //排序
-            alldata.Sort(ListSort);
-
-            foreach(DirectoryData dir in alldata)
+            else
             {
-                TreeNode node = new TreeNode();
-                node.Text = dir.index+" "+dir.name;
-                node.ImageIndex = 0;
-                node.SelectedImageIndex = 0;
-
-                dir_map.Add(node, dir);
-
-                foreach(msgdata msg in dir.protos)
-                {
-                    TreeNode node2 = new TreeNode();
-                    node2.Text = msg.name;
-                    node2.ImageIndex = 1;
-                    node2.SelectedImageIndex = 1;
-
-                    proto_map.Add(node2, msg);
-
-                    node.Nodes.Add(node2);
-                }
-
-                tv.Nodes.Add(node);
+                BuildTree("");
             }
 
-            tv.HideSelection = false;
-
-            WriteFileData();
-        }
-
-
-        private static int ListSort(DirectoryData data1,DirectoryData data2)
-        {
-            return data1.index > data2.index?1:0;
+           
         }
 
         //写入协议数据
@@ -296,12 +412,83 @@ namespace MsgEdit
             sw.Close();
         }
 
+        public static void BuildTree(string data)
+        {
+           
+            try
+            {
+                alldata = JSON.Decode<tree_data>(data);
+            }
+            catch(Exception ex)
+            {
+                alldata = new tree_data();
+            }
+
+            if(alldata.name != "...")
+            {
+                alldata.isdir = true;
+                alldata.name = "...";
+            }
+
+            //设置树的上下级
+            SetFather(alldata);
+           
+            UpdateTree();
+        }
+
+        public static void SetFather(tree_data data)
+        {
+            List<tree_data> temps = data.nodes;
+
+            if(temps != null)
+            {
+                foreach(var node in temps)
+                {
+                    node.prev_node = data;
+                    SetFather(node);
+                }
+            }
+        }
 
         //导出协议文件
         public static void OutProtocolFile()
         {
-            OutCsharp2.OutFile(alldata);
-            OutJava.OutFile(alldata);
+            OutCsharp.OutFile(alldata);
+            //OutJava.OutFile(alldata);
+        }
+
+        //添加后退数据
+        public static void addBackData()
+        {
+            back_data.Push(JSON.Encode(alldata));
+        }
+
+        //弹出后退数据
+        public static string popBackData()
+        {
+            if(back_data.Count == 0)
+            {
+                return null;
+            }
+
+            return back_data.Pop();
+        }
+
+        //添加前进数据
+        public static void addForwardData()
+        {
+            forward_data.Push(JSON.Encode(alldata));
+        }
+
+        //弹出前进数据
+        public static string popForwardData()
+        {
+            if(forward_data.Count == 0)
+            {
+                return null;
+            }
+
+            return forward_data.Pop();
         }
 
     }

@@ -75,6 +75,12 @@
     <Compile Include="Form4.Designer.cs">
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddParamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddParamForm.Designer.cs">
+      <DependentUpon>AddParamForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_AddEnumType.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,9 +94,9 @@
       <DependentUpon>Form_CreateEnum.cs</DependentUpon>
     </Compile>
     <Compile Include="JSON.cs" />
-    <Compile Include="MsgInfo.cs" />
+    <Compile Include="InfoShow.cs" />
     <Compile Include="MsgList.cs" />
-    <Compile Include="OutCsharp2.cs" />
+    <Compile Include="OutCsharp.cs" />
     <Compile Include="OutJava.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +111,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form4.resx">
       <DependentUpon>Form4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddParamForm.resx">
+      <DependentUpon>AddParamForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_AddEnumType.resx">
       <DependentUpon>Form_AddEnumType.cs</DependentUpon>

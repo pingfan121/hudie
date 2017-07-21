@@ -16,6 +16,8 @@ namespace MsgEdit
 
         public static Button btn;
         public static Button btn2;
+
+       
         public Form1()
         {
             InitializeComponent();
@@ -36,9 +38,9 @@ namespace MsgEdit
 
              MsgList.SetTreeView(treeView1);
 
-             MsgInfo.name = tb_name;
-             MsgInfo.explain = tb_shuoming;
-             MsgInfo.content = tb_content;
+//              MsgInfo.name = tb_name;
+//              MsgInfo.explain = tb_shuoming;
+//              MsgInfo.content = tb_content;
 
              MsgList.ReadFileData();
 
@@ -50,6 +52,9 @@ namespace MsgEdit
             lb_meiju.SelectedIndexChanged += lb_meiju_SelectedIndexChanged;
             EnumPanel.lv_showenum = lv_showenum;
             lv_showenum.SelectedIndexChanged += listView1_SelectedIndexChanged;
+
+
+
         
 
             ImageList iList = new ImageList();
@@ -72,15 +77,30 @@ namespace MsgEdit
             btn2.Size = new Size(60,
             24);
 
+
+         
+
             EnumPanel.ReadFileData();
 
+            setInfoShowView();
+
+        }
+
+        public void setInfoShowView()
+        {
+            InfoShow.lv_req = lv_req;
+            InfoShow.lv_res = lv_res;
+            InfoShow.luyou = t_luyou;
+
+            InfoShow.btn_add1 = btn_add1;
+            InfoShow.btn_add2 = btn_add2;
+
+            InfoShow.initView();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form2 form = new Form2();
-            form.StartPosition = FormStartPosition.CenterParent;
-            form.ShowDialog();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -90,6 +110,7 @@ namespace MsgEdit
                 //创建
                 Form3 form = new Form3();
                 form.StartPosition = FormStartPosition.CenterParent;
+                form.setData(MsgList.gettreedata(treeView1.SelectedNode));
                 form.ShowDialog();
             }
         }
@@ -108,40 +129,15 @@ namespace MsgEdit
         {
             if(treeView1.SelectedNode.Parent != null)
             {
-                 msgdata data = MsgList.GetMsgInfo(treeView1.SelectedNode.Text);
-
-                 if(data != null)
-                 {
-                     MsgInfo.SetMsgInfo(treeView1.SelectedNode, data);
-                 }
-                 else
-                 {
-                     MsgInfo.CleanData();
-                 }
-                
+                 MsgList.SelectNodeChange(treeView1.SelectedNode);
             }
-            else
-            {
-                MsgInfo.CleanData();
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            MsgInfo.SaveData();
-        }
-
-        private void btn_setpath_Click(object sender, EventArgs e)
-        {
-            Form4 form = new Form4();
-            form.StartPosition = FormStartPosition.CenterParent;
-            form.ShowDialog();
+          
         }
 
 
-        private void btn_delpro_Click(object sender, EventArgs e)
+        private void btn_del_Click(object sender, EventArgs e)
         {
-            MsgList.SubMsg();
+            MsgList.delNode();
         }
 
      
@@ -246,9 +242,19 @@ namespace MsgEdit
 
         private void button7_Click(object sender, EventArgs e)
         {
-
+            if(treeView1.SelectedNode != null)
+            {
+                //创建
+                Form2 form = new Form2();
+                form.StartPosition = FormStartPosition.CenterParent;
+                form.ShowDialog();
+            }
         }
 
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
 
     }
 }

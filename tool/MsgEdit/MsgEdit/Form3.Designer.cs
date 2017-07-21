@@ -34,7 +34,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(157, 112);
+            this.button1.Location = new System.Drawing.Point(230, 35);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -44,21 +44,21 @@
             // 
             // tb1
             // 
-            this.tb1.Location = new System.Drawing.Point(99, 51);
+            this.tb1.Location = new System.Drawing.Point(44, 37);
             this.tb1.Name = "tb1";
-            this.tb1.Size = new System.Drawing.Size(204, 21);
+            this.tb1.Size = new System.Drawing.Size(155, 21);
             this.tb1.TabIndex = 1;
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(390, 166);
+            this.ClientSize = new System.Drawing.Size(343, 103);
             this.Controls.Add(this.tb1);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "Form3";
-            this.Text = "请输入协议名字";
+            this.Text = "修改节点";
             this.ResumeLayout(false);
             this.PerformLayout();
 

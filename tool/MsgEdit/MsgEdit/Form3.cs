@@ -19,12 +19,17 @@ namespace MsgEdit
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(tb1.Text != "")
-            {
+            data.name = tb1.Text;
+            MsgList.UpdateTree();
+            this.Close();
+        }
 
-                MsgList.AddMsg(tb1.Text);
-                this.Visible = false;
-            }
+        public tree_data data;
+        public void setData(tree_data data)
+        {
+            this.data = data;
+
+            tb1.Text = data.name;
         }
     }
 }
