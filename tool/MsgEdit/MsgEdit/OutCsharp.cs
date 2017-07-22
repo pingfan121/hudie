@@ -51,7 +51,9 @@ namespace MsgEdit
 
             foreach(var item in treedata.nodes)
             {
+                
                 buildCodeFile(item);
+                
             }
 
             //生成映射文件
@@ -60,12 +62,29 @@ namespace MsgEdit
                 buildMapFile(item);
             }
 
+            //生成协议文件
+            string filepath = path + "app\\info\\";
+
+            if(Directory.Exists(filepath) == false)
+            {
+                Directory.CreateDirectory(filepath);
+            }
+
+            foreach(var item in treedata.nodes)
+            {
+                buildMsgFile(item);
+            }
+
+
             MessageBox.Show("导出成功");
         }
 
           //生成代码文件
           private static void buildCodeFile(tree_data treedata)
           {
+
+              if(treedata.name == "info")
+                  return;
 
               string filepath = path + getLuYouPath(treedata);
 
@@ -175,24 +194,15 @@ namespace MsgEdit
               sw.WriteLine("\t}");
               sw.WriteLine("}");
 
-//               foreach(var item in dic1.Values)
-//               {
-//                   sw.WriteLine(item);
-//               }
-// 
-//               foreach(var item in dic2.Values)
-//               {
-//                   sw.WriteLine(item);
-//               }
-
-
               sw.Close();
-
-
           }
 
           private static void FillMapFile(tree_data treedata, Dictionary<string, string> dic1, Dictionary<string, string> dic2)
           {
+
+              if(treedata.name == "info")
+                  return;
+
               if(treedata.isdir == false)
               {
                   string temp = getLuYouPath2(treedata.prev_node).Replace('\\', '.');
@@ -220,6 +230,68 @@ namespace MsgEdit
         {
             return "msg_map.Add(\"hudie.\"+\""+temp2+"\", (("+temp1+")class_map[\"hudie." + temp1+"\"])."+name+");";
         }
+
+
+        //生成消息文件
+        private static void buildMsgFile(tree_data treedata)
+        {
+
+
+
+            if(treedata.isdir == true)
+            {
+                if(treedata.nodes != null)
+                {
+                    foreach(var node in treedata.nodes)
+                    {
+                        buildMsgFile(node);
+                    }
+                }
+               
+                return;
+            }
+
+              string filepath = path + "app\\info\\";
+
+            string classname="";
+
+            if(treedata.prev_node.name!="info")
+            {
+                 classname="res_"+treedata.prev_node.name+"_"+treedata.name;
+            }
+            else
+            {
+                classname=treedata.name;
+            }
+
+            filepath+=classname+".cs";
+
+            //打开文件
+            StreamWriter sw = new StreamWriter(filepath, false, Encoding.UTF8);
+
+           
+            sw.WriteLine("using System;");
+            sw.WriteLine("using System.Collections.Generic;");
+            sw.WriteLine("using System.Linq;");
+            sw.WriteLine("using System.Text;");
+            sw.WriteLine("");
+
+            sw.WriteLine("namespace hudie.app.info");
+            sw.WriteLine("{");
+            sw.WriteLine("\tpublic partial class "+classname);
+            sw.WriteLine("\t{");
+
+            foreach(var temp in treedata.data.res_params)
+            {
+                sw.WriteLine("\t\tpublic "+temp.param_type+" "+temp.param_name+";//"+temp.param_explain);
+            }
+        
+            sw.WriteLine("\t}");
+            sw.WriteLine("}");
+
+            sw.Close();
+        }
+
 
 
         //private static void CreateCodeID(List<DirectoryData> protos)
