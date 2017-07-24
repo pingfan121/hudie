@@ -9,15 +9,18 @@ namespace hudie.app
 {
 	public partial class MapAppMsg
 	{
-		private void init_class_map()
+		private void init_class_map(GameApp app)
 		{
-			class_map.Add("hudie."+"app.module.user", new app.module.user());
+			class_map.Add("hudie."+"app.module.user", new app.module.user(app));
 		}
 		private void init_msg_map()
 		{
-			msg_map.Add("hudie."+"app.module.user.userinfo", ((app.module.user)class_map["hudie.app.module.user"]).userinfo);
-			msg_map.Add("hudie."+"app.module.user.test2", ((app.module.user)class_map["hudie.app.module.user"]).test2);
-			msg_map.Add("hudie."+"app.module.user.login", ((app.module.user)class_map["hudie.app.module.user"]).login);
+			msg_map.Add("hudie."+"app.module.user.wx_login", ((app.module.user)class_map["hudie.app.module.user"]).wx_login);
+		}
+		private void init_req_map()
+		{
+			req_map.Add("hudie.app.module.user.wx_login",new List<string>());
+			req_map["hudie.app.module.user.wx_login"].Add("wx_token");
 		}
 	}
 }

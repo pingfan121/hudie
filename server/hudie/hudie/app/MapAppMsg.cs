@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 
 namespace hudie.app
 {
-    public delegate void msg_dispose(GameApp app, HttpInfo info);
+    public delegate void msg_dispose(HttpInfo info);
     public partial class MapAppMsg
     {
         public Dictionary<string,Object> class_map=new Dictionary<string,object>();
 
         public Dictionary<string, msg_dispose> msg_map = new Dictionary<string, msg_dispose>();
 
-        public void init()
+        public Dictionary<string, List<string>> req_map = new Dictionary<string, List<string>>();
+
+        public void init(GameApp app)
         {
-            init_class_map();
+            init_class_map(app);
 
             init_msg_map();
+
+            init_req_map();
         }
 
 //         private void init_class_map()
@@ -30,6 +34,7 @@ namespace hudie.app
 //         {
 //             msg_map.Add("hudie." + "app.module.user.login", ((app.module.user)class_map["hudie." + "app.module.user"]).login);
 //         }
+
 
     }
 }

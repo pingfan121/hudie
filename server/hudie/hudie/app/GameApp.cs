@@ -28,7 +28,7 @@ namespace hudie
         private MapAppMsg msg_map = new MapAppMsg();
 
         public ConcurrentQueue<HttpInfo> msg_data = new ConcurrentQueue<HttpInfo>();
-        
+
 
         public void init()
         {
@@ -41,7 +41,7 @@ namespace hudie
             thread.Start();
 
             //消息映射
-            msg_map.init();
+            msg_map.init(this);
         }
 
         public void addMsg(HttpInfo info)
@@ -66,7 +66,27 @@ namespace hudie
                         {
                             try
                             {
-                                msg_map.msg_map[msg.funpath](this,msg);
+                                if(msg_map.req_map.ContainsKey(msg.funpath))
+                                {
+                                    int flag = 0;
+
+                                    foreach(var item in msg_map.req_map[msg.funpath])
+                                    {
+                                        if(msg.req_params.ContainsKey(item) == false)
+                                        {
+                                            flag = 1;
+                                            break;
+                                        }
+                                    }
+
+                                    if(flag==1)
+                                    {
+                                        sendErrorMsg(msg, EnumMsgState.param_err);
+                                        continue;
+                                    }
+                                }
+                                
+                                msg_map.msg_map[msg.funpath](msg);
                             }
                             catch(Exception ex)
                             {
@@ -74,17 +94,17 @@ namespace hudie
                                 Log.error(ex.Message);
                                 Log.error(ex.StackTrace);
 
-                                sendErrorMsg(msg.context, (int)EnumMsgState.fun_err);
+                                sendErrorMsg(msg, EnumMsgState.fun_err);
                             }
                         }
                         else
                         {
-                            sendErrorMsg(msg.context, (int)EnumMsgState.fun_err);
+                            sendErrorMsg(msg, EnumMsgState.fun_err);
                         }
                     }
                     else
                     {
-                        sendErrorMsg(msg.context, (int)EnumMsgState.module_err);
+                        sendErrorMsg(msg, EnumMsgState.module_err);
                     }
                 }
                 else
@@ -97,9 +117,9 @@ namespace hudie
 
         //返回消息
       
-        public void sendMsg(HttpListenerContext context, Object msg)
+        public void sendMsg(HttpInfo reqinfo, Object msg)
         {
-            HttpListenerResponse reponse = context.Response;
+            HttpListenerResponse reponse = reqinfo.context.Response;
             StreamWriter writer = new StreamWriter(reponse.OutputStream,Encoding.UTF8);
 
             backmsg.error = 0;
@@ -110,18 +130,26 @@ namespace hudie
             writer.Close();
             reponse.Close();
         }
-        public void sendErrorMsg(HttpListenerContext context,int err)
+        public void sendErrorMsg(HttpInfo reqinfo,EnumMsgState err)
         {
-            HttpListenerResponse reponse = context.Response;
-            StreamWriter writer = new StreamWriter(reponse.OutputStream);
+            try
+            {
+                HttpListenerResponse reponse = reqinfo.context.Response;
+                StreamWriter writer = new StreamWriter(reponse.OutputStream);
 
-            backmsg.error = err;
-            backmsg.msg = new object();
+                backmsg.error = (int)err;
+                backmsg.msg = new object();
 
-            writer.Write(JSON.Encode(backmsg));
+                writer.Write(JSON.Encode(backmsg));
 
-            writer.Close();
-            reponse.Close();
+                writer.Close();
+                reponse.Close();
+            }
+            catch(Exception ex)
+            {
+                Log.error(ex);
+            }
+           
         }
 
         //----------数据库读取---------

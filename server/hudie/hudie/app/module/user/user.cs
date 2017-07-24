@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace hudie.app.module
 {
-    public partial class user
+    public partial class user:ModuleBase
     {
-
+        public user(GameApp app)
+        {
+            this.app = app;
+        }
     }
 }

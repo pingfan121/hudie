@@ -20,7 +20,7 @@ namespace hudie.net
         public string modpath;
         public string funpath;
         public HttpListenerContext context;
-        public Hashtable ht = new Hashtable();
+        public Dictionary<string, string> req_params = new Dictionary<string, string>();
     }
     class NetHttp
     {
@@ -194,21 +194,26 @@ namespace hudie.net
                 return EnumMsgState.module_err;
             }
 
-            string[] temp=param.Split('&');
+          
 
             //验证参数
-
-            foreach(var str in temp)
+            if(param != "")
             {
-                string[] temp2 = str.Split('=');
+                string[] temp = param.Split('&');
 
-                if(temp2.Length != 2)
+                foreach(var str in temp)
                 {
-                    return EnumMsgState.param_err;
-                }
+                    string[] temp2 = str.Split('=');
 
-                info.ht.Add(temp2[0], temp2[1]);
+                    if(temp2.Length != 2)
+                    {
+                        return EnumMsgState.param_err;
+                    }
+
+                    info.req_params.Add(temp2[0], temp2[1]);
+                }
             }
+           
 
             info.funpath = fun_path;
             info.modpath = mod_path;

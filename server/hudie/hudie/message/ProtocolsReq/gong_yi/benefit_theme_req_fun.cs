@@ -59,7 +59,7 @@ namespace messages
           }
 
           //´¦Àí½áÊø
-           msg.app.sendMsg(req.context, res);
+        //   msg.app.sendMsg(req.context, res);
 
          
       }
