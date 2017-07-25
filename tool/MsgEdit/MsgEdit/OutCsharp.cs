@@ -62,6 +62,12 @@ namespace MsgEdit
                 buildMapFile(item);
             }
 
+//             //生成请求参数文件
+//             foreach(var item in treedata.nodes)
+//             {
+//                 buildReqFile(item);
+//             }
+
             //生成协议文件
             string filepath = path + "app\\info\\";
 
@@ -134,7 +140,7 @@ namespace MsgEdit
               sw.WriteLine("{");
               sw.WriteLine("\tpublic partial class "+treedata.prev_node.name);
               sw.WriteLine("\t{");
-              sw.WriteLine("\t\tpublic void " + treedata.name + "(GameApp app, HttpInfo info)");
+              sw.WriteLine("\t\tpublic void " + treedata.name + "(HttpInfo reqinfo)");
               sw.WriteLine("\t\t{");
               sw.WriteLine("\t\t");
               sw.WriteLine("\t\t}");
@@ -154,7 +160,11 @@ namespace MsgEdit
               Dictionary<string,string> dic1 = new Dictionary<string,string>();
               Dictionary<string, string> dic2 = new Dictionary<string, string>();
 
+              Dictionary<string, List<string>> dic3 = new Dictionary<string, List<string>>();
+
               FillMapFile(treedata, dic1, dic2);
+
+              FillReqFile(treedata, dic3);
 
               //然后填写
 
@@ -174,7 +184,7 @@ namespace MsgEdit
               sw.WriteLine("\tpublic partial class MapAppMsg");
               sw.WriteLine("\t{");
 
-              sw.WriteLine("\t\tprivate void init_class_map()");
+              sw.WriteLine("\t\tprivate void init_class_map(GameApp app)");
               sw.WriteLine("\t\t{");
               foreach(var item in dic1.Values)
               {
@@ -182,6 +192,8 @@ namespace MsgEdit
               }
             //  sw.WriteLine("\t\t");
               sw.WriteLine("\t\t}");
+
+              //消息映射函数
               sw.WriteLine("\t\tprivate void init_msg_map()");
               sw.WriteLine("\t\t{");
               foreach(var item in dic2.Values)
@@ -190,6 +202,24 @@ namespace MsgEdit
               }
               //  sw.WriteLine("\t\t");
               sw.WriteLine("\t\t}");
+
+
+              sw.WriteLine("\t\tprivate void init_req_map()");
+              sw.WriteLine("\t\t{");
+              foreach(var item in dic3)
+              {
+                  sw.WriteLine("\t\t\t" + "req_map.Add(\"" + item.Key + "\",new List<string>());");
+              }
+              foreach(var item in dic3)
+              {
+                  foreach(var temp in item.Value)
+                  {
+                      sw.WriteLine("\t\t\t" + "req_map[\"" + item.Key + "\"].Add(\"" + temp + "\");");
+                  }
+              }
+             
+              sw.WriteLine("\t\t}");
+
 
               sw.WriteLine("\t}");
               sw.WriteLine("}");
@@ -222,9 +252,41 @@ namespace MsgEdit
               }
              
           }
+          private static void FillReqFile(tree_data treedata, Dictionary<string, List<string>> dic1)
+          {
+
+              if(treedata.name == "info")
+                  return;
+
+              if(treedata.isdir == false)
+              {
+                  string temp2 = getLuYouPath2(treedata).Replace('\\', '.');
+
+                  if(treedata.data.req_params!=null && treedata.data.req_params.Count!=0)
+                  {
+                      dic1["hudie." + temp2] = new List<string>();
+
+                  
+                      foreach(var temp in treedata.data.req_params)
+                      {
+                          dic1["hudie." + temp2].Add(temp.param_name);
+                      }
+                  }
+                
+              }
+
+              if(treedata.nodes != null)
+              {
+                  foreach(var node in treedata.nodes)
+                  {
+                      FillReqFile(node, dic1);
+                  }
+              }
+
+          }
         private static string getclassname1(string temp)
         {
-            return "class_map.Add(\"hudie.\"+\"" + temp + "\", new " + temp + "());";
+            return "class_map.Add(\"hudie.\"+\"" + temp + "\", new " + temp + "(app));";
         }
         private static string getclassname2(string temp1,string temp2,string name)
         {

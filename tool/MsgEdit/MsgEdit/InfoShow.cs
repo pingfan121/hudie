@@ -73,7 +73,7 @@ namespace MsgEdit
             24);
 
             lv_req.SelectedIndexChanged += SelectedIndexChanged;
-            lv_req.SelectedIndexChanged += SelectedIndexChanged;
+            lv_res.SelectedIndexChanged += SelectedIndexChanged;
 
             btn_add1.Click += btn_add_event;
             btn_add2.Click += btn_add_event;
@@ -257,9 +257,9 @@ namespace MsgEdit
             else
             {
                 type = 2;
-                if(lv_req.SelectedItems.Count > 0)
+                if(lv_res.SelectedItems.Count > 0)
                 {
-                    paramname = lv_req.SelectedItems[0].SubItems[0].Text;
+                    paramname = lv_res.SelectedItems[0].SubItems[0].Text;
 
                 }
             }
