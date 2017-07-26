@@ -25,16 +25,5 @@ namespace hudie.app
             init_req_map();
         }
 
-//         private void init_class_map()
-//         {
-//             class_map.Add("hudie."+"app.module.user", new app.module.user());
-//         }
-// 
-//         private void init_msg_map()
-//         {
-//             msg_map.Add("hudie." + "app.module.user.login", ((app.module.user)class_map["hudie." + "app.module.user"]).login);
-//         }
-
-
     }
 }

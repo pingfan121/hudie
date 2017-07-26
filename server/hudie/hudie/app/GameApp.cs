@@ -29,6 +29,12 @@ namespace hudie
 
         public ConcurrentQueue<HttpInfo> msg_data = new ConcurrentQueue<HttpInfo>();
 
+        public ConcurrentQueue<sql_struct> sql_read_data = new ConcurrentQueue<sql_struct>();
+       
+        public ConcurrentQueue<sql_struct> sql_write_data = new ConcurrentQueue<sql_struct>();
+
+        public ConcurrentQueue<sql_struct> sql_data_back = new ConcurrentQueue<sql_struct>();
+
 
         public void init()
         {
@@ -42,6 +48,16 @@ namespace hudie
 
             //消息映射
             msg_map.init(this);
+
+            //数据库读取线程
+            Thread sql_read_thread = new Thread(sql_read);
+            sql_read_thread.IsBackground = true;
+            sql_read_thread.Start();
+
+            //数据库写入线程
+            Thread sql_write_thread = new Thread(sql_write);
+            sql_write_thread.IsBackground = true;
+            sql_write_thread.Start();
         }
 
         public void addMsg(HttpInfo info)
@@ -107,6 +123,17 @@ namespace hudie
                         sendErrorMsg(msg, EnumMsgState.module_err);
                     }
                 }
+
+                sql_struct sql = null;
+
+                if(sql_data_back.TryDequeue(out sql) == true)
+                {
+                    if(sql.fun != null)
+                    {
+                        sql.fun(sql);
+                    }
+                   
+                }
                 else
                 {
                     Thread.Sleep(20);
@@ -114,6 +141,45 @@ namespace hudie
             }
         }
 
+        private void sql_read()
+        {
+
+            while(true)
+            {
+                sql_struct sql = null;
+
+                if(sql_read_data.TryDequeue(out sql) == true)
+                {
+                    sql.cmd.processRequest();
+
+                    sql_data_back.Enqueue(sql);
+                }
+                else
+                {
+                    Thread.Sleep(20);
+                }
+            }
+        }
+
+        private void sql_write()
+        {
+
+            while(true)
+            {
+                sql_struct sql = null;
+
+                if(sql_write_data.TryDequeue(out sql) == true)
+                {
+                    sql.cmd.processRequest();
+
+                    sql_data_back.Enqueue(sql);
+                }
+                else
+                {
+                    Thread.Sleep(20);
+                }
+            }
+        }
 
         //返回消息
       
@@ -153,19 +219,23 @@ namespace hudie
         }
 
         //----------数据库读取---------
-        public List<T> db_Select<T>(string req) where T : TbLogic,new()
+        public void db_Select(sql_struct sql)
         {
-            DbSelect<T> dbselect = new DbSelect<T>(connect, req, null);
-            dbselect.processRequest();
-
-            return dbselect.ListRecord;
+            sql.cmd.DbConnect = this.connect;
+            sql_read_data.Enqueue(sql);
         }
 
         //数据库插入
-        public void db_Insert<T>(T t) where T : TbLogic, new()
+        public void db_Insert(sql_struct sql)
         {
-            DbInsert<T> dbinsert = new DbInsert<T>(connect, t, null);
-            dbinsert.processRequest();
+            sql.cmd.DbConnect = this.connect;
+            sql_write_data.Enqueue(sql);
+        }
+
+        //数据库更新
+        public void db_Update(sql_struct sql)
+        {
+            sql_write_data.Enqueue(sql);
         }
 
     }

@@ -168,6 +168,8 @@ namespace hudie.net
                 param=urlparam.Substring(index+1);
             }
 
+          //  param = System.Web.HttpUtility.UrlDecode(param);
+
             //检测是否有处理模块
             fun_path = "hudie." + fun_path.Replace('/', '.');
 

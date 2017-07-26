@@ -91,6 +91,7 @@ namespace MsgEdit
             InfoShow.lv_req = lv_req;
             InfoShow.lv_res = lv_res;
             InfoShow.luyou = t_luyou;
+            InfoShow.tb_explain = tb_explain;
 
             InfoShow.btn_add1 = btn_add1;
             InfoShow.btn_add2 = btn_add2;
@@ -252,6 +253,11 @@ namespace MsgEdit
         }
 
         private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_add2_Click(object sender, EventArgs e)
         {
 
         }

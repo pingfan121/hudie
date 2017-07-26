@@ -35,25 +35,11 @@ namespace MsgEdit
         {
             getPath();
 
-            //先生协议id文件
-//             CreateCodeID(protos);
-// 
-//             //导出协议文件
-//             CreateProtoFiles(protos);
-// 
-//             //导出协议处理文件
-//             CreateProtoReq(protos);
-// 
-//             //导出协议映射处理函数文件
-//             CreateprotoMapFile(protos);
-
             //生成代码文件
 
             foreach(var item in treedata.nodes)
             {
-                
                 buildCodeFile(item);
-                
             }
 
             //生成映射文件
@@ -61,12 +47,6 @@ namespace MsgEdit
             {
                 buildMapFile(item);
             }
-
-//             //生成请求参数文件
-//             foreach(var item in treedata.nodes)
-//             {
-//                 buildReqFile(item);
-//             }
 
             //生成协议文件
             string filepath = path + "app\\info\\";
@@ -149,7 +129,54 @@ namespace MsgEdit
 
             
               sw.Close();
+
+              //生成一下上层类文件
+              buildFatherFile(treedata);
           }
+
+          private static void buildFatherFile(tree_data treedata)
+          {
+              tree_data father_data = treedata.prev_node;
+
+              //打开文件
+              string fatherpath = path + getLuYouPath(father_data);
+
+              fatherpath += "\\"+father_data.name+".cs";
+
+              if(File.Exists(fatherpath) == true)
+              {
+                  return;
+              }
+
+              
+
+              StreamWriter sw = new StreamWriter(fatherpath, false, Encoding.UTF8);
+
+              sw.WriteLine("using hudie.net;");
+              sw.WriteLine("using System;");
+              sw.WriteLine("using System.Collections.Generic;");
+              sw.WriteLine("using System.Linq;");
+              sw.WriteLine("using System.Text;");
+              sw.WriteLine("using GameServer.Define.EnumNormal;");
+              sw.WriteLine(" using GameDb.Util;");
+              sw.WriteLine("");
+
+
+              sw.WriteLine("namespace hudie." + getLuYouPath(father_data.prev_node).Replace('\\', '.'));
+              sw.WriteLine("{");
+              sw.WriteLine("\tpublic partial class " + father_data.name + " : ModuleBase");
+              sw.WriteLine("\t{");
+              sw.WriteLine("\t\tpublic " + father_data.name + "(GameApp app)");
+              sw.WriteLine("\t\t{");
+              sw.WriteLine("\t\t\tthis.app = app;");
+              sw.WriteLine("\t\t}");
+              sw.WriteLine("\t}");
+              sw.WriteLine("}");
+
+
+              sw.Close();
+          }
+
 
           //生成映射文件
           private static void buildMapFile(tree_data treedata)

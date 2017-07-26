@@ -10,6 +10,7 @@ using Enum;
 using GameLib.Util;
 using GameDb.Logic;
 using hudie.app.info;
+using GameLib.Database;
 
 namespace hudie.app.module
 {
@@ -55,8 +56,6 @@ namespace hudie.app.module
               wb.DownloadDataCompleted += weixin_back;
 
               wb.DownloadDataAsync(new Uri(String.Format("https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}", wx_token, wx_app_id)), reqinfo);
-
-         
 		}
 
         public void weixin_back(object sender, DownloadDataCompletedEventArgs e)
@@ -78,39 +77,15 @@ namespace hudie.app.module
                 {
                     //没有错误...
 
-                    //查询数据是否已经有了记录
-                    List<TbAppUser> users = app.db_Select<TbAppUser>("select * from app_user where wx_id='" + info.unionid + "';");
+                    sql_struct sql = new sql_struct();
 
-                    if(users == null || users.Count == 0)
-                    {
-                        //没有查询到数据  插入一条
+                    DbSelect<TbAppUser> select = new DbSelect<TbAppUser>(null, "select * from app_user where wx_id='" + info.unionid + "';");
 
-                        TbAppUser user = new TbAppUser();
-                        user.Id = ObjectId.NewObjectId().ToString();
-                        user.WxId = info.unionid;
-                        user.Sex = info.sex;
-                        user.Mobile = "";
-                        user.Mail = "";
-                        user.Pass = "";
-                        user.WbId = "";
-                        user.Name = info.nickName;
-                        user.Head = info.headimgurl;
+                    sql.data1 = reqinfo;
+                    sql.data2 = info;
+                    sql.cmd = select;
 
-                        user.Createtime = DateUtil.ToUnixTime2(DateTime.Now);
-
-                        app.db_Insert(user);
-
-                        Log.warn("插入一条微信登陆数据..wx_id=" + info.unionid + "  昵称:" + info.nickName);
-                    }
-
-
-                    res_user_wx_login res = new res_user_wx_login();
-
-                    res.name = info.nickName;
-                    res.sex = info.sex;
-                    res.face = info.headimgurl;
-
-                    app.sendMsg(reqinfo, res);
+                    app.db_Select(sql);
                 }
             }
             catch(Exception ex)
@@ -119,14 +94,47 @@ namespace hudie.app.module
                 app.sendErrorMsg(reqinfo, EnumMsgState.login_wx_error);
                 return;
             }
+        }
 
+        private void wx_login_sql_back(sql_struct sql)
+        {
+            HttpInfo reqinfo = sql.data1 as HttpInfo;
+            weixin_info info = sql.data2 as weixin_info;
 
+            DbSelect<TbAppUser> user_select = sql.cmd as DbSelect<TbAppUser>;
 
-           
+            if(user_select.ListRecord == null || user_select.ListRecord.Count == 0)
+            {
+                    //没有查询到数据  插入一条
 
+                    TbAppUser user = new TbAppUser();
+                    user.Id = ObjectId.NewObjectId().ToString();
+                    user.WxId = info.unionid;
+                    user.Sex = info.sex;
+                    user.Mobile = "";
+                    user.Mail = "";
+                    user.Pass = "";
+                    user.WbId = "";
+                    user.Name = info.nickName;
+                    user.Head = info.headimgurl;
 
+                    user.Createtime = DateUtil.ToUnixTime2(DateTime.Now);
 
-           
+                    sql = new sql_struct();
+
+                    sql.cmd = new DbInsert<TbAppUser>(null, user, null);
+
+                    app.db_Insert(sql);
+
+                    Log.warn("插入一条微信登陆数据..wx_id=" + info.unionid + "  昵称:" + info.nickName);
+            }
+            res_user_wx_login res = new res_user_wx_login();
+
+            res.name = info.nickName;
+            res.sex = info.sex;
+            res.face = info.headimgurl;
+
+            app.sendMsg(reqinfo, res);
         }
 	}
 }

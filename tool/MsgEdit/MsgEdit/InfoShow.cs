@@ -12,6 +12,7 @@ namespace MsgEdit
     {
 
         public static Label luyou;
+        public static TextBox tb_explain;
 
         public static ListView lv_req;
         public static ListView lv_res;
@@ -77,6 +78,8 @@ namespace MsgEdit
 
             btn_add1.Click += btn_add_event;
             btn_add2.Click += btn_add_event;
+
+            tb_explain.LostFocus += OnLostFocus;
         }
 
        
@@ -85,6 +88,7 @@ namespace MsgEdit
             treedata = data;
 
             luyou.Text = path;
+
 
             updateView();
         }
@@ -101,6 +105,8 @@ namespace MsgEdit
 
             if(treedata == null)
                 return;
+
+            tb_explain.Text = treedata.data.explain;
 
             foreach(var item in treedata.data.req_params)
             {
@@ -369,6 +375,16 @@ namespace MsgEdit
                 }
             }
             return null;
+        }
+
+        private static void OnLostFocus(object sender, EventArgs e)
+        {
+            if(treedata != null)
+            {
+                treedata.data.explain = tb_explain.Text;
+                updateView();
+            }
+           
         }
     }
 }

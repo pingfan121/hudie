@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.第一个标签 = new System.Windows.Forms.TabPage();
+            this.btn_add2 = new System.Windows.Forms.Button();
+            this.btn_add1 = new System.Windows.Forms.Button();
             this.lv_res = new System.Windows.Forms.ListView();
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -65,8 +67,8 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lb_meiju = new System.Windows.Forms.ListBox();
             this.button8 = new System.Windows.Forms.Button();
-            this.btn_add1 = new System.Windows.Forms.Button();
-            this.btn_add2 = new System.Windows.Forms.Button();
+            this.tb_explain = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.第一个标签.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -84,6 +86,8 @@
             // 
             // 第一个标签
             // 
+            this.第一个标签.Controls.Add(this.label4);
+            this.第一个标签.Controls.Add(this.tb_explain);
             this.第一个标签.Controls.Add(this.btn_add2);
             this.第一个标签.Controls.Add(this.btn_add1);
             this.第一个标签.Controls.Add(this.lv_res);
@@ -107,6 +111,25 @@
             this.第一个标签.Text = "协议";
             this.第一个标签.UseVisualStyleBackColor = true;
             // 
+            // btn_add2
+            // 
+            this.btn_add2.Location = new System.Drawing.Point(850, 328);
+            this.btn_add2.Name = "btn_add2";
+            this.btn_add2.Size = new System.Drawing.Size(60, 24);
+            this.btn_add2.TabIndex = 19;
+            this.btn_add2.Text = "添加";
+            this.btn_add2.UseVisualStyleBackColor = true;
+            this.btn_add2.Click += new System.EventHandler(this.btn_add2_Click);
+            // 
+            // btn_add1
+            // 
+            this.btn_add1.Location = new System.Drawing.Point(850, 138);
+            this.btn_add1.Name = "btn_add1";
+            this.btn_add1.Size = new System.Drawing.Size(60, 24);
+            this.btn_add1.TabIndex = 18;
+            this.btn_add1.Text = "添加";
+            this.btn_add1.UseVisualStyleBackColor = true;
+            // 
             // lv_res
             // 
             this.lv_res.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -119,7 +142,7 @@
             this.lv_res.FullRowSelect = true;
             this.lv_res.GridLines = true;
             this.lv_res.LabelEdit = true;
-            this.lv_res.Location = new System.Drawing.Point(380, 335);
+            this.lv_res.Location = new System.Drawing.Point(380, 354);
             this.lv_res.Name = "lv_res";
             this.lv_res.Size = new System.Drawing.Size(530, 173);
             this.lv_res.TabIndex = 17;
@@ -161,7 +184,7 @@
             this.lv_req.FullRowSelect = true;
             this.lv_req.GridLines = true;
             this.lv_req.LabelEdit = true;
-            this.lv_req.Location = new System.Drawing.Point(380, 134);
+            this.lv_req.Location = new System.Drawing.Point(380, 165);
             this.lv_req.Name = "lv_req";
             this.lv_req.Size = new System.Drawing.Size(530, 148);
             this.lv_req.TabIndex = 16;
@@ -244,7 +267,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(601, 303);
+            this.label3.Location = new System.Drawing.Point(377, 330);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 2;
@@ -255,7 +278,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(581, 99);
+            this.label2.Location = new System.Drawing.Point(377, 140);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
             this.label2.TabIndex = 1;
@@ -410,23 +433,22 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.OnCreateEnum);
             // 
-            // btn_add1
+            // tb_explain
             // 
-            this.btn_add1.Location = new System.Drawing.Point(850, 97);
-            this.btn_add1.Name = "btn_add1";
-            this.btn_add1.Size = new System.Drawing.Size(60, 24);
-            this.btn_add1.TabIndex = 18;
-            this.btn_add1.Text = "添加";
-            this.btn_add1.UseVisualStyleBackColor = true;
+            this.tb_explain.Location = new System.Drawing.Point(455, 99);
+            this.tb_explain.Name = "tb_explain";
+            this.tb_explain.Size = new System.Drawing.Size(455, 21);
+            this.tb_explain.TabIndex = 20;
             // 
-            // btn_add2
+            // label4
             // 
-            this.btn_add2.Location = new System.Drawing.Point(850, 301);
-            this.btn_add2.Name = "btn_add2";
-            this.btn_add2.Size = new System.Drawing.Size(60, 24);
-            this.btn_add2.TabIndex = 19;
-            this.btn_add2.Text = "添加";
-            this.btn_add2.UseVisualStyleBackColor = true;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(377, 102);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 16);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "请求说明";
             // 
             // Form1
             // 
@@ -485,6 +507,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.Button btn_add2;
         private System.Windows.Forms.Button btn_add1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tb_explain;
     }
 }
 

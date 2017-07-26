@@ -26,6 +26,7 @@ namespace MsgEdit
     {
         public List<info_data> req_params = new List<info_data>();
         public List<info_data> res_params = new List<info_data>();
+        public string explain = "";
     }
 
     //返回定义
