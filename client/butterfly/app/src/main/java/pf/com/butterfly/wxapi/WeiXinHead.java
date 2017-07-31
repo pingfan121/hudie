@@ -1,5 +1,7 @@
 package pf.com.butterfly.wxapi;
 
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
@@ -9,7 +11,9 @@ import com.tencent.mm.sdk.openapi.SendAuth;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pf.com.butterfly.GlobalData;
 import pf.com.butterfly.MainActivity;
@@ -18,6 +22,8 @@ import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.http.BmobHttp;
 import pf.com.butterfly.http.HttpBase;
+import pf.com.butterfly.manager.DataManager;
+import pf.com.butterfly.manager.MsgManager;
 import pf.com.butterfly.message.MsgBase;
 import pf.com.butterfly.message.Protocols.bored_record_items_res;
 import pf.com.butterfly.message.Protocols.login_weixin_req;
@@ -25,6 +31,8 @@ import pf.com.butterfly.message.Protocols.login_weixin_res;
 import pf.com.butterfly.message.net.IMsgResult;
 import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.bored.BoredAudioItemData;
+import pf.com.butterfly.module.info.res_user_wx_login;
+import pf.com.butterfly.module.okhttp.OkHttpUtils;
 import pf.com.butterfly.module.user.UserHead;
 import pf.com.butterfly.util.HDLog;
 
@@ -76,53 +84,54 @@ public class WeiXinHead
 
         HDLog.Toast("获取token....");
 
-        String url  = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="
-                + wx_app_id
-                + "&secret="
-                + wx_app_secret
-                + "&code="
-                + code
-                + "&grant_type=authorization_code";
+        Map<String,String> params=new HashMap<>();
+        params.put("appid",wx_app_id);
+        params.put("secret",wx_app_secret);
+        params.put("code",code);
+        params.put("grant_type","authorization_code");
 
-        HDLog.info("获取access_token的地址"+url);
-
-        if(http==null)
-        {
-            http=new BmobHttp(new IMsgHandler() {
-                @Override
-                public void onMsgDispose(int err,String result,Object userToken)
-                {
-                    OnMessage(err,result,userToken);
-                }
-            });
-        }
-
-        http.send(url,"");
+        OkHttpUtils.getInstance().sendAppMsg("https://api.weixin.qq.com/sns/oauth2/access_token",params,null,handler);
 
     }
-    //处理http返回
-    private static void OnMessage(int err,String result,Object userToken)
+
+    private static Handler handler=new Handler()
     {
-        HDLog.error("获取token返回....");
-
-        if(err==-99 ||err==-100 )
+        @Override
+        public void handleMessage(Message msg)
         {
-          //  http.errerDispose(msg);
-            HDLog.error("出现错误");
-            return ;
+            switch (msg.what)
+            {
+                case 0:
+                {
+                    Bundle bundle=msg.getData();
+
+                    int error=bundle.getInt("error");
+                    String result=bundle.getString("result");
+
+                    if(error!=0)
+                    {
+                        HDLog.Toast("微信登录出错:"+result);
+                        return ;
+                    }
+
+                    wx_result res =new Gson().fromJson(result,wx_result.class);
+
+                    login_weixin_req req=new login_weixin_req();
+
+                    req.acc_token=res.access_token;
+
+                    Map<String,String> params=new HashMap<>();
+                    params.put("wx_token",res.access_token);
+
+                    MsgManager.sendMsg("app/module/user/wx_login",params,msg_result);
+
+
+                    break;
+                }
+            }
         }
+    };
 
-        wx_result res =new Gson().fromJson(result,wx_result.class);
-
-        HDLog.Toast(res.access_token);
-
-        login_weixin_req req=new login_weixin_req();
-
-        req.acc_token=res.access_token;
-
-        NetManager.SendMsg(req,msg_result);
-
-    }
 
     class wx_result
     {
@@ -134,28 +143,27 @@ public class WeiXinHead
         public String unionid;
     }
 
-
-    //消息返回..................
-    private static IMsgResult msg_result=new IMsgResult()
+    private static IMsgHandler msg_result=new IMsgHandler()
     {
         @Override
-        public void onError(int err, String msg)
+        public void onMsgDispose(int err,String result,Object userToken)
         {
-          //  HDLog.Toast(msg);
+            if(err!=0)
+            {
+                HDLog.Toast("微信登录失败");
+                return ;
+            }
 
-            HDLog.Toast("微信登录错误,错误码:"+err);
-        }
-
-        @Override
-        public void onResult(MsgBase msg)
-        {
-            login_weixin_res res=(login_weixin_res)msg;
+            res_user_wx_login res =MsgManager.parseJson(result, res_user_wx_login.class);
 
             //注册成功
             HDLog.Toast("微信登录成功");
 
-            GlobalData.login_flag=true;
-            GlobalData.userinfo=res.info;
+            DataManager.login_flag=true;
+
+            DataManager.userinfo.name=res.name;
+            DataManager.userinfo.sex=res.sex;
+            DataManager.userinfo.face=res.face;
 
             //更新个人信息
             UserHead.getInstance().updateInfo();

@@ -1,13 +1,13 @@
 package pf.com.butterfly.module.update;
 
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 
 import com.google.gson.Gson;
@@ -23,10 +23,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import pf.com.butterfly.MainActivity;
-import pf.com.butterfly.hander.IMsgHandler;
-import pf.com.butterfly.hander.MsgHandler;
-import pf.com.butterfly.http.BmobHttp;
 import pf.com.butterfly.http.HttpBase;
+import pf.com.butterfly.module.okhttp.OkHttpUtils;
 import pf.com.butterfly.util.HDLog;
 
 /**
@@ -35,10 +33,9 @@ import pf.com.butterfly.util.HDLog;
 public class UpdateModule
 {
 
-   // public String updateurl ="http://pfkj.online/updateinfo.json";
     public static String updateurl ="http://www.pfkj.online/UpdateInfo.txt";
 
-
+    public static String debug_updateurl ="http://192.168.0.88:8080/UpdateInfo.txt";
 
 
     private static UpdateModule _instance=null;
@@ -55,41 +52,36 @@ public class UpdateModule
 
     private HttpBase http;
 
-    public void init()
+    public static void init()
     {
+        String url="";
 
+        if(MainActivity.main.isdebug==true)
+        {
+            url=debug_updateurl;
+        }
+        else
+        {
+            url=updateurl;
+        }
 
-        http=new HttpBase(new IMsgHandler() {
-            @Override
-            public void onMsgDispose(int err,String result,Object userToken)
-            {
-                OnUpdateInfoBack(err,result,userToken);
-            }
-        });
+         OkHttpUtils.getInstance().sendAppMsg(url,null,1,handler);
 
-        http.setGet();
-
-        http.send(updateurl,"");
 
     }
 
 
     //下载更新文件的返回
-    public void OnUpdateInfoBack(int err,String result,Object userToken)
+    public static void OnUpdateInfoBack(int err,String result)
     {
-        HDLog.error("收到了消息....");
-        HDLog.error("收到了消息:"+result);
-
-        if(err==-99 || err==-100)
+        if(err!=0)
         {
             //判断更新文件出现问题.....
             HDLog.Toast("获取服务器更新信息失败");
             return;
         }
 
-        String msgstr=result;
-
-        UpdateInfo info=new Gson().fromJson(msgstr,UpdateInfo.class);
+        UpdateInfo info=new Gson().fromJson(result,UpdateInfo.class);
 
         String currversion=getVersionName();
 
@@ -111,10 +103,11 @@ public class UpdateModule
     /*
      * 获取当前程序的版本号
      */
-    private String getVersionName()
+    private static String getVersionName()
     {
 
-        try {
+        try
+        {
             //获取packagemanager的实例
             PackageManager packageManager = MainActivity.main.getPackageManager();
             //getPackageName()是你当前类的包名，0代表是获取版本信息
@@ -126,27 +119,6 @@ public class UpdateModule
             return "";
         }
     }
-
-//    /*
-//     * 用pull解析器解析服务器返回的xml文件 (xml封装了版本号)
-//     */
-//    public static UpdataInfo getUpdataInfo(InputStream is) throws Exception{
-//
-//        BufferedReader in = new BufferedReader(
-//                new InputStreamReader(is));
-//
-//        String line;
-//        String result="";
-//
-//        while ((line = in.readLine()) != null)
-//        {
-//            result += line;
-//        }
-//
-//        Gson gson=new Gson();
-//        UpdataInfo info = gson.fromJson(result,UpdataInfo.class);
-//        return info;
-//    }
 
     public static File getFileFromServer(String path, ProgressDialog pd) throws Exception
     {
@@ -180,34 +152,53 @@ public class UpdateModule
         }
     }
 
-    ProgressDialog pd;    //进度条对话框
+    private static ProgressDialog pd;    //进度条对话框
 
-    Handler handler = new Handler(){
-
+    private static Handler handler=new Handler()
+    {
         @Override
         public void handleMessage(Message msg)
         {
-            // TODO Auto-generated method stub
-            super.handleMessage(msg);
-            switch (msg.what) {
-
-                case -99:
-                    //下载apk失败
-                    HDLog.Toast( "下载新版本失败");
-
+            switch (msg.what)
+            {
+                case 0:
+                {
+                    int token=(int)msg.obj;
+                    switch (token)
+                    {
+                        case 1:
+                        {
+                            Bundle bundle=msg.getData();
+                            int err=bundle.getInt("error");
+                            String result=bundle.getString("result");
+                            OnUpdateInfoBack(err,result);
+                            break;
+                        }
+                    }
 
                     break;
-                case 1:
+                }
+                case 101:
                 {
                     File file=(File)msg.obj;
 
                     installApk(file);
-                }
-            }
 
-            if(pd!=null)
-            {
-                pd.dismiss();
+                    if(pd!=null)
+                    {
+                        pd.dismiss();
+                    }
+                    break;
+                }
+                case 102:
+                {
+                    HDLog.Toast("下载最新版本失败");
+                    if(pd!=null)
+                    {
+                        pd.dismiss();
+                    }
+                    break;
+                }
             }
         }
     };
@@ -222,7 +213,7 @@ public class UpdateModule
      *  3.通过builder 创建一个对话框
      *  4.对话框show()出来
      */
-    protected void showUpdataDialog(UpdateInfo info)
+    protected static void showUpdataDialog(UpdateInfo info)
     {
         AlertDialog.Builder builer = new AlertDialog.Builder(MainActivity.main) ;
         builer.setTitle("版本升级");
@@ -251,7 +242,7 @@ public class UpdateModule
     /*
      * 从服务器中下载APK
      */
-    protected void downLoadApk( final String url)
+    private static void downLoadApk( final String url)
     {
 
         pd = new  ProgressDialog(MainActivity.main);
@@ -266,7 +257,7 @@ public class UpdateModule
                     sleep(3000);
 
                     Message msg = new Message();
-                    msg.what = 1;
+                    msg.what = 101;
                     msg.obj=file;
                     handler.sendMessage(msg);
 
@@ -274,15 +265,14 @@ public class UpdateModule
                 } catch (Exception e)
                 {
                     Message msg = new Message();
-                    msg.what = -99;
+                    msg.what = 102;
                     handler.sendMessage(msg);
-                    e.printStackTrace();
                 }
             }}.start();
     }
 
     //安装apk
-    protected void installApk(File file) {
+    private static  void installApk(File file) {
         Intent intent = new Intent();
         //执行动作
         intent.setAction(Intent.ACTION_VIEW);

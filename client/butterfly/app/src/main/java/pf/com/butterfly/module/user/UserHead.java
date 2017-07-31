@@ -6,6 +6,7 @@ import android.widget.TextView;
 import pf.com.butterfly.GlobalData;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
+import pf.com.butterfly.manager.DataManager;
 import pf.com.butterfly.manager.ImageManager;
 
 /**
@@ -42,7 +43,7 @@ public class UserHead extends AppBaseViewControl
     @Override
     protected void initControl()
     {
-        iv_face=(ImageView)view.findViewById(R.id.iv_face);
+        iv_face=(ImageView)view.findViewById(R.id.riv_face);
         tv_name=(TextView)view.findViewById(R.id.tv_name);
 
         updateInfo();
@@ -59,7 +60,7 @@ public class UserHead extends AppBaseViewControl
     public void updateInfo()
     {
 
-        if(GlobalData.login_flag==false)
+        if(DataManager.login_flag==false)
         {
             if(iv_face!=null)
             {
@@ -68,7 +69,7 @@ public class UserHead extends AppBaseViewControl
 
             if(tv_name!=null)
             {
-                tv_name.setText("嘿嘿嘿");
+                tv_name.setText("");
             }
         }
         else
@@ -76,12 +77,12 @@ public class UserHead extends AppBaseViewControl
             if(iv_face!=null)
             {
                 //设置默认图片
-                ImageManager.LoadHead(GlobalData.userinfo.face,iv_face);
+                ImageManager.LoadHead(DataManager.userinfo.face,iv_face);
             }
 
             if(tv_name!=null)
             {
-                tv_name.setText(GlobalData.userinfo.name);
+                tv_name.setText(DataManager.userinfo.name);
             }
         }
 

@@ -7,16 +7,16 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
+
 import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.ListViewAdapter;
-import pf.com.butterfly.component.IItemClick;
-import pf.com.butterfly.component.ItemAdapter;
-import pf.com.butterfly.model.ItemData;
-import pf.com.butterfly.module.advise.AdviseHead;
-import pf.com.butterfly.module.benefit.BenefitHead;
+import pf.com.butterfly.manager.DataManager;
+import pf.com.butterfly.module.advice.AdviceHead;
 import pf.com.butterfly.module.bored.BoredHead;
-import pf.com.butterfly.module.bored.BoredDetail;
+import pf.com.butterfly.module.game_2048.TestGameHead;
+import pf.com.butterfly.module.login.LoginHead;
 import pf.com.butterfly.module.set.SetingHead;
 import pf.com.butterfly.module.user.UserHead;
 
@@ -42,7 +42,7 @@ public class MenuModule
     private static DrawerLayout slide;//菜单布局
     private View view;  //菜单视图
 
-    private ImageView iv_head;
+    private RoundedImageView riv_head;
 
     public void init( View father)
     {
@@ -71,13 +71,22 @@ public class MenuModule
         listView3.setOnItemClickListener(aa);
 
 
-        view.findViewById(R.id.iv_head).setOnClickListener(new View.OnClickListener()
+        view.findViewById(R.id.riv_head).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 ShowMenu(false);
-                UserHead.getInstance().show();
+
+                if(DataManager.login_flag==false)
+                {
+                    LoginHead.getInstance().show();
+                }
+                else
+                {
+                    UserHead.getInstance().show();
+                }
+
             }
         });
 
@@ -136,22 +145,22 @@ public class MenuModule
 
        //  adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"蝴蝶",BenefitHead.getInstance()));
          adapter1.addOneItem(new MenuItemData(R.drawable.bored,"好无聊啊",BoredHead.getInstance()));
-         adapter1.addOneItem(new MenuItemData(R.drawable.rou,"有鱼想吃肉",BoredHead.getInstance()));
-         adapter1.addOneItem(new MenuItemData(R.drawable.yu,"有肉想吃鱼",BoredHead.getInstance()));
+         adapter1.addOneItem(new MenuItemData(R.drawable.rou,"中午吃啥",BoredHead.getInstance()));
+         adapter1.addOneItem(new MenuItemData(R.drawable.yu,"晚上吃啥",BoredHead.getInstance()));
 
          adapter2=new ListViewAdapter(R.layout.itemlayout,MenuItemControl.class.getName());
 
-
-         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"回不去",AdviseHead.getInstance()));
-         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"舍不得",SetingHead.getInstance()));
-         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"来不及",SetingHead.getInstance()));
-         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"乌托邦",SetingHead.getInstance()));
+         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"2048", TestGameHead.getInstance()));
+//         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"回不去", AdviceHead.getInstance()));
+//         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"舍不得",SetingHead.getInstance()));
+//         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"来不及",SetingHead.getInstance()));
+//         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"乌托邦",SetingHead.getInstance()));
 
 
          adapter3=new ListViewAdapter(R.layout.itemlayout,MenuItemControl.class.getName());
 
 
-         adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"建议",AdviseHead.getInstance()));
+         adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"建议", AdviceHead.getInstance()));
          adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"设置",SetingHead.getInstance()));
          adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"退出",SetingHead.getInstance()));
 

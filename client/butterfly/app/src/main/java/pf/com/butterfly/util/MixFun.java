@@ -3,6 +3,7 @@ package pf.com.butterfly.util;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.view.inputmethod.InputMethodManager;
@@ -153,5 +154,19 @@ public class MixFun
     {
         final float scale = MainActivity.main.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+
+    //是不是调试模式
+    public static boolean isDebug() {
+        try
+        {
+            ApplicationInfo info= MainActivity.main.getApplicationInfo();
+            return (info.flags& ApplicationInfo.FLAG_DEBUGGABLE)!=0;
+        }
+        catch (Exception e)
+        {
+
+        }
+        return false;
     }
 }

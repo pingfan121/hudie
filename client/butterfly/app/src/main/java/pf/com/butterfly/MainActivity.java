@@ -12,12 +12,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import c.b.BP;
+import pf.com.butterfly.manager.DataManager;
 import pf.com.butterfly.manager.ImageManager;
+import pf.com.butterfly.manager.MsgManager;
 import pf.com.butterfly.module.bored.MediaManager;
 import pf.com.butterfly.module.menu.MenuModule;
 import pf.com.butterfly.module.title.TitleModule;
 import pf.com.butterfly.module.update.UpdateModule;
 import pf.com.butterfly.util.HDLog;
+import pf.com.butterfly.util.MixFun;
 import pf.com.butterfly.util.PermissionManager;
 import pf.com.butterfly.util.PhotoChoose;
 import pf.com.butterfly.module.ShowPhoto;
@@ -31,6 +34,8 @@ public class MainActivity  extends AppCompatActivity
 
     public static MainActivity main;
 
+    public Boolean isdebug=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,24 +43,33 @@ public class MainActivity  extends AppCompatActivity
 
         main=this;
 
+        isdebug= MixFun.isDebug();
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main);
 
-        //初始化图片管理器
-        ImageManager.init();
+        if(DataManager.app_over==false)
+        {
+            DataManager.app_over=true;
 
-        //检测版本更新
-        UpdateModule.getInstance().init();
+            MsgManager.init();
 
-        //初始化支付
-        BP.init("a5a2688114fb06e9156acaaee76ca9a0");
+            //初始化图片管理器
+            ImageManager.init();
 
-        //初始化网络
-        NetManager.init();
+            //检测版本更新
+            UpdateModule.getInstance().init();
 
-        //微信注册
-        WeiXinHead.registToWX();
+            //初始化支付
+            BP.init("a5a2688114fb06e9156acaaee76ca9a0");
+
+            //初始化网络
+            NetManager.init();
+
+            //微信注册
+            WeiXinHead.registToWX();
+        }
 
         //其他activity切换回来..
         //新页面接收数据
