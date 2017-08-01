@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.第一个标签 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tb_explain = new System.Windows.Forms.TextBox();
             this.btn_add2 = new System.Windows.Forms.Button();
             this.btn_add1 = new System.Windows.Forms.Button();
             this.lv_res = new System.Windows.Forms.ListView();
@@ -67,8 +69,6 @@
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lb_meiju = new System.Windows.Forms.ListBox();
             this.button8 = new System.Windows.Forms.Button();
-            this.tb_explain = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.第一个标签.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -111,6 +111,23 @@
             this.第一个标签.Text = "协议";
             this.第一个标签.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(377, 102);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 16);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "请求说明";
+            // 
+            // tb_explain
+            // 
+            this.tb_explain.Location = new System.Drawing.Point(455, 99);
+            this.tb_explain.Name = "tb_explain";
+            this.tb_explain.Size = new System.Drawing.Size(455, 21);
+            this.tb_explain.TabIndex = 20;
+            // 
             // btn_add2
             // 
             this.btn_add2.Location = new System.Drawing.Point(850, 328);
@@ -129,6 +146,7 @@
             this.btn_add1.TabIndex = 18;
             this.btn_add1.Text = "添加";
             this.btn_add1.UseVisualStyleBackColor = true;
+            this.btn_add1.Click += new System.EventHandler(this.btn_add1_Click);
             // 
             // lv_res
             // 
@@ -432,23 +450,6 @@
             this.button8.Text = "创建枚举";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.OnCreateEnum);
-            // 
-            // tb_explain
-            // 
-            this.tb_explain.Location = new System.Drawing.Point(455, 99);
-            this.tb_explain.Name = "tb_explain";
-            this.tb_explain.Size = new System.Drawing.Size(455, 21);
-            this.tb_explain.TabIndex = 20;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(377, 102);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 16);
-            this.label4.TabIndex = 21;
-            this.label4.Text = "请求说明";
             // 
             // Form1
             // 

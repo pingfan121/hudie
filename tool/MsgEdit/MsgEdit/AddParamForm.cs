@@ -12,6 +12,7 @@ namespace MsgEdit
 {
     public partial class AddParamForm : Form
     {
+        private static info_data copy_data = new info_data();
         public AddParamForm()
         {
             InitializeComponent();
@@ -29,12 +30,15 @@ namespace MsgEdit
             EnumInfo info = new EnumInfo();
             try
             {
-                info_data data = new info_data();
+                if(tb_1.Text != "")
+                {
+                    info_data data = new info_data();
 
-                data.param_name = tb_1.Text;
-                data.param_type = tb_2.Text;
-                data.param_explain = tb_3.Text;
-                InfoShow.addOneParame(type,data);
+                    data.param_name = tb_1.Text;
+                    data.param_type = tb_2.Text;
+                    data.param_explain = tb_3.Text;
+                    InfoShow.addOneParame(type, data);
+                }
                 this.Close();
             }
             catch
@@ -84,6 +88,20 @@ namespace MsgEdit
                  tb_2.Text =infodata.param_type   ;
                  tb_3.Text =infodata.param_explain;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            copy_data.param_name = tb_1.Text;
+            copy_data.param_type = tb_2.Text;
+            copy_data.param_explain = tb_3.Text;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            tb_1.Text = copy_data.param_name;
+            tb_2.Text = copy_data.param_type;
+            tb_3.Text = copy_data.param_explain;
         }
     }
 }
