@@ -76,16 +76,21 @@ namespace hudie
                 if (msg_data.TryDequeue(out msg)==true)
                 {
                    
-                    if (msg_map.class_map.ContainsKey(msg.modpath)==true)
-                    {
+                  //  if (msg_map.class_map.ContainsKey(msg.modpath)==true)
+                  //  {
                         if(msg_map.msg_map.ContainsKey(msg.funpath) == true)
                         {
                             try
                             {
                                 if(msg_map.req_map.ContainsKey(msg.funpath))
                                 {
-                                    int flag = 0;
+                                    if(msg.req_params==null)
+                                    {
+                                        sendErrorMsg(msg, EnumMsgState.param_err);
+                                        continue;
+                                    }
 
+                                    int flag = 0;
                                     foreach(var item in msg_map.req_map[msg.funpath])
                                     {
                                         if(msg.req_params.ContainsKey(item) == false)
@@ -117,11 +122,11 @@ namespace hudie
                         {
                             sendErrorMsg(msg, EnumMsgState.fun_err);
                         }
-                    }
-                    else
-                    {
-                        sendErrorMsg(msg, EnumMsgState.module_err);
-                    }
+//                     }
+//                     else
+//                     {
+//                         sendErrorMsg(msg, EnumMsgState.module_err);
+//                     }
                 }
 
                 sql_struct sql = null;
@@ -186,10 +191,16 @@ namespace hudie
         public void sendMsg(HttpInfo reqinfo, Object msg)
         {
             HttpListenerResponse reponse = reqinfo.context.Response;
-            StreamWriter writer = new StreamWriter(reponse.OutputStream,Encoding.UTF8);
+            StreamWriter writer = new StreamWriter(reponse.OutputStream);
 
             backmsg.error = 0;
             backmsg.msg = msg;
+
+            byte[] bb = Encoding.UTF8.GetBytes(JSON.Encode(backmsg));
+
+            string str = Encoding.UTF8.GetString(bb);
+
+            Console.WriteLine(str);
 
             writer.Write(JSON.Encode(backmsg));
 

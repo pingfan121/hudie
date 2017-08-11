@@ -17,7 +17,7 @@ namespace hudie.net
 {
     public class HttpInfo
     {
-        public string modpath;
+       // public string modpath;
         public string funpath;
         public HttpListenerContext context;
         public Dictionary<string, string> req_params = new Dictionary<string, string>();
@@ -66,37 +66,75 @@ namespace hudie.net
         private static void RequestHandler(IAsyncResult result)
         {
             log.error("收到连接...");
-            try
+
+            do
             {
-                HttpListenerContext context = listener.EndGetContext(result);
-                HttpListenerRequest request = context.Request;
-
-                StreamReader sr = new StreamReader(request.InputStream);
-
-                string param = request.RawUrl;
-
-                HttpInfo info= new HttpInfo();
-
-                info.context = context;
-
-                EnumMsgState msgerr= analysisParam(param, info);
-
-                if(msgerr != EnumMsgState.ok)
+                try
                 {
-                    sendErrorMsg(info.context, msgerr);
-                }
-                else
-                {
+                    HttpListenerContext context = listener.EndGetContext(result);
+                    HttpListenerRequest request = context.Request;
+
+                    string param = request.RawUrl;
+
+                    if(param.Length < 2)
+                    {
+                        sendErrorMsg(context, EnumMsgState.error);
+                        break;
+                    }
+
+                    if(param.Substring(0, 1) == "/")
+                    {
+                        param = param.Substring(1);
+                    }
+
+                    int index = param.IndexOf('?');
+
+                    string path1 = "";
+                    string param1 = "";
+
+
+                    if(index == -1)
+                    {
+                        path1 = param;
+
+                        StreamReader sr = new StreamReader(request.InputStream);
+                        param1 = sr.ReadToEnd();
+                    }
+                    else
+                    {
+                        path1 = param.Substring(0, index);
+                        param1 = param.Substring(index + 1);
+                    }
+
+                    string path2 = analysisPath(path1);
+
+                    if(path2 == "")
+                    {
+                        sendErrorMsg(context, EnumMsgState.error);
+                        break;
+                    }
+
+                    HttpInfo info = new HttpInfo();
+
+                    info.context = context;
+                    info.funpath = path2;
+
+                    info.req_params = analysisParam(param1);
+
                     http_data.Enqueue(info);
-                }
 
+                    
+                }
+                catch(Exception ex)
+                {
+                    log.error(ex.Message);
+                    log.error(ex.StackTrace);
+
+                }
             }
-            catch(Exception ex)
-            {
-                log.error(ex.Message);
-                log.error(ex.StackTrace);
-              
-            }
+            while(false);
+
+           
 
             try
             {
@@ -139,41 +177,43 @@ namespace hudie.net
 
         public static Dictionary<string, int> mod_flag = new Dictionary<string, int>();  //模块对应标志
 
-        public static Dictionary<string, int> fun_flag = new Dictionary<string, int>();  //模块对应标志
+        public static Dictionary<string, int> fun_flag = new Dictionary<string, int>();  //模块函数对应标志
 
-        public static EnumMsgState analysisParam(string urlparam,HttpInfo info)
+        public static Dictionary<string, string> analysisParam(string param)
         {
-            if(urlparam.Length < 2)
+            Dictionary<string, string> dic = null;
+
+            //验证参数
+            if(param != "")
             {
-                return EnumMsgState.param_err;
+                dic = new Dictionary<string, string>();
+
+                string[] temp = param.Split('&');
+
+                foreach(var str in temp)
+                {
+                    string[] temp2 = str.Split('=');
+
+                    if(temp2.Length != 2)
+                    {
+                        return null;
+                    }
+
+                    dic.Add(temp2[0], temp2[1]);
+                }
             }
+           
+            return dic;
+        }
 
-            if(urlparam.Substring(0, 1) == "/")
-            {
-                urlparam = urlparam.Substring(1);
-            }
-
-            int index=urlparam.IndexOf('?');
-
-            string fun_path="";
-            string param="";
-
-            if(index==-1)
-            {
-                fun_path = urlparam;
-            }
-            else
-            {
-                fun_path = urlparam.Substring(0, index);
-                param=urlparam.Substring(index+1);
-            }
-
-          //  param = System.Web.HttpUtility.UrlDecode(param);
-
+        //解析路由路径
+        public static string analysisPath(string path)
+        {
             //检测是否有处理模块
-            fun_path = "hudie." + fun_path.Replace('/', '.');
+            string fun_path = "hudie." + path.Replace('/', '.');
 
-            index=fun_path.LastIndexOf('.');
+            int index = fun_path.LastIndexOf('.');
+
             string mod_path = fun_path.Substring(0, index);
 
             if(mod_flag.ContainsKey(mod_path) == false)
@@ -193,34 +233,10 @@ namespace hudie.net
 
             if(mod_flag[mod_path] == 0)
             {
-                return EnumMsgState.module_err;
+                return "";
             }
 
-          
-
-            //验证参数
-            if(param != "")
-            {
-                string[] temp = param.Split('&');
-
-                foreach(var str in temp)
-                {
-                    string[] temp2 = str.Split('=');
-
-                    if(temp2.Length != 2)
-                    {
-                        return EnumMsgState.param_err;
-                    }
-
-                    info.req_params.Add(temp2[0], temp2[1]);
-                }
-            }
-           
-
-            info.funpath = fun_path;
-            info.modpath = mod_path;
-            
-            return EnumMsgState.ok;
+            return fun_path;
         }
     }
 }

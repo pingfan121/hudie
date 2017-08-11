@@ -1,11 +1,13 @@
 ﻿using GameLib.Util;
 using messages.Protocols;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace testserver
 {
@@ -23,18 +25,16 @@ namespace testserver
 
                     string[] sss = str.Split(' ');
 
-                    switch(sss[0])
+                    if(sss.Length == 3)
                     {
-                        case "注册":
-                            {
-                                register_req req = new register_req();
-                                req.tel = "18789061261";
-                                req.nickname = "平凡";
-                                req.pass = "123456";
-                                sendMsg(req);
-                                break;
-                            }
+                         sendMsg(sss[0], sss[1], sss[2],false);
                     }
+                    else
+                    {
+                         sendMsg(sss[0], sss[1], sss[2],true);
+                    }
+
+                  
                 }
                 catch(Exception ex)
                 {
@@ -45,16 +45,30 @@ namespace testserver
 
         }
 
-        private static string sendMsg(MsgBase mb)
+        private static string sendMsg(string modulename,string funname,string param,bool flag)
         {
             WebClient web = new WebClient();
-            web.Headers.Add("token", "111111");
 
-            byte[] data = Encoding.UTF8.GetBytes(JSON.Encode(mb));
-            byte[] bt = web.UploadData(url + "/app/module/user/login?data=" + JSON.Encode(mb), "post", new byte[0]);
+            byte[] bt = null;
+
+            if(false == flag)
+            {
+                web.Encoding = Encoding.UTF8;
+                bt = web.UploadData(url + "/app/module/"+modulename+"/"+funname+"?"+param, "post", new byte[0]);
+            }
+            else
+            {
+                 byte[] data = Encoding.UTF8.GetBytes(param);
+
+                 web.Encoding = Encoding.UTF8;
+                 bt = web.UploadData(url + "/app/module/"+modulename+"/"+funname, "post", data);
+            }
 
             string str = System.Text.Encoding.UTF8.GetString(bt);
+
             Console.WriteLine(str);
+
+
             return str;
         }
     }
