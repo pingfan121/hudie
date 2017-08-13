@@ -193,6 +193,8 @@ namespace hudie
             HttpListenerResponse reponse = reqinfo.context.Response;
             StreamWriter writer = new StreamWriter(reponse.OutputStream);
 
+            reponse.ContentType="text/html; charset=utf-8";
+
             backmsg.error = 0;
             backmsg.msg = msg;
 
@@ -201,6 +203,8 @@ namespace hudie
             string str = Encoding.UTF8.GetString(bb);
 
             Console.WriteLine(str);
+
+            Console.WriteLine(writer.Encoding);
 
             writer.Write(JSON.Encode(backmsg));
 

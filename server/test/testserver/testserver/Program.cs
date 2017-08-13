@@ -16,6 +16,7 @@ namespace testserver
         private static string url="http://192.168.1.16:10012";
         static void Main(string[] args)
         {
+           // Console.WriteLine(long.MaxValue);
 
             while(true)
             {
@@ -60,7 +61,7 @@ namespace testserver
             {
                  byte[] data = Encoding.UTF8.GetBytes(param);
 
-                 web.Encoding = Encoding.UTF8;
+                
                  bt = web.UploadData(url + "/app/module/"+modulename+"/"+funname, "post", data);
             }
 
