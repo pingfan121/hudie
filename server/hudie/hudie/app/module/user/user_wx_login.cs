@@ -79,11 +79,12 @@ namespace hudie.app.module
 
                     sql_struct sql = new sql_struct();
 
-                    DbSelect<TbAppUser> select = new DbSelect<TbAppUser>(null, "select * from app_user where wx_id='" + info.unionid + "';");
+                    DbSelect<TbAppUser> select = new DbSelect<TbAppUser>(null, "select * from app_user where wx_id='" + info.unionid + "';",null);
 
                     sql.data1 = reqinfo;
                     sql.data2 = info;
                     sql.cmd = select;
+                    sql.fun = wx_login_sql_back;
 
                     app.db_Select(sql);
                 }
