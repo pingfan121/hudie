@@ -25,7 +25,16 @@ namespace hudie.app.module
             jianyi.Id = ObjectId.NewObjectId().ToString();
             jianyi.Time = DateTime.Now;
             jianyi.Content = System.Web.HttpUtility.UrlDecode(reqinfo.req_params["content"]);
-            jianyi.Userid = reqinfo.req_params["userid"];
+
+            if(reqinfo.req_params.ContainsKey("userid"))
+            {
+                jianyi.Userid = reqinfo.req_params["userid"];
+            }
+            else
+            {
+                jianyi.Userid = "";
+            }
+           
 
             sql_struct sql = new sql_struct();
 
@@ -39,6 +48,7 @@ namespace hudie.app.module
             res_advice_add res = new res_advice_add();
 
             res.state = 0;
+            res.state2 = "测试啊";
 
             //处理结束
             app.sendMsg(reqinfo, res);

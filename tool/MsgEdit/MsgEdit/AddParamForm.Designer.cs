@@ -36,6 +36,8 @@
             this.tb_3 = new System.Windows.Forms.TextBox();
             this.btn_add = new System.Windows.Forms.Button();
             this.btn_xiugai = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -89,9 +91,9 @@
             // 
             // btn_add
             // 
-            this.btn_add.Location = new System.Drawing.Point(110, 192);
+            this.btn_add.Location = new System.Drawing.Point(191, 192);
             this.btn_add.Name = "btn_add";
-            this.btn_add.Size = new System.Drawing.Size(75, 23);
+            this.btn_add.Size = new System.Drawing.Size(64, 23);
             this.btn_add.TabIndex = 6;
             this.btn_add.Text = "添加";
             this.btn_add.UseVisualStyleBackColor = true;
@@ -99,19 +101,41 @@
             // 
             // btn_xiugai
             // 
-            this.btn_xiugai.Location = new System.Drawing.Point(110, 192);
+            this.btn_xiugai.Location = new System.Drawing.Point(191, 192);
             this.btn_xiugai.Name = "btn_xiugai";
-            this.btn_xiugai.Size = new System.Drawing.Size(75, 23);
+            this.btn_xiugai.Size = new System.Drawing.Size(64, 23);
             this.btn_xiugai.TabIndex = 7;
             this.btn_xiugai.Text = "修改";
             this.btn_xiugai.UseVisualStyleBackColor = true;
             this.btn_xiugai.Click += new System.EventHandler(this.btn_xiugai_click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 192);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(58, 23);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "复制";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(76, 192);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(58, 23);
+            this.button2.TabIndex = 9;
+            this.button2.Text = "粘贴";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // AddParamForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(296, 262);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_xiugai);
             this.Controls.Add(this.btn_add);
             this.Controls.Add(this.tb_3);
@@ -137,5 +161,7 @@
         private System.Windows.Forms.TextBox tb_3;
         private System.Windows.Forms.Button btn_add;
         private System.Windows.Forms.Button btn_xiugai;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

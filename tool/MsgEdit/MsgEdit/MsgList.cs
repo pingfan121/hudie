@@ -455,7 +455,9 @@ namespace MsgEdit
         public static void OutProtocolFile()
         {
             OutCsharp.OutFile(alldata);
-            //OutJava.OutFile(alldata);
+            OutJava.OutFile(alldata);
+
+            MessageBox.Show("导出成功");
         }
 
         //添加后退数据

@@ -62,7 +62,7 @@ namespace MsgEdit
             }
 
 
-            MessageBox.Show("导出成功");
+           
         }
 
           //生成代码文件
