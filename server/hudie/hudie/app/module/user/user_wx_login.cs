@@ -81,8 +81,8 @@ namespace hudie.app.module
 
                     DbSelect<TbAppUser> select = new DbSelect<TbAppUser>(null, "select * from app_user where wx_id='" + info.unionid + "';",null);
 
-                    sql.data1 = reqinfo;
-                    sql.data2 = info;
+                    sql.httpinfo = reqinfo;
+                    sql.data1 = info;
                     sql.cmd = select;
                     sql.fun = wx_login_sql_back;
 
@@ -99,8 +99,8 @@ namespace hudie.app.module
 
         private void wx_login_sql_back(sql_struct sql)
         {
-            HttpInfo reqinfo = sql.data1 as HttpInfo;
-            weixin_info info = sql.data2 as weixin_info;
+            HttpInfo reqinfo = sql.httpinfo;
+            weixin_info info = sql.data1 as weixin_info;
 
             DbSelect<TbAppUser> user_select = sql.cmd as DbSelect<TbAppUser>;
 

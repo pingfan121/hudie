@@ -4,19 +4,27 @@ import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.AdapterItemData;
 import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
+import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.hander.MsgHandler;
+import pf.com.butterfly.infofile.res_bored_add;
+import pf.com.butterfly.infofile.res_bored_getlist;
 import pf.com.butterfly.input.TextInput;
+import pf.com.butterfly.manager.MsgManager;
 import pf.com.butterfly.message.MsgBase;
 import pf.com.butterfly.message.Protocols.bored_head_item_add_req;
 import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
@@ -28,6 +36,8 @@ import pf.com.butterfly.module.bored.BoredDetail;
 import pf.com.butterfly.module.bored.BoredItemView;
 import pf.com.butterfly.module.bored.MediaManager;
 import pf.com.butterfly.module.bored.Recorder;
+import pf.com.butterfly.module.info.res_user_wx_login;
+import pf.com.butterfly.module.okhttp.OkHttpUtils;
 import pf.com.butterfly.util.HDLog;
 
 /**
@@ -138,10 +148,12 @@ public class BoredHead extends AppBaseViewControl
             return ;
         }
 
-        //提交
-        bored_head_item_add_req req=new bored_head_item_add_req();
-        req.content=str;
-        NetManager.SendMsg(req,add_result);
+        Map<String,String> param=new HashMap<>();
+
+        param.put("content",str);
+
+        MsgManager.sendMsg2("bored","add",param,add_result);
+
 
     }
 
@@ -156,29 +168,20 @@ public class BoredHead extends AppBaseViewControl
             srl.setRefreshing(true);
         }
 
-        bored_head_items_req req=new bored_head_items_req();
 
-        NetManager.SendMsg(req,update_result);
-
-
+        MsgManager.sendMsg2("bored","getlist",null,update_result);
     }
 
     //-----------------网络返回处理-------------------
 
-    private IMsgResult add_result=new IMsgResult()
+    private IMsgHandler add_result=new IMsgHandler()
     {
         @Override
-        public void onError(int err, String msg)
-        {
-            HDLog.Toast(msg);
-        }
-
-        @Override
-        public void onResult(MsgBase msg)
+        public void onMsgDispose(int err, String result, Object userToken)
         {
             HDLog.Toast("提交成功");
 
-            bored_head_item_add_res res=(bored_head_item_add_res)msg;
+            res_bored_add res=MsgManager.parseJson(result, res_bored_add.class);
 
             BoredHeadItemData data=new BoredHeadItemData();
             data.id=res.info.id;
@@ -192,31 +195,25 @@ public class BoredHead extends AppBaseViewControl
     };
 
 
-    private IMsgResult update_result=new IMsgResult()
+    private IMsgHandler update_result=new IMsgHandler()
     {
         @Override
-        public void onError(int err, String msg)
-        {
-            HDLog.Toast(msg);
-        }
-
-        @Override
-        public void onResult(MsgBase msg)
+        public void onMsgDispose(int err, String result, Object userToken)
         {
             HDLog.Toast("已刷新");
 
-            bored_head_items_res res=(bored_head_items_res)msg;
+            res_bored_getlist res=MsgManager.parseJson(result, res_bored_getlist.class);
 
             List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
 
-            for(int i=0;i<res.infos.length;i++)
+            for(int i=0;i<res.list.length;i++)
             {
                 BoredHeadItemData data=new BoredHeadItemData();
-                data.id=res.infos[i].id;
+                data.id=res.list[i].id;
                 data.icon="";
                 data.name="我是一个平凡的人";
-                data.text=res.infos[i].content;
-                data.num=res.infos[i].rownum;
+                data.text=res.list[i].content;
+                data.num=res.list[i].rownum;
 
                 datas.add(data);
             }

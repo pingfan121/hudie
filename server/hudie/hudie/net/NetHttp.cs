@@ -120,6 +120,14 @@ namespace hudie.net
                     info.funpath = path2;
 
                     info.req_params = analysisParam(param1);
+                    if(info.req_params!=null)
+                    {
+                         foreach(var temp in info.req_params.Keys.ToArray())
+                         {
+                             info.req_params[temp] = System.Web.HttpUtility.UrlDecode(info.req_params[temp]);
+                         }
+                    }
+                   
 
                     http_data.Enqueue(info);
 

@@ -6,6 +6,8 @@ import android.os.Message;
 
 import com.google.gson.Gson;
 
+import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.Map;
 
 import pf.com.butterfly.hander.IMsgHandler;
@@ -83,7 +85,37 @@ public class MsgManager
     //发送消息
     public static void sendMsg(String path, Map<String,String> params, IMsgHandler dispose)
     {
+        if(params != null)
+        {
+            Iterator<String> iterator = params.keySet().iterator();
+            String key = "";
+            while (iterator.hasNext()) {
+                key = iterator.next().toString();
+                String val = params.get(key);
+                val= URLEncoder.encode(val);
+                params.put(key,val);
+            }
+        }
+
         OkHttpUtils.getInstance().sendAppMsg(url+path,params,dispose,handler);
+    }
+
+    //发送消息
+    public static void sendMsg2(String modulename,String funname, Map<String,String> params, IMsgHandler dispose)
+    {
+        if(params != null)
+        {
+            Iterator<String> iterator = params.keySet().iterator();
+            String key = "";
+            while (iterator.hasNext()) {
+                key = iterator.next().toString();
+                String val = params.get(key);
+                val=URLEncoder.encode(val);
+                params.put(key,val);
+            }
+        }
+
+        OkHttpUtils.getInstance().sendAppMsg(url+"app/module/"+modulename+"/"+funname,params,dispose,handler);
     }
 
     public static <T> T parseJson(String result,Class<T> c)

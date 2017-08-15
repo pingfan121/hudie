@@ -78,7 +78,7 @@ namespace MsgEdit
             string filepath = path + classname + ".java";
 
             //打开文件
-            StreamWriter sw = new StreamWriter(filepath, false, Encoding.Unicode);
+            StreamWriter sw = new StreamWriter(filepath, false);
 
             sw.WriteLine("package pf.com.butterfly.infofile;");
             sw.WriteLine("");
@@ -88,6 +88,8 @@ namespace MsgEdit
 
             foreach(var temp in treedata.data.res_params)
             {
+                string tt = temp.param_type.Replace("string", "String");
+
                 sw.WriteLine("\tpublic " + (temp.param_type=="string"?"String":temp.param_type) + " " + temp.param_name + ";//" + temp.param_explain);
             }
 

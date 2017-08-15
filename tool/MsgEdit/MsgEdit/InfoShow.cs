@@ -319,9 +319,9 @@ namespace MsgEdit
             else
             {
                 type = 2;
-                if(lv_req.SelectedItems.Count > 0)
+                if(lv_res.SelectedItems.Count > 0)
                 {
-                    paramname = lv_req.SelectedItems[0].SubItems[0].Text;
+                    paramname = lv_res.SelectedItems[0].SubItems[0].Text;
 
                 }
             }

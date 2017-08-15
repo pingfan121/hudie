@@ -1,6 +1,7 @@
 package pf.com.butterfly.module.bored;
 
 import pf.com.butterfly.adapter.AdapterItemData;
+import pf.com.butterfly.infofile.info_bored_voice;
 import pf.com.butterfly.message.Protocols.info_bored_record_item;
 
 /**
@@ -9,5 +10,5 @@ import pf.com.butterfly.message.Protocols.info_bored_record_item;
 
 public class BoredAudioItemData extends AdapterItemData
 {
-      public info_bored_record_item iteminfo;
+      public info_bored_voice iteminfo;
 }

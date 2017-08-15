@@ -29,6 +29,6 @@ public class BoredAudioItemView extends AdapterItemControl
     {
         BoredAudioItemData itemdata=(BoredAudioItemData)obj;
 
-        t_time.setText(Math.round(itemdata.iteminfo.recordlength) + "\"");
+        t_time.setText(Math.round(itemdata.iteminfo.voice_len) + "\"");
     }
 }

@@ -167,6 +167,8 @@ public class WeiXinHead
 
             //更新个人信息
             UserHead.getInstance().updateInfo();
+
+
         }
     };
 

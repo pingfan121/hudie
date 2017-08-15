@@ -163,7 +163,6 @@
     <Compile Include="Util\ObjectID.cs" />
     <Compile Include="Util\ObjectPool.cs" />
     <Compile Include="Util\pf.cs" />
-    <Compile Include="Util\sql_struct.cs" />
     <Compile Include="Util\StringUtil.cs" />
     <Compile Include="Util\SystemInfo.cs" />
     <Compile Include="Util\Zip.cs" />

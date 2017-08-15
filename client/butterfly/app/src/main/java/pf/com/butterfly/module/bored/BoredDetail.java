@@ -9,7 +9,9 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.AdapterItemData;
@@ -17,6 +19,8 @@ import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.hander.IMsgHandler;
 import pf.com.butterfly.http.BmobHttp;
+import pf.com.butterfly.infofile.res_bored_voicelist;
+import pf.com.butterfly.manager.MsgManager;
 import pf.com.butterfly.message.MsgBase;
 import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
 import pf.com.butterfly.message.Protocols.bored_record_item_add_req;
@@ -91,7 +95,7 @@ public class BoredDetail extends AppBaseViewControl
                 animation = (AnimationDrawable) voiceAnim.getBackground();
                 animation.start();
 
-                MediaManager.playSound(((BoredAudioItemData)mAdapter.getItem(position)).iteminfo.recordurl,
+                MediaManager.playSound(((BoredAudioItemData)mAdapter.getItem(position)).iteminfo.voice_url,
                         new MediaPlayer.OnCompletionListener() {
                             @Override
                             public void onCompletion(MediaPlayer mp) {
@@ -196,12 +200,15 @@ public class BoredDetail extends AppBaseViewControl
     //发送网络消息
     public void updateData()
     {
-        bored_record_items_req req=new bored_record_items_req();
-        req.head_id=headid;
 
-        NetManager.SendMsg(req,update_result);
+        Map<String,String> params=new HashMap<>();
+
+        params.put("bored_id",headid);
+
+        MsgManager.sendMsg2("bored","voicelist",params,voicelist_result);
 
         //播放发送动画.....
+
     }
 
 
@@ -231,27 +238,31 @@ public class BoredDetail extends AppBaseViewControl
         }
     };
 
-    private IMsgResult update_result=new IMsgResult()
+    private IMsgHandler voicelist_result=new IMsgHandler()
     {
-        @Override
-        public void onError(int err, String msg)
-        {
-            HDLog.Toast(msg);
-        }
 
         @Override
-        public void onResult(MsgBase msg)
+        public void onMsgDispose(int err, String result, Object userToken)
         {
+
+            //取消发送动画...
+
+            if(err!=0)
+            {
+                HDLog.Toast("获取语音列表出现错误.....");
+                return ;
+            }
+
             HDLog.Toast("已刷新");
 
             List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
 
-            bored_record_items_res res=(bored_record_items_res)msg;
+            res_bored_voicelist res=MsgManager.parseJson(result,res_bored_voicelist.class);
 
-            for(int i=0;i<res.infos.length;i++)
+            for(int i=0;i<res.list.length;i++)
             {
                 BoredAudioItemData data=new BoredAudioItemData();
-                data.iteminfo=res.infos[i];
+                data.iteminfo=res.list[i];
                 datas.add(data);
             }
 

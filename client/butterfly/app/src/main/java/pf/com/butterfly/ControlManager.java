@@ -142,6 +142,7 @@ public class ControlManager
 
             fl.addView(viewControl.view);
 
+            viewControl.view.setClickable(true);
             viewControl.showMode(true);
 
         }

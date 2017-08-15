@@ -13,22 +13,26 @@ namespace hudie.app
 		{
 			class_map.Add("hudie."+"app.module.user", new app.module.user(app));
 			class_map.Add("hudie."+"app.module.advice", new app.module.advice(app));
-		//	class_map.Add("hudie."+"app.module.bored", new app.module.bored(app));
+			class_map.Add("hudie."+"app.module.bored", new app.module.bored(app));
 		}
 		private void init_msg_map()
 		{
 			msg_map.Add("hudie."+"app.module.user.wx_login", ((app.module.user)class_map["hudie.app.module.user"]).wx_login);
 			msg_map.Add("hudie."+"app.module.advice.add", ((app.module.advice)class_map["hudie.app.module.advice"]).add);
-	//		msg_map.Add("hudie."+"app.module.bored.add", ((app.module.bored)class_map["hudie.app.module.bored"]).add);
+			msg_map.Add("hudie."+"app.module.bored.add", ((app.module.bored)class_map["hudie.app.module.bored"]).add);
+			msg_map.Add("hudie."+"app.module.bored.getlist", ((app.module.bored)class_map["hudie.app.module.bored"]).getlist);
+			msg_map.Add("hudie."+"app.module.bored.voicelist", ((app.module.bored)class_map["hudie.app.module.bored"]).voicelist);
 		}
 		private void init_req_map()
 		{
 			req_map.Add("hudie.app.module.user.wx_login",new List<string>());
 			req_map.Add("hudie.app.module.advice.add",new List<string>());
 			req_map.Add("hudie.app.module.bored.add",new List<string>());
+			req_map.Add("hudie.app.module.bored.voicelist",new List<string>());
 			req_map["hudie.app.module.user.wx_login"].Add("wx_token");
 			req_map["hudie.app.module.advice.add"].Add("content");
 			req_map["hudie.app.module.bored.add"].Add("content");
+			req_map["hudie.app.module.bored.voicelist"].Add("bored_id");
 		}
 	}
 }

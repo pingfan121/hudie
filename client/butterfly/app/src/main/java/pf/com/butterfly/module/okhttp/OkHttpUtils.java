@@ -18,9 +18,12 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import pf.com.butterfly.manager.MsgManager;
 import pf.com.butterfly.module.info.MsgData;
@@ -156,7 +159,8 @@ public class OkHttpUtils
      */
     private String setUrlParams( Map<String, String> mapParams){
         String strParams = "";
-        if(mapParams != null){
+        if(mapParams != null)
+        {
             Iterator<String> iterator = mapParams.keySet().iterator();
             String key = "";
             while (iterator.hasNext()) {
@@ -168,7 +172,6 @@ public class OkHttpUtils
         if(strParams.length()>0)
         {
             strParams = strParams.substring(1);
-            strParams="?"+strParams;
         }
 
         return strParams;
@@ -179,7 +182,30 @@ public class OkHttpUtils
     {
 
         okhttp3.Request.Builder RequestBuilder = new okhttp3.Request.Builder();
-        RequestBuilder.url(reqUrl + setUrlParams(params));//添加URL地址
+
+
+      //  RequestBody body= RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"),)
+
+
+        String param_str=setUrlParams(params);
+
+        if(param_str.equals(""))
+        {
+            RequestBuilder.url(reqUrl);
+        }
+        else if(param_str.length()<200)
+        {
+            RequestBuilder.url(reqUrl+"?"+param_str);
+        }
+        else
+        {
+            RequestBuilder.url(reqUrl);
+
+            RequestBody body= RequestBody.create(MediaType.parse("text/x-markdown; charset=utf-8"),param_str);
+
+            RequestBuilder.post(body);
+        }
+
 
         RequestBuilder.tag(userToken);//添加请求标签
         RequestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");

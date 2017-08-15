@@ -68,15 +68,43 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="app\GlobalApp.cs" />
-    <Compile Include="app\info\res_advice_add.cs" />
-    <Compile Include="app\info\res_user_login.cs" />
-    <Compile Include="app\info\res_user_test2.cs" />
-    <Compile Include="app\info\res_user_userinfo.cs" />
-    <Compile Include="app\info\res_user_wx_login.cs" />
+    <Compile Include="app\info\info_bored.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\info\info_bored_voice.cs" />
+    <Compile Include="app\info\info_test.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\info\res_advice_add.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\info\res_bored_add.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\info\res_bored_getlist.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\info\res_bored_voicelist.cs" />
+    <Compile Include="app\info\res_user_login.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\info\res_user_test2.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\info\res_user_userinfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\info\res_user_wx_login.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\MapAppMsg.cs" />
     <Compile Include="app\MapAppMsg2.cs" />
     <Compile Include="app\module\advice\advice.cs" />
     <Compile Include="app\module\advice\advice_add.cs" />
+    <Compile Include="app\module\bored\bored.cs" />
+    <Compile Include="app\module\bored\bored_add.cs" />
+    <Compile Include="app\module\bored\bored_getlist.cs" />
+    <Compile Include="app\module\bored\bored_voicelist.cs" />
     <Compile Include="app\module\modulebase.cs" />
     <Compile Include="app\module\user\user.cs" />
     <Compile Include="app\module\user\user_wx_login.cs" />
@@ -95,6 +123,7 @@
     <Compile Include="dbfile\dblogic\benefit\TbBenefitTheme.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBoredHead.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBoredHeadDetail.cs" />
+    <Compile Include="dbfile\sql_struct.cs" />
     <Compile Include="enum\EnumMsgState.cs" />
     <Compile Include="app\GameApp.cs" />
     <Compile Include="message\ProtocolsReq\deng_lu\login_weixin_req_fun.cs" />

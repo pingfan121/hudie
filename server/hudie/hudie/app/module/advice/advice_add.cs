@@ -24,7 +24,7 @@ namespace hudie.app.module
             TbAppJianyi jianyi = new TbAppJianyi();
             jianyi.Id = ObjectId.NewObjectId().ToString();
             jianyi.Time = DateTime.Now;
-            jianyi.Content = System.Web.HttpUtility.UrlDecode(reqinfo.req_params["content"]);
+            jianyi.Content =reqinfo.req_params["content"];
 
             if(reqinfo.req_params.ContainsKey("userid"))
             {
@@ -38,7 +38,6 @@ namespace hudie.app.module
 
             sql_struct sql = new sql_struct();
 
-            sql.data1 = reqinfo;
             sql.cmd = new DbInsert<TbAppJianyi>(null, jianyi, null);
 
             app.db_Insert(sql);
