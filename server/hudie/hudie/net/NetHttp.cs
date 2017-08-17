@@ -1,4 +1,5 @@
 ﻿using Enum;
+using GameDb.Logic;
 using GameLib.Util;
 using messages;
 using System;
@@ -21,6 +22,8 @@ namespace hudie.net
         public string funpath;
         public HttpListenerContext context;
         public Dictionary<string, string> req_params = new Dictionary<string, string>();
+        public TbAppUser user_data;
+        
     }
     class NetHttp
     {

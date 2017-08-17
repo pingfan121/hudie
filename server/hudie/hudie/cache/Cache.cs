@@ -15,18 +15,18 @@ namespace hudie.cache
 
         //----------------------token的操作--------------------------
         //添加
-//         public static void AddToken(string token,TbUser user)
-//         {
-//             CacheData temp = ObjectPool.getObject<CacheData>();
-//             temp.setData(user);
-// 
-//             lock(tokens)
-//             {
-//                 tokens[token] = temp;
-//             }
-//           
-//             
-//         }
+        public static void AddToken(string token,TbAppUser user)
+        {
+            CacheData temp = ObjectPool.getObject<CacheData>();
+            temp.setData(user);
+
+            lock(tokens)
+            {
+                tokens[token] = temp;
+            }
+          
+            
+        }
         //更新
         public static void updateToken(string token)
         {

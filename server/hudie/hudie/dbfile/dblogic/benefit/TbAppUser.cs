@@ -108,6 +108,30 @@ namespace GameDb.Logic
 			Head=t.Head;
 			Sex=t.Sex;
 			Createtime=t.Createtime;
-       }	 } 
+        }
+
+       public TbAppUser()
+       {
+
+       }
+
+       public TbAppUser copy()
+       {
+           TbAppUser t = new TbAppUser();
+         
+           t.Mobile = Mobile;
+           t.Mail = Mail;
+           t.Pass = Pass;
+           t.WxId = WxId;
+           t.WbId = WbId;
+           t.Name = Name;
+           t.Head = Head;
+           t.Sex = Sex;
+           t.Createtime = Createtime;
+
+           return t;
+       }
+
+     } 
 }    
 
