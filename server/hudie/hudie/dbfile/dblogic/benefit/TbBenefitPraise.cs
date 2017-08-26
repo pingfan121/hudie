@@ -1,53 +1,67 @@
 using System;
 using System.Collections.Generic; 
+using System.Linq;  
 using System.Text;  
-using Easy4net.CustomAttributes; 
+using Easy4net.CustomAttributes;  
 namespace GameDb.Logic  
 {  
 	 [Table(Name = "benefit_praise")] 
 	 public class TbBenefitPraise:TbLogic
 	 { 
-		private string _id;
+		public string _id;
 		[Id(Name = "id", Strategy = GenerationType.GUID)]
-		public string Id{ 
+		public string Id{
 			get{ return _id;}
-			 set{_id=value;}
-		} 
-
-		private string _item;
+			set
+			{
+				_id = value;
+			}
+		}
+		public string _item;
 		[Column(Name = "item")]
-		public string Item{ 
+		public string Item{
 			get{ return _item;}
-			 set{if(_item==value)return;
-			_item=value;
-			changedKeys.Add("Item");}
-		} 
-
-		private string _userid;
+			set
+			{
+				_item = value;
+				changedKeys.Add("Item");
+			}
+		}
+		public string _userid;
 		[Column(Name = "userid")]
-		public string Userid{ 
+		public string Userid{
 			get{ return _userid;}
-			 set{if(_userid==value)return;
-			_userid=value;
-			changedKeys.Add("Userid");}
-		} 
-
-		private DateTime _time;
+			set
+			{
+				_userid = value;
+				changedKeys.Add("Userid");
+			}
+		}
+		public DateTime _time;
 		[Column(Name = "time")]
-		public DateTime Time{ 
+		public DateTime Time{
 			get{ return _time;}
-			 set{if(_time==value)return;
-			_time=value;
-			changedKeys.Add("Time");}
-		} 
+			set
+			{
+				_time = value;
+				changedKeys.Add("Time");
+			}
+		}
+		public TbBenefitPraise()
+		{
+			Item ="";
+			Userid ="";
+		}
+		public TbBenefitPraise copy()
+		{
+			TbBenefitPraise t = new TbBenefitPraise();
 
-
-       override public void copy(TbLogic tblogic) {
-         if (tblogic == this)return;
-         TbBenefitPraise t=tblogic as TbBenefitPraise;
-			Item=t.Item;
-			Userid=t.Userid;
-			Time=t.Time;
-       }	 } 
+			t.Id = Id;
+			t.Item = Item;
+			t.Userid = Userid;
+			t.Time = Time;
+			return t;
+		}
+	 } 
 }    
 

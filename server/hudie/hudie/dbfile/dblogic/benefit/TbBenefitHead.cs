@@ -1,113 +1,136 @@
 using System;
 using System.Collections.Generic; 
+using System.Linq;  
 using System.Text;  
-using Easy4net.CustomAttributes; 
+using Easy4net.CustomAttributes;  
 namespace GameDb.Logic  
 {  
 	 [Table(Name = "benefit_head")] 
 	 public class TbBenefitHead:TbLogic
 	 { 
-		private string _id;
+		public string _id;
 		[Id(Name = "id", Strategy = GenerationType.GUID)]
-		public string Id{ 
+		public string Id{
 			get{ return _id;}
-			 set{_id=value;}
-		} 
-
-		private DateTime _createtime;
+			set
+			{
+				_id = value;
+			}
+		}
+		public DateTime _createtime;
 		[Column(Name = "createtime")]
-		public DateTime Createtime{ 
+		public DateTime Createtime{
 			get{ return _createtime;}
-			 set{if(_createtime==value)return;
-			_createtime=value;
-			changedKeys.Add("Createtime");}
-		} 
-
-		private string _name;
+			set
+			{
+				_createtime = value;
+				changedKeys.Add("Createtime");
+			}
+		}
+		public string _name;
 		[Column(Name = "name")]
-		public string Name{ 
+		public string Name{
 			get{ return _name;}
-			 set{if(_name==value)return;
-			_name=value;
-			changedKeys.Add("Name");}
-		} 
-
-		private string _addr;
+			set
+			{
+				_name = value;
+				changedKeys.Add("Name");
+			}
+		}
+		public string _addr;
 		[Column(Name = "addr")]
-		public string Addr{ 
+		public string Addr{
 			get{ return _addr;}
-			 set{if(_addr==value)return;
-			_addr=value;
-			changedKeys.Add("Addr");}
-		} 
-
-		private int _needmoney;
+			set
+			{
+				_addr = value;
+				changedKeys.Add("Addr");
+			}
+		}
+		public int _needmoney;
 		[Column(Name = "needmoney")]
-		public int Needmoney{ 
+		public int Needmoney{
 			get{ return _needmoney;}
-			 set{if(_needmoney==value)return;
-			_needmoney=value;
-			changedKeys.Add("Needmoney");}
-		} 
-
-		private int _nowmoney;
+			set
+			{
+				_needmoney = value;
+				changedKeys.Add("Needmoney");
+			}
+		}
+		public int _nowmoney;
 		[Column(Name = "nowmoney")]
-		public int Nowmoney{ 
+		public int Nowmoney{
 			get{ return _nowmoney;}
-			 set{if(_nowmoney==value)return;
-			_nowmoney=value;
-			changedKeys.Add("Nowmoney");}
-		} 
-
-		private int _over;
+			set
+			{
+				_nowmoney = value;
+				changedKeys.Add("Nowmoney");
+			}
+		}
+		public int _over;
 		[Column(Name = "over")]
-		public int Over{ 
+		public int Over{
 			get{ return _over;}
-			 set{if(_over==value)return;
-			_over=value;
-			changedKeys.Add("Over");}
-		} 
-
-		private string _details;
+			set
+			{
+				_over = value;
+				changedKeys.Add("Over");
+			}
+		}
+		public string _details;
 		[Column(Name = "details")]
-		public string Details{ 
+		public string Details{
 			get{ return _details;}
-			 set{if(_details==value)return;
-			_details=value;
-			changedKeys.Add("Details");}
-		} 
-
-		private string _userid;
+			set
+			{
+				_details = value;
+				changedKeys.Add("Details");
+			}
+		}
+		public string _userid;
 		[Column(Name = "userid")]
-		public string Userid{ 
+		public string Userid{
 			get{ return _userid;}
-			 set{if(_userid==value)return;
-			_userid=value;
-			changedKeys.Add("Userid");}
-		} 
-
-		private string _username;
+			set
+			{
+				_userid = value;
+				changedKeys.Add("Userid");
+			}
+		}
+		public string _username;
 		[Column(Name = "username")]
-		public string Username{ 
+		public string Username{
 			get{ return _username;}
-			 set{if(_username==value)return;
-			_username=value;
-			changedKeys.Add("Username");}
-		} 
+			set
+			{
+				_username = value;
+				changedKeys.Add("Username");
+			}
+		}
+		public TbBenefitHead()
+		{
+			Name ="";
+			Addr ="";
+			Details ="";
+			Userid ="";
+			Username ="";
+		}
+		public TbBenefitHead copy()
+		{
+			TbBenefitHead t = new TbBenefitHead();
 
-
-       override public void copy(TbLogic tblogic) {
-         if (tblogic == this)return;
-         TbBenefitHead t=tblogic as TbBenefitHead;
-			Createtime=t.Createtime;
-			Name=t.Name;
-			Addr=t.Addr;
-			Needmoney=t.Needmoney;
-			Nowmoney=t.Nowmoney;
-			Over=t.Over;
-			Details=t.Details;
-			Userid=t.Userid;
-			Username=t.Username;
-       }	 } 
+			t.Id = Id;
+			t.Createtime = Createtime;
+			t.Name = Name;
+			t.Addr = Addr;
+			t.Needmoney = Needmoney;
+			t.Nowmoney = Nowmoney;
+			t.Over = Over;
+			t.Details = Details;
+			t.Userid = Userid;
+			t.Username = Username;
+			return t;
+		}
+	 } 
 }    
 

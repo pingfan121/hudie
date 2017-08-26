@@ -5,8 +5,8 @@ using System.Text;
 
 namespace hudie.app.info
 {
-	public partial class res_bored_getlist
+	public partial class res_g2048_rank
 	{
-		public info_bored[] list;//无聊列表
+		public info_2048_rank[] list;//
 	}
 }

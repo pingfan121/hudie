@@ -1,73 +1,90 @@
 using System;
 using System.Collections.Generic; 
+using System.Linq;  
 using System.Text;  
-using Easy4net.CustomAttributes; 
+using Easy4net.CustomAttributes;  
 namespace GameDb.Logic  
 {  
 	 [Table(Name = "benefit_proof")] 
 	 public class TbBenefitProof:TbLogic
 	 { 
-		private string _id;
+		public string _id;
 		[Id(Name = "id", Strategy = GenerationType.GUID)]
-		public string Id{ 
+		public string Id{
 			get{ return _id;}
-			 set{_id=value;}
-		} 
-
-		private string _issueid;
+			set
+			{
+				_id = value;
+			}
+		}
+		public string _issueid;
 		[Column(Name = "issueid")]
-		public string Issueid{ 
+		public string Issueid{
 			get{ return _issueid;}
-			 set{if(_issueid==value)return;
-			_issueid=value;
-			changedKeys.Add("Issueid");}
-		} 
-
-		private string _issuename;
+			set
+			{
+				_issueid = value;
+				changedKeys.Add("Issueid");
+			}
+		}
+		public string _issuename;
 		[Column(Name = "issuename")]
-		public string Issuename{ 
+		public string Issuename{
 			get{ return _issuename;}
-			 set{if(_issuename==value)return;
-			_issuename=value;
-			changedKeys.Add("Issuename");}
-		} 
-
-		private string _content;
+			set
+			{
+				_issuename = value;
+				changedKeys.Add("Issuename");
+			}
+		}
+		public string _content;
 		[Column(Name = "content")]
-		public string Content{ 
+		public string Content{
 			get{ return _content;}
-			 set{if(_content==value)return;
-			_content=value;
-			changedKeys.Add("Content");}
-		} 
-
-		private int _praise;
+			set
+			{
+				_content = value;
+				changedKeys.Add("Content");
+			}
+		}
+		public int _praise;
 		[Column(Name = "praise")]
-		public int Praise{ 
+		public int Praise{
 			get{ return _praise;}
-			 set{if(_praise==value)return;
-			_praise=value;
-			changedKeys.Add("Praise");}
-		} 
-
-		private int _discuss;
+			set
+			{
+				_praise = value;
+				changedKeys.Add("Praise");
+			}
+		}
+		public int _discuss;
 		[Column(Name = "discuss")]
-		public int Discuss{ 
+		public int Discuss{
 			get{ return _discuss;}
-			 set{if(_discuss==value)return;
-			_discuss=value;
-			changedKeys.Add("Discuss");}
-		} 
+			set
+			{
+				_discuss = value;
+				changedKeys.Add("Discuss");
+			}
+		}
+		public TbBenefitProof()
+		{
+			Issueid ="";
+			Issuename ="";
+			Content ="";
+		}
+		public TbBenefitProof copy()
+		{
+			TbBenefitProof t = new TbBenefitProof();
 
-
-       override public void copy(TbLogic tblogic) {
-         if (tblogic == this)return;
-         TbBenefitProof t=tblogic as TbBenefitProof;
-			Issueid=t.Issueid;
-			Issuename=t.Issuename;
-			Content=t.Content;
-			Praise=t.Praise;
-			Discuss=t.Discuss;
-       }	 } 
+			t.Id = Id;
+			t.Issueid = Issueid;
+			t.Issuename = Issuename;
+			t.Content = Content;
+			t.Praise = Praise;
+			t.Discuss = Discuss;
+			return t;
+		}
+	 } 
 }    
 

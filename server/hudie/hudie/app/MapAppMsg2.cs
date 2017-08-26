@@ -14,6 +14,7 @@ namespace hudie.app
 			class_map.Add("hudie."+"app.module.user", new app.module.user(app));
 			class_map.Add("hudie."+"app.module.advice", new app.module.advice(app));
 			class_map.Add("hudie."+"app.module.bored", new app.module.bored(app));
+			class_map.Add("hudie."+"app.module.game.g2048", new app.module.game.g2048(app));
 		}
 		private void init_msg_map()
 		{
@@ -22,6 +23,7 @@ namespace hudie.app
 			msg_map.Add("hudie."+"app.module.bored.add", ((app.module.bored)class_map["hudie.app.module.bored"]).add);
 			msg_map.Add("hudie."+"app.module.bored.getlist", ((app.module.bored)class_map["hudie.app.module.bored"]).getlist);
 			msg_map.Add("hudie."+"app.module.bored.voicelist", ((app.module.bored)class_map["hudie.app.module.bored"]).voicelist);
+			msg_map.Add("hudie."+"app.module.game.g2048.rank", ((app.module.game.g2048)class_map["hudie.app.module.game.g2048"]).rank);
 		}
 		private void init_req_map()
 		{
@@ -29,10 +31,13 @@ namespace hudie.app
 			req_map.Add("hudie.app.module.advice.add",new List<string>());
 			req_map.Add("hudie.app.module.bored.add",new List<string>());
 			req_map.Add("hudie.app.module.bored.voicelist",new List<string>());
+			req_map.Add("hudie.app.module.game.g2048.rank",new List<string>());
 			req_map["hudie.app.module.user.wx_login"].Add("wx_token");
 			req_map["hudie.app.module.advice.add"].Add("content");
 			req_map["hudie.app.module.bored.add"].Add("content");
 			req_map["hudie.app.module.bored.voicelist"].Add("bored_id");
+			req_map["hudie.app.module.game.g2048.rank"].Add("type");
+			req_map["hudie.app.module.game.g2048.rank"].Add("num");
 		}
 	}
 }

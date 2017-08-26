@@ -1,73 +1,90 @@
 using System;
 using System.Collections.Generic; 
+using System.Linq;  
 using System.Text;  
-using Easy4net.CustomAttributes; 
+using Easy4net.CustomAttributes;  
 namespace GameDb.Logic  
 {  
 	 [Table(Name = "bored_head_detail")] 
 	 public class TbBoredHeadDetail:TbLogic
 	 { 
-		private string _id;
+		public string _id;
 		[Id(Name = "id", Strategy = GenerationType.GUID)]
-		public string Id{ 
+		public string Id{
 			get{ return _id;}
-			 set{_id=value;}
-		} 
-
-		private string _headid;
+			set
+			{
+				_id = value;
+			}
+		}
+		public string _headid;
 		[Column(Name = "headid")]
-		public string Headid{ 
+		public string Headid{
 			get{ return _headid;}
-			 set{if(_headid==value)return;
-			_headid=value;
-			changedKeys.Add("Headid");}
-		} 
-
-		private string _useid;
+			set
+			{
+				_headid = value;
+				changedKeys.Add("Headid");
+			}
+		}
+		public string _useid;
 		[Column(Name = "useid")]
-		public string Useid{ 
+		public string Useid{
 			get{ return _useid;}
-			 set{if(_useid==value)return;
-			_useid=value;
-			changedKeys.Add("Useid");}
-		} 
-
-		private int _record_len;
+			set
+			{
+				_useid = value;
+				changedKeys.Add("Useid");
+			}
+		}
+		public int _record_len;
 		[Column(Name = "record_len")]
-		public int RecordLen{ 
+		public int RecordLen{
 			get{ return _record_len;}
-			 set{if(_record_len==value)return;
-			_record_len=value;
-			changedKeys.Add("RecordLen");}
-		} 
-
-		private string _record_url;
+			set
+			{
+				_record_len = value;
+				changedKeys.Add("RecordLen");
+			}
+		}
+		public string _record_url;
 		[Column(Name = "record_url")]
-		public string RecordUrl{ 
+		public string RecordUrl{
 			get{ return _record_url;}
-			 set{if(_record_url==value)return;
-			_record_url=value;
-			changedKeys.Add("RecordUrl");}
-		} 
-
-		private long _createtime;
+			set
+			{
+				_record_url = value;
+				changedKeys.Add("RecordUrl");
+			}
+		}
+		public long _createtime;
 		[Column(Name = "createtime")]
-		public long Createtime{ 
+		public long Createtime{
 			get{ return _createtime;}
-			 set{if(_createtime==value)return;
-			_createtime=value;
-			changedKeys.Add("Createtime");}
-		} 
+			set
+			{
+				_createtime = value;
+				changedKeys.Add("Createtime");
+			}
+		}
+		public TbBoredHeadDetail()
+		{
+			Headid ="";
+			Useid ="";
+			RecordUrl ="";
+		}
+		public TbBoredHeadDetail copy()
+		{
+			TbBoredHeadDetail t = new TbBoredHeadDetail();
 
-
-       override public void copy(TbLogic tblogic) {
-         if (tblogic == this)return;
-         TbBoredHeadDetail t=tblogic as TbBoredHeadDetail;
-			Headid=t.Headid;
-			Useid=t.Useid;
-			RecordLen=t.RecordLen;
-			RecordUrl=t.RecordUrl;
-			Createtime=t.Createtime;
-       }	 } 
+			t.Id = Id;
+			t.Headid = Headid;
+			t.Useid = Useid;
+			t.RecordLen = RecordLen;
+			t.RecordUrl = RecordUrl;
+			t.Createtime = Createtime;
+			return t;
+		}
+	 } 
 }    
 

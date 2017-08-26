@@ -10,6 +10,7 @@ using MySql.Data.Types;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -615,17 +616,23 @@ namespace Easy4net.Session
             {
                 while (sdr.Read())
                 {
+
                     T entity = new T();
                     foreach (ColomnInfo co in dic.colomns.Values)
                     {
                         String name = co.columnName;
-                        if (sdr[name] is MySqlDateTime)
+                        if(CheckColumnName(sdr,name)==true)
                         {
-                            co.proptoty.SetValue(entity, ((MySqlDateTime)sdr[name]).GetDateTime(), null);
+                            if(sdr[name] is MySqlDateTime)
+                            {
+                                co.proptoty.SetValue(entity, ((MySqlDateTime)sdr[name]).GetDateTime(), null);
+                            }
+                            else
+                            {
+                                co.proptoty.SetValue(entity, sdr[name], null);
+                            }
                         }
-                        else {
-                            co.proptoty.SetValue(entity, sdr[name], null);
-                        }
+                      
                     }
                     entity.changedKeys.Clear();//清理
                     list.Add(entity);
@@ -640,6 +647,21 @@ namespace Easy4net.Session
             }
             return list;
         }
+
+        public bool CheckColumnName(MySqlDataReader reader, string columnName)  
+        {  
+            bool result = false;  
+            DataTable dt = reader.GetSchemaTable();
+            foreach (DataRow dr in dt.Rows)  
+            {  
+                if (dr["ColumnName"].ToString() == columnName)  
+                {  
+                    result = true;  
+                }  
+            }  
+  
+            return result;
+        }  
         #endregion
 
         

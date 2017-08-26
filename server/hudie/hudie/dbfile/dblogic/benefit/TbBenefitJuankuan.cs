@@ -1,66 +1,80 @@
 using System;
 using System.Collections.Generic; 
+using System.Linq;  
 using System.Text;  
-using Easy4net.CustomAttributes; 
+using Easy4net.CustomAttributes;  
 namespace GameDb.Logic  
 {  
 	 [Table(Name = "benefit_juankuan")] 
 	 public class TbBenefitJuankuan:TbLogic
 	 { 
-		private string _id;
+		public string _id;
 		[Column(Name = "id")]
-		public string Id{ 
+		public string Id{
 			get{ return _id;}
-			 set{if(_id==value)return;
-			_id=value;
-			changedKeys.Add("Id");}
-		} 
-
-		private string _userid;
+			set
+			{
+				_id = value;
+				changedKeys.Add("Id");
+			}
+		}
+		public string _userid;
 		[Column(Name = "userid")]
-		public string Userid{ 
+		public string Userid{
 			get{ return _userid;}
-			 set{if(_userid==value)return;
-			_userid=value;
-			changedKeys.Add("Userid");}
-		} 
-
-		private string _itemid;
+			set
+			{
+				_userid = value;
+				changedKeys.Add("Userid");
+			}
+		}
+		public string _itemid;
 		[Column(Name = "itemid")]
-		public string Itemid{ 
+		public string Itemid{
 			get{ return _itemid;}
-			 set{if(_itemid==value)return;
-			_itemid=value;
-			changedKeys.Add("Itemid");}
-		} 
-
-		private float _gold;
+			set
+			{
+				_itemid = value;
+				changedKeys.Add("Itemid");
+			}
+		}
+		public float _gold;
 		[Column(Name = "gold")]
-		public float Gold{ 
+		public float Gold{
 			get{ return _gold;}
-			 set{if(_gold==value)return;
-			_gold=value;
-			changedKeys.Add("Gold");}
-		} 
-
-		private DateTime _time;
+			set
+			{
+				_gold = value;
+				changedKeys.Add("Gold");
+			}
+		}
+		public DateTime _time;
 		[Column(Name = "time")]
-		public DateTime Time{ 
+		public DateTime Time{
 			get{ return _time;}
-			 set{if(_time==value)return;
-			_time=value;
-			changedKeys.Add("Time");}
-		} 
+			set
+			{
+				_time = value;
+				changedKeys.Add("Time");
+			}
+		}
+		public TbBenefitJuankuan()
+		{
+			Id ="";
+			Userid ="";
+			Itemid ="";
+		}
+		public TbBenefitJuankuan copy()
+		{
+			TbBenefitJuankuan t = new TbBenefitJuankuan();
 
-
-       override public void copy(TbLogic tblogic) {
-         if (tblogic == this)return;
-         TbBenefitJuankuan t=tblogic as TbBenefitJuankuan;
-			Id=t.Id;
-			Userid=t.Userid;
-			Itemid=t.Itemid;
-			Gold=t.Gold;
-			Time=t.Time;
-       }	 } 
+			t.Id = Id;
+			t.Userid = Userid;
+			t.Itemid = Itemid;
+			t.Gold = Gold;
+			t.Time = Time;
+			return t;
+		}
+	 } 
 }    
 

@@ -13,8 +13,8 @@ namespace hudie.app.module
 {
 	public partial class bored
 	{
-		public void getlist(HttpInfo reqinfo)
-		{
+        public void getlist(HttpInfo reqinfo)
+        {
 
             //请求数据库数据......
 
@@ -34,21 +34,21 @@ namespace hudie.app.module
             app.db_Select(sql);
 
 
-        
-		}
+
+        }
 
         private void getlist_back(sql_struct sql)
         {
-            DbSelect<TbBoredHead> dbselect=sql.cmd as DbSelect<TbBoredHead>;
+            DbSelect<TbBoredHead> dbselect = sql.cmd as DbSelect<TbBoredHead>;
 
             res_bored_getlist res = new res_bored_getlist();
 
-            if (dbselect.ListRecord != null)
+            if(dbselect.ListRecord != null)
             {
                 res.list = new info_bored[dbselect.ListRecord.Count];
 
                 int count = 0;
-                foreach (TbBoredHead theme in dbselect.ListRecord)
+                foreach(TbBoredHead theme in dbselect.ListRecord)
                 {
                     res.list[count] = new info_bored();
 
@@ -66,5 +66,5 @@ namespace hudie.app.module
 
             app.sendMsg(sql.httpinfo, res);
         }
-	}
+    }
 }

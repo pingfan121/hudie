@@ -1,137 +1,138 @@
 using System;
 using System.Collections.Generic; 
+using System.Linq;  
 using System.Text;  
-using Easy4net.CustomAttributes; 
+using Easy4net.CustomAttributes;  
 namespace GameDb.Logic  
 {  
 	 [Table(Name = "app_user")] 
 	 public class TbAppUser:TbLogic
 	 { 
-		private string _id;
+		public string _id;
 		[Id(Name = "id", Strategy = GenerationType.GUID)]
-		public string Id{ 
+		public string Id{
 			get{ return _id;}
-			 set{_id=value;}
-		} 
-
-		private string _mobile;
+			set
+			{
+				_id = value;
+			}
+		}
+		public string _mobile;
 		[Column(Name = "mobile")]
-		public string Mobile{ 
+		public string Mobile{
 			get{ return _mobile;}
-			 set{if(_mobile==value)return;
-			_mobile=value;
-			changedKeys.Add("Mobile");}
-		} 
-
-		private string _mail;
+			set
+			{
+				_mobile = value;
+				changedKeys.Add("Mobile");
+			}
+		}
+		public string _mail;
 		[Column(Name = "mail")]
-		public string Mail{ 
+		public string Mail{
 			get{ return _mail;}
-			 set{if(_mail==value)return;
-			_mail=value;
-			changedKeys.Add("Mail");}
-		} 
-
-		private string _pass;
+			set
+			{
+				_mail = value;
+				changedKeys.Add("Mail");
+			}
+		}
+		public string _pass;
 		[Column(Name = "pass")]
-		public string Pass{ 
+		public string Pass{
 			get{ return _pass;}
-			 set{if(_pass==value)return;
-			_pass=value;
-			changedKeys.Add("Pass");}
-		} 
-
-		private string _wx_id;
+			set
+			{
+				_pass = value;
+				changedKeys.Add("Pass");
+			}
+		}
+		public string _wx_id;
 		[Column(Name = "wx_id")]
-		public string WxId{ 
+		public string WxId{
 			get{ return _wx_id;}
-			 set{if(_wx_id==value)return;
-			_wx_id=value;
-			changedKeys.Add("WxId");}
-		} 
-
-		private string _wb_id;
+			set
+			{
+				_wx_id = value;
+				changedKeys.Add("WxId");
+			}
+		}
+		public string _wb_id;
 		[Column(Name = "wb_id")]
-		public string WbId{ 
+		public string WbId{
 			get{ return _wb_id;}
-			 set{if(_wb_id==value)return;
-			_wb_id=value;
-			changedKeys.Add("WbId");}
-		} 
-
-		private string _name;
+			set
+			{
+				_wb_id = value;
+				changedKeys.Add("WbId");
+			}
+		}
+		public string _name;
 		[Column(Name = "name")]
-		public string Name{ 
+		public string Name{
 			get{ return _name;}
-			 set{if(_name==value)return;
-			_name=value;
-			changedKeys.Add("Name");}
-		} 
-
-		private string _head;
+			set
+			{
+				_name = value;
+				changedKeys.Add("Name");
+			}
+		}
+		public string _head;
 		[Column(Name = "head")]
-		public string Head{ 
+		public string Head{
 			get{ return _head;}
-			 set{if(_head==value)return;
-			_head=value;
-			changedKeys.Add("Head");}
-		} 
-
-		private int _sex;
+			set
+			{
+				_head = value;
+				changedKeys.Add("Head");
+			}
+		}
+		public int _sex;
 		[Column(Name = "sex")]
-		public int Sex{ 
+		public int Sex{
 			get{ return _sex;}
-			 set{if(_sex==value)return;
-			_sex=value;
-			changedKeys.Add("Sex");}
-		} 
-
-		private long _createtime;
+			set
+			{
+				_sex = value;
+				changedKeys.Add("Sex");
+			}
+		}
+		public long _createtime;
 		[Column(Name = "createtime")]
-		public long Createtime{ 
+		public long Createtime{
 			get{ return _createtime;}
-			 set{if(_createtime==value)return;
-			_createtime=value;
-			changedKeys.Add("Createtime");}
-		} 
+			set
+			{
+				_createtime = value;
+				changedKeys.Add("Createtime");
+			}
+		}
+		public TbAppUser()
+		{
+			Mobile ="";
+			Mail ="";
+			Pass ="";
+			WxId ="";
+			WbId ="";
+			Name ="";
+			Head ="";
+		}
+		public TbAppUser copy()
+		{
+			TbAppUser t = new TbAppUser();
 
-
-       override public void copy(TbLogic tblogic) {
-         if (tblogic == this)return;
-         TbAppUser t=tblogic as TbAppUser;
-			Mobile=t.Mobile;
-			Mail=t.Mail;
-			Pass=t.Pass;
-			WxId=t.WxId;
-			WbId=t.WbId;
-			Name=t.Name;
-			Head=t.Head;
-			Sex=t.Sex;
-			Createtime=t.Createtime;
-        }
-
-       public TbAppUser()
-       {
-
-       }
-
-       public TbAppUser copy()
-       {
-           TbAppUser t = new TbAppUser();
-         
-           t.Mobile = Mobile;
-           t.Mail = Mail;
-           t.Pass = Pass;
-           t.WxId = WxId;
-           t.WbId = WbId;
-           t.Name = Name;
-           t.Head = Head;
-           t.Sex = Sex;
-           t.Createtime = Createtime;
-
-           return t;
-       }
-
-     } 
+			t.Id = Id;
+			t.Mobile = Mobile;
+			t.Mail = Mail;
+			t.Pass = Pass;
+			t.WxId = WxId;
+			t.WbId = WbId;
+			t.Name = Name;
+			t.Head = Head;
+			t.Sex = Sex;
+			t.Createtime = Createtime;
+			return t;
+		}
+	 } 
 }    
 
