@@ -1,19 +1,45 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地_3311
-Source Server Version : 50091
+Source Server         : 本地
+Source Server Version : 50714
 Source Host           : 127.0.0.1:3311
 Source Database       : app_benefit
 
 Target Server Type    : MYSQL
-Target Server Version : 50091
+Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-06-06 18:14:00
+Date: 2017-08-29 09:58:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for account
+-- ----------------------------
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `account` (
+  `id` char(24) NOT NULL,
+  `mobile` char(11) NOT NULL DEFAULT '',
+  `mail` char(48) NOT NULL DEFAULT '',
+  `pass` char(48) NOT NULL DEFAULT '',
+  `createtime` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `mobile` (`mobile`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of account
+-- ----------------------------
+INSERT INTO `account` VALUES ('123', '123', '123', '123', '0000-00-00 00:00:00');
+INSERT INTO `account` VALUES ('124', '123', '123', '123', '0000-00-00 00:00:00');
+INSERT INTO `account` VALUES ('77237803aeddbf4c1f000000', '18789061261', '', '111111', '2016-08-18 00:10:05');
+INSERT INTO `account` VALUES ('89ddfa01eb2d78b455000000', '13242423411', '', '111111', '2016-07-08 17:13:37');
+INSERT INTO `account` VALUES ('ac524003aeddbf588b000000', '18789081811', '', '111111', '2016-11-24 23:09:07');
+INSERT INTO `account` VALUES ('c7fba403aeddbff443000000', '18789061263', '', '111111', '2016-08-18 00:59:04');
+INSERT INTO `account` VALUES ('cf486c03aeddbf3012000000', '12345678', '', '111111', '2016-08-17 23:57:08');
+INSERT INTO `account` VALUES ('f912a103aeddbfc832000000', '18789061262', '', '111', '2016-08-18 00:54:47');
 
 -- ----------------------------
 -- Table structure for app_jianyi
@@ -24,7 +50,7 @@ CREATE TABLE `app_jianyi` (
   `userid` char(32) NOT NULL,
   `content` text NOT NULL,
   `time` datetime NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -37,22 +63,38 @@ INSERT INTO `app_jianyi` VALUES ('43d9d301eb2d78b40e030000', '111', '这也是�
 INSERT INTO `app_jianyi` VALUES ('4effd501eb2d78b40e040000', '111', '这也是一条建议', '2017-03-14 16:33:21');
 
 -- ----------------------------
+-- Table structure for app_login_log
+-- ----------------------------
+DROP TABLE IF EXISTS `app_login_log`;
+CREATE TABLE `app_login_log` (
+  `id` char(32) NOT NULL,
+  `user_id` char(32) NOT NULL,
+  `ip` varchar(16) NOT NULL,
+  `login_time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of app_login_log
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for app_user
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user`;
 CREATE TABLE `app_user` (
   `id` char(24) NOT NULL,
   `mobile` char(11) NOT NULL COMMENT '手机号',
-  `mail` char(48) NOT NULL default '' COMMENT '邮件',
-  `pass` char(48) NOT NULL default '' COMMENT '密码',
+  `mail` char(48) NOT NULL DEFAULT '' COMMENT '邮件',
+  `pass` char(48) NOT NULL DEFAULT '' COMMENT '密码',
   `wx_id` char(32) NOT NULL,
   `wb_id` char(32) NOT NULL,
   `name` varchar(32) NOT NULL,
   `head` varchar(255) NOT NULL COMMENT '头像图片url',
-  `sex` int(11) NOT NULL default '0' COMMENT '性别 1是男 2是女',
+  `sex` int(11) NOT NULL DEFAULT '0' COMMENT '性别 1是男 2是女',
   `createtime` bigint(20) NOT NULL COMMENT '创建时间',
-  PRIMARY KEY  (`id`),
-  KEY `mobile` USING BTREE (`mobile`),
+  PRIMARY KEY (`id`),
+  KEY `mobile` (`mobile`) USING BTREE,
   KEY `wx_id` (`wx_id`),
   KEY `wb_id` (`wb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -68,6 +110,7 @@ INSERT INTO `app_user` VALUES ('ac524003aeddbf588b000000', '18789081811', '', '1
 INSERT INTO `app_user` VALUES ('c7fba403aeddbff443000000', '18789061263', '', '111111', '', '', '', '', '0', '2016');
 INSERT INTO `app_user` VALUES ('cf486c03aeddbf3012000000', '12345678', '', '111111', '', '', '', '', '0', '2016');
 INSERT INTO `app_user` VALUES ('f912a103aeddbfc832000000', '18789061262', '', '111', '', '', '', '', '0', '2016');
+INSERT INTO `app_user` VALUES ('35281604aeddbf8856000000', '', '', '', 'oIBoIs0LYi6j9pfrqvnc2-teo0AI', '', '飒飒西风', 'http://wx.qlogo.cn/mmopen/PdibpV1sFDHd7jGjouGwGr5yfNGzrfu47C63VVicRgxY19Cr5vddE1Sq41X0cgicLu1xJcxibGXqxORGGgR7a0ogYtyYgASZ7RTf/0', '1', '1503946960949');
 
 -- ----------------------------
 -- Table structure for benefit_discuss
@@ -79,7 +122,7 @@ CREATE TABLE `benefit_discuss` (
   `userid` char(32) NOT NULL,
   `content` varchar(2048) NOT NULL,
   `time` datetime NOT NULL,
-  PRIMARY KEY  (`id`),
+  PRIMARY KEY (`id`),
   KEY `itemid` (`itemid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -95,7 +138,7 @@ DROP TABLE IF EXISTS `benefit_head`;
 CREATE TABLE `benefit_head` (
   `id` char(32) NOT NULL,
   `createtime` datetime NOT NULL,
-  `name` varchar(32) NOT NULL default '' COMMENT '救助对象',
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '救助对象',
   `addr` varchar(255) NOT NULL COMMENT '所在位置',
   `needmoney` int(4) NOT NULL COMMENT '需要金额',
   `nowmoney` int(4) NOT NULL COMMENT '筹集金额',
@@ -103,7 +146,7 @@ CREATE TABLE `benefit_head` (
   `details` text NOT NULL,
   `userid` char(32) NOT NULL,
   `username` char(32) NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -136,7 +179,7 @@ CREATE TABLE `benefit_praise` (
   `item` char(32) NOT NULL,
   `userid` char(32) NOT NULL,
   `time` datetime NOT NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -153,15 +196,72 @@ CREATE TABLE `benefit_proof` (
   `issueid` char(32) NOT NULL COMMENT '发布人id',
   `issuename` char(32) NOT NULL COMMENT '发布人名字',
   `content` text NOT NULL,
-  `praise` int(4) NOT NULL default '0' COMMENT '赞的数量',
+  `praise` int(4) NOT NULL DEFAULT '0' COMMENT '赞的数量',
   `discuss` int(4) NOT NULL COMMENT '评论的数量',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of benefit_proof
 -- ----------------------------
 INSERT INTO `benefit_proof` VALUES ('123456789', '333222111', '', '这是一个证据链', '1', '1');
+
+-- ----------------------------
+-- Table structure for benefit_proof_discuss
+-- ----------------------------
+DROP TABLE IF EXISTS `benefit_proof_discuss`;
+CREATE TABLE `benefit_proof_discuss` (
+  `id` char(32) NOT NULL,
+  `proofid` char(32) NOT NULL,
+  `userid` char(32) NOT NULL,
+  `content` varchar(1024) NOT NULL,
+  `time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of benefit_proof_discuss
+-- ----------------------------
+INSERT INTO `benefit_proof_discuss` VALUES ('12342143', '123456789', '333222111', '这是一个评论', '2016-07-05 16:31:19');
+
+-- ----------------------------
+-- Table structure for benefit_proof_praise
+-- ----------------------------
+DROP TABLE IF EXISTS `benefit_proof_praise`;
+CREATE TABLE `benefit_proof_praise` (
+  `id` char(32) NOT NULL,
+  `proofid` char(32) NOT NULL,
+  `userid` char(32) NOT NULL,
+  `time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of benefit_proof_praise
+-- ----------------------------
+INSERT INTO `benefit_proof_praise` VALUES ('32532535', '123456789', '333222111', '2016-07-05 16:31:44');
+
+-- ----------------------------
+-- Table structure for benefit_theme
+-- ----------------------------
+DROP TABLE IF EXISTS `benefit_theme`;
+CREATE TABLE `benefit_theme` (
+  `id` char(32) NOT NULL,
+  `createtime` datetime NOT NULL,
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '救助对象',
+  `addr` varchar(255) NOT NULL COMMENT '所在位置',
+  `needmoney` int(4) NOT NULL COMMENT '需要金额',
+  `nowmoney` int(4) NOT NULL COMMENT '筹集金额',
+  `over` int(4) NOT NULL COMMENT '是否结束',
+  `details` text NOT NULL,
+  `issueid` char(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of benefit_theme
+-- ----------------------------
+INSERT INTO `benefit_theme` VALUES ('111222333', '2016-07-05 15:49:10', '王尼玛', '北京市武警医院', '150000', '0', '12', '这里是详细介绍', '333222111');
 
 -- ----------------------------
 -- Table structure for bored_head
@@ -171,15 +271,16 @@ CREATE TABLE `bored_head` (
   `id` char(32) NOT NULL,
   `useid` char(32) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `createtime` bigint(255) NOT NULL default '0' COMMENT '//创建时间全部使用 long类型  毫秒级',
+  `createtime` bigint(255) NOT NULL DEFAULT '0' COMMENT '//创建时间全部使用 long类型  毫秒级',
   `rownum` int(11) NOT NULL,
-  `invalid` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  `invalid` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bored_head
 -- ----------------------------
+INSERT INTO `bored_head` VALUES ('d5fa6703aeddbf443b000000', '0', '测试一下', '1503935546071', '0', '0');
 
 -- ----------------------------
 -- Table structure for bored_head_detail
@@ -191,11 +292,38 @@ CREATE TABLE `bored_head_detail` (
   `useid` char(32) NOT NULL,
   `record_len` int(11) NOT NULL,
   `record_url` varchar(512) NOT NULL,
-  `createtime` bigint(255) NOT NULL default '0' COMMENT '//创建时间全部使用 long类型  毫秒级',
-  PRIMARY KEY  (`id`)
+  `createtime` bigint(255) NOT NULL DEFAULT '0' COMMENT '//创建时间全部使用 long类型  毫秒级',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bored_head_detail
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` char(24) NOT NULL,
+  `mobile` char(11) NOT NULL COMMENT '手机号',
+  `mail` char(48) NOT NULL DEFAULT '' COMMENT '邮件',
+  `pass` char(48) NOT NULL DEFAULT '' COMMENT '密码',
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `mobile` (`mobile`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('123', '123', '123', '123', '0000-00-00 00:00:00');
+INSERT INTO `user` VALUES ('124', '123', '123', '123', '0000-00-00 00:00:00');
+INSERT INTO `user` VALUES ('77237803aeddbf4c1f000000', '18789061261', '', '111111', '2016-08-18 00:10:05');
+INSERT INTO `user` VALUES ('89ddfa01eb2d78b455000000', '13242423411', '', '111111', '2016-07-08 17:13:37');
+INSERT INTO `user` VALUES ('ac524003aeddbf588b000000', '18789081811', '', '111111', '2016-11-24 23:09:07');
+INSERT INTO `user` VALUES ('c7fba403aeddbff443000000', '18789061263', '', '111111', '2016-08-18 00:59:04');
+INSERT INTO `user` VALUES ('cf486c03aeddbf3012000000', '12345678', '', '111111', '2016-08-17 23:57:08');
+INSERT INTO `user` VALUES ('f912a103aeddbfc832000000', '18789061262', '', '111', '2016-08-18 00:54:47');
+INSERT INTO `user` VALUES ('c7d07103aeddbf403b000000', '18789061611', '', '111111', '2017-04-05 00:03:10');
 SET FOREIGN_KEY_CHECKS=1;
