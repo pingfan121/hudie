@@ -1,13 +1,9 @@
 package pf.com.butterfly.module.bored;
 
-import android.graphics.drawable.AnimationDrawable;
-import android.media.MediaPlayer;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -19,26 +15,12 @@ import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.AdapterItemData;
 import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
-import pf.com.butterfly.hander.IMsgHandler;
-import pf.com.butterfly.hander.MsgHandler;
+import pf.com.butterfly.okhttp.IMsgback;
 import pf.com.butterfly.infofile.res_bored_add;
 import pf.com.butterfly.infofile.res_bored_getlist;
-import pf.com.butterfly.input.TextInput;
-import pf.com.butterfly.manager.MsgManager;
-import pf.com.butterfly.message.MsgBase;
-import pf.com.butterfly.message.Protocols.bored_head_item_add_req;
-import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
-import pf.com.butterfly.message.Protocols.bored_head_items_req;
-import pf.com.butterfly.message.Protocols.bored_head_items_res;
-import pf.com.butterfly.message.net.IMsgResult;
-import pf.com.butterfly.message.net.NetManager;
-import pf.com.butterfly.module.bored.BoredDetail;
-import pf.com.butterfly.module.bored.BoredItemView;
-import pf.com.butterfly.module.bored.MediaManager;
-import pf.com.butterfly.module.bored.Recorder;
-import pf.com.butterfly.module.info.res_user_wx_login;
-import pf.com.butterfly.module.okhttp.OkHttpUtils;
+import pf.com.butterfly.okhttp.OkHttpUtils;
 import pf.com.butterfly.util.HDLog;
+import pf.com.butterfly.util.MyGson;
 
 /**
  * Created by admin on 2017/3/3.
@@ -152,7 +134,7 @@ public class BoredHead extends AppBaseViewControl
 
         param.put("content",str);
 
-        MsgManager.sendMsg2("bored","add",param,add_result);
+        OkHttpUtils.getInstance().sendAppMsg("bored/add",param,add_result);
 
 
     }
@@ -169,19 +151,20 @@ public class BoredHead extends AppBaseViewControl
         }
 
 
-        MsgManager.sendMsg2("bored","getlist",null,update_result);
+       // MsgManager.sendMsg2("bored","getlist",null,update_result);
+        OkHttpUtils.getInstance().sendAppMsg("bored/getlist",null,update_result);
     }
 
     //-----------------网络返回处理-------------------
 
-    private IMsgHandler add_result=new IMsgHandler()
+    private IMsgback add_result=new IMsgback()
     {
         @Override
         public void onMsgDispose(int err, String result, Object userToken)
         {
             HDLog.Toast("提交成功");
 
-            res_bored_add res=MsgManager.parseJson(result, res_bored_add.class);
+            res_bored_add res= MyGson.parseJson(result, res_bored_add.class);
 
             BoredHeadItemData data=new BoredHeadItemData();
             data.id=res.info.id;
@@ -195,14 +178,14 @@ public class BoredHead extends AppBaseViewControl
     };
 
 
-    private IMsgHandler update_result=new IMsgHandler()
+    private IMsgback update_result=new IMsgback()
     {
         @Override
         public void onMsgDispose(int err, String result, Object userToken)
         {
             HDLog.Toast("已刷新");
 
-            res_bored_getlist res=MsgManager.parseJson(result, res_bored_getlist.class);
+            res_bored_getlist res=MyGson.parseJson(result, res_bored_getlist.class);
 
             List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
 

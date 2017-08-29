@@ -16,6 +16,9 @@
     <color name="app_view_down">#acabab</color>
     <color name="app_lucency">#00000000</color>
 
+    <color name="clr_normal">#FFFFFF</color>
+    <color name="clr_pressed">#99E5FE</color>
+
 
 
 </resources>

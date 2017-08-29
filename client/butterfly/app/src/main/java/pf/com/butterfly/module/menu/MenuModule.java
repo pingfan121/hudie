@@ -15,7 +15,7 @@ import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.manager.DataManager;
 import pf.com.butterfly.module.advice.AdviceHead;
 import pf.com.butterfly.module.bored.BoredHead;
-import pf.com.butterfly.module.game_2048.TestGameHead;
+import pf.com.butterfly.module.game_2048.SelectGameHead;
 import pf.com.butterfly.module.login.LoginHead;
 import pf.com.butterfly.module.set.SetingHead;
 import pf.com.butterfly.module.user.UserHead;
@@ -150,7 +150,7 @@ public class MenuModule
 
          adapter2=new ListViewAdapter(R.layout.itemlayout,MenuItemControl.class.getName());
 
-         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"2048", TestGameHead.getInstance()));
+         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"2048", SelectGameHead.getInstance()));
 //         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"回不去", AdviceHead.getInstance()));
 //         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"舍不得",SetingHead.getInstance()));
 //         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"来不及",SetingHead.getInstance()));

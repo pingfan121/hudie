@@ -7,7 +7,6 @@ import java.util.Map;
 
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
-import pf.com.butterfly.manager.MsgManager;
 import pf.com.butterfly.module.ControlLayer;
 import pf.com.butterfly.module.DebugHead;
 import pf.com.butterfly.module.TestEditView;
@@ -166,9 +165,9 @@ public class MainTest extends AppBaseViewControl
 //
 //        MsgManager.sendMsg("app/module/user/wx_login",maps,null);
 
-        maps.put("userid","");
-        maps.put("content","heiheihei");
-        MsgManager.sendMsg("app/module/advice/add",maps,null);
+//        maps.put("userid","");
+//        maps.put("content","heiheihei");
+//        MsgManager.sendMsg("app/module/advice/add",maps,null);
 
     }
 

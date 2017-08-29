@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import pf.com.butterfly.hander.IMsgHandler;
+import pf.com.butterfly.okhttp.IMsgback;
 import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.util.HDLog;
 
@@ -27,7 +27,7 @@ public class HttpBase extends Thread
     private String mode="POST";
 
 
-    public HttpBase(IMsgHandler handler)
+    public HttpBase(IMsgback handler)
     {
         this.what=MsgHandler.getInstance().getNewWhat();
         MsgHandler.getInstance().addOneDispose(what,handler);

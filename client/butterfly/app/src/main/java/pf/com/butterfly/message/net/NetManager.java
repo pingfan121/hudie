@@ -1,16 +1,11 @@
 package pf.com.butterfly.message.net;
 
-import android.os.Message;
-
 import com.google.gson.Gson;
 
-import java.util.HashMap;
-
-import pf.com.butterfly.hander.IMsgHandler;
+import pf.com.butterfly.okhttp.IMsgback;
 import pf.com.butterfly.http.HttpBase;
 import pf.com.butterfly.message.CSMsg;
 import pf.com.butterfly.message.MsgBase;
-import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.message.MsgMap;
 import pf.com.butterfly.message.ProtocolsFun.MsgProcessor;
 import pf.com.butterfly.util.HDLog;
@@ -35,7 +30,7 @@ public class NetManager
 
         gson=new Gson();
 
-        http=new HttpBase(new IMsgHandler()
+        http=new HttpBase(new IMsgback()
         {
             @Override
             public void onMsgDispose(int err,String result,Object userToken)

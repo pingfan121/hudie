@@ -14,11 +14,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import c.b.BP;
 import pf.com.butterfly.manager.DataManager;
 import pf.com.butterfly.manager.ImageManager;
-import pf.com.butterfly.manager.MsgManager;
-import pf.com.butterfly.module.bored.MediaManager;
+import pf.com.butterfly.manager.MediaManager;
 import pf.com.butterfly.module.menu.MenuModule;
 import pf.com.butterfly.module.title.TitleModule;
 import pf.com.butterfly.module.update.UpdateModule;
+import pf.com.butterfly.okhttp.OkHttpHandler;
 import pf.com.butterfly.util.HDLog;
 import pf.com.butterfly.util.MixFun;
 import pf.com.butterfly.util.PermissionManager;
@@ -53,7 +53,7 @@ public class MainActivity  extends AppCompatActivity
         {
             DataManager.app_over=true;
 
-            MsgManager.init();
+            OkHttpHandler.getInstance();
 
             //初始化图片管理器
             ImageManager.init();

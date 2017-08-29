@@ -104,6 +104,8 @@ namespace hudie.app.module
 
             DbSelect<TbAppUser> user_select = sql.cmd as DbSelect<TbAppUser>;
 
+            string userid = "";
+
             if(user_select.ListRecord == null || user_select.ListRecord.Count == 0)
             {
                     //没有查询到数据  插入一条
@@ -128,7 +130,34 @@ namespace hudie.app.module
                     app.db_Insert(sql);
 
                     Log.warn("插入一条微信登陆数据..wx_id=" + info.unionid + "  昵称:" + info.nickName);
+
+                    userid = user.Id;
             }
+            else
+            {
+                userid = user_select.ListRecord[0].Id;
+            }
+
+            //记录一条登录日志
+
+            try
+            {
+                TbAppLoginLog log = new TbAppLoginLog();
+                log.Id = ObjectId.NewObjectId().ToString();
+                log.UserId = userid;
+                log.Ip = reqinfo.context.Request.UserHostAddress.Split(':')[0];
+                log.LoginTime = DateUtil.ToUnixTime(DateTime.Now);
+                sql_struct sql2 = new sql_struct();
+
+                sql2.cmd = new DbInsert<TbAppLoginLog>(null, log, null);
+
+                app.db_Insert(sql2);
+            }
+            catch
+            {
+
+            }
+
             res_user_wx_login res = new res_user_wx_login();
 
             res.name = info.nickName;
@@ -136,6 +165,12 @@ namespace hudie.app.module
             res.face = info.headimgurl;
 
             app.sendMsg(reqinfo, res);
+
+
+
+            
+           
+           
         }
 	}
 }

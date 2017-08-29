@@ -8,8 +8,8 @@
 //import java.util.HashMap;
 //import java.util.List;
 //
-//import pf.com.butterfly.hander.IMsgHandler;
-//import pf.com.butterfly.http.BmobHttp;
+//import pf.com.butterfly.okhttp.IMsgback;
+//import pf.com.butterfly.bmob.BmobHttp;
 //import pf.com.butterfly.http.HeadHttp;
 //import pf.com.butterfly.util.BitmapAndStringUtils;
 //
@@ -41,7 +41,7 @@
 //        req_head=new ArrayList<req_load>();
 //        req_other=new ArrayList<req_load>();
 //
-//        http1=new HeadHttp(new IMsgHandler()
+//        http1=new HeadHttp(new IMsgback()
 //        {
 //            @Override
 //            public void onMsgDispose(int err, String result, Object userToken)
@@ -50,7 +50,7 @@
 //            }
 //        });
 //
-//        http2=new HeadHttp(new IMsgHandler()
+//        http2=new HeadHttp(new IMsgback()
 //        {
 //            @Override
 //            public void onMsgDispose(int err, String result, Object userToken)

@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import pf.com.butterfly.hander.IMsgHandler;
+import pf.com.butterfly.okhttp.IMsgback;
 import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.util.BitmapAndStringUtils;
 import pf.com.butterfly.util.HDLog;
@@ -31,7 +31,7 @@ public class HeadHttp extends Thread
     private String mode="POST";
 
 
-    public HeadHttp(IMsgHandler handler)
+    public HeadHttp(IMsgback handler)
     {
         this.what=MsgHandler.getInstance().getNewWhat();
         MsgHandler.getInstance().addOneDispose(what,handler);

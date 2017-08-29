@@ -17,21 +17,19 @@ import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.AdapterItemData;
 import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
-import pf.com.butterfly.hander.IMsgHandler;
-import pf.com.butterfly.http.BmobHttp;
+import pf.com.butterfly.okhttp.IMsgback;
+import pf.com.butterfly.bmob.BmobHttp;
 import pf.com.butterfly.infofile.res_bored_voicelist;
-import pf.com.butterfly.manager.MsgManager;
+import pf.com.butterfly.manager.MediaManager;
 import pf.com.butterfly.message.MsgBase;
-import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
 import pf.com.butterfly.message.Protocols.bored_record_item_add_req;
 import pf.com.butterfly.message.Protocols.bored_record_item_add_res;
-import pf.com.butterfly.message.Protocols.bored_record_items_req;
-import pf.com.butterfly.message.Protocols.bored_record_items_res;
 import pf.com.butterfly.message.net.IMsgResult;
 import pf.com.butterfly.message.net.NetManager;
-import pf.com.butterfly.module.ControlLayer;
+import pf.com.butterfly.okhttp.OkHttpBmob;
+import pf.com.butterfly.okhttp.OkHttpUtils;
 import pf.com.butterfly.util.HDLog;
-import pf.com.butterfly.util.MixFun;
+import pf.com.butterfly.util.MyGson;
 
 /**
  * Created by admin on 2017/3/3.
@@ -45,6 +43,7 @@ public class BoredDetail extends AppBaseViewControl
         if(_instance==null)
         {
             _instance=new BoredDetail();
+            _instance.layer = BoredHead.getInstance().layer+1;
         }
 
         return _instance;
@@ -54,7 +53,6 @@ public class BoredDetail extends AppBaseViewControl
     {
         title="无聊";
         layout=R.layout.bored_detail;
-        layer= ControlLayer.module_view1;
     }
 
     private ListView voiceList;
@@ -65,7 +63,7 @@ public class BoredDetail extends AppBaseViewControl
     private AnimationDrawable animation;
     private View voiceAnim;
 
-    private BmobHttp http;
+    //private BmobHttp http;
 
     @Override
     public void initControl()
@@ -106,17 +104,17 @@ public class BoredDetail extends AppBaseViewControl
             }
         });
 
-        http=new BmobHttp(new IMsgHandler()
-        {
-            @Override
-            public void onMsgDispose(int err,String result,Object userToken)
-            {
-                OnMessage(err,result,userToken);
-            }
-        });
-
-
-        http.setContentType(MixFun.getContentType(".amr"));
+//        http=new BmobHttp(new IMsgback()
+//        {
+//            @Override
+//            public void onMsgDispose(int err,String result,Object userToken)
+//            {
+//                OnMessage(err,result,userToken);
+//            }
+//        });
+//
+//
+//        http.setContentType(MixFun.getContentType(".amr"));
     }
 
     private  String headid="";
@@ -147,7 +145,8 @@ public class BoredDetail extends AppBaseViewControl
             {
                 HDLog.error("录音地址:"+filePath);
 
-                http.sendAudioFile(filePath);
+            //    MsgManager.sendBmobmsg(filePath,upfile_result);
+                OkHttpBmob.getInstance().upBmobAMRFile(filePath,upfile_result);
 
                 //等待一会....这里应该播放上传动画
                 //.....
@@ -160,21 +159,56 @@ public class BoredDetail extends AppBaseViewControl
         }
 
     }
-    public static String getupname(String filename)
+//    public static String getupname(String filename)
+//    {
+//        String type=filename.substring(filename.length()-4,filename.length());
+//
+//        String name= ""+System.currentTimeMillis()+type;
+//
+//        return name;
+//    }
+
+    //-----------------网络返回处理-------------------
+
+    private IMsgback upfile_result=new IMsgback()
     {
-        String type=filename.substring(filename.length()-4,filename.length());
+        @Override
+        public void onMsgDispose(int err, String result, Object userToken)
+        {
 
-        String name= ""+System.currentTimeMillis()+type;
+            if(err!=0)
+            {
+                HDLog.Toast("出现错误__"+result);
+                return ;
+            }
 
-        return name;
-    }
+//            BmobHttp.fileback res =MsgManager.parseJson(result,BmobHttp.fileback.class);
+//
+//            if(res==null)
+//            {
+//                HDLog.Toast("解析出错");
+//                return;
+//            }
+
+            HDLog.Toast("录音已提交到bmob");
+
+//            //把数据发送给服务器
+//            bored_record_item_add_req req=new bored_record_item_add_req();
+//
+//            req.head_id=headid;
+//            req.time=1;
+//            req.url=res.url;
+//
+//            NetManager.SendMsg(req,add_result);
+        }
+    };
 
     //处理http返回
     private void OnMessage(int err,String result,Object userToken)
     {
         if(err==-99 ||err==-100 )
         {
-            http.errerDispose(err,result);
+          //  http.errerDispose(err,result);
             return ;
         }
 
@@ -205,7 +239,9 @@ public class BoredDetail extends AppBaseViewControl
 
         params.put("bored_id",headid);
 
-        MsgManager.sendMsg2("bored","voicelist",params,voicelist_result);
+      //  MsgManager.sendMsg2("bored","voicelist",params,voicelist_result);
+
+        OkHttpUtils.getInstance().sendAppMsg("bored/voicelist",params,voicelist_result);
 
         //播放发送动画.....
 
@@ -238,7 +274,7 @@ public class BoredDetail extends AppBaseViewControl
         }
     };
 
-    private IMsgHandler voicelist_result=new IMsgHandler()
+    private IMsgback voicelist_result=new IMsgback()
     {
 
         @Override
@@ -257,7 +293,7 @@ public class BoredDetail extends AppBaseViewControl
 
             List<AdapterItemData> datas=new ArrayList<AdapterItemData>();
 
-            res_bored_voicelist res=MsgManager.parseJson(result,res_bored_voicelist.class);
+            res_bored_voicelist res= MyGson.parseJson(result,res_bored_voicelist.class);
 
             for(int i=0;i<res.list.length;i++)
             {

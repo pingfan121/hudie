@@ -9,13 +9,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import pf.com.butterfly.DataAccess;
+import pf.com.butterfly.R;
 import pf.com.butterfly.component.game_2048_view;
+import pf.com.butterfly.manager.MediaManager;
+import pf.com.butterfly.util.HDLog;
 
 class SmallGame
 {
 
     private NumGrid[][] grids = null;
     private int num;
+
+    private int curr_score=0;
+    private int max_socre=0;
+
+    private boolean sound_flag=true;
+    private boolean merge_flag=false;
 
     public void init(int num)
     {
@@ -37,8 +47,60 @@ class SmallGame
     {
         cleanGrid();
 
-        addGrid();
-        addGrid();
+//        sortlist.clear();
+//
+//        int a=2;
+//
+//
+//        for(int i = 0; i < grids.length; i++)
+//        {
+//            for(int k = 0; k < grids[i].length; k++)
+//            {
+//                grids[i][k].num=a;
+//                if(a<1000000000)
+//                {
+//                    a *= 2;
+//                }
+//            }
+//        }
+
+        String data = DataAccess.get2048data(num);
+
+        if(data==null || data=="")
+        {
+            addGrid();
+            addGrid();
+        }
+        else
+        {
+            String[] temp=data.split(",");
+
+            int index=0;
+
+            for(int i = 0; i < grids.length; i++)
+            {
+                for(int k = 0; k < grids[i].length; k++)
+                {
+                     grids[i][k].num = Integer.parseInt(temp[index]);
+                    index++;
+                }
+            }
+        }
+
+        curr_score=getCurrScore();
+
+
+        //得到最大分数
+        data = DataAccess.get2048maxscore(num);
+
+        if(data!="")
+        {
+            max_socre=Integer.parseInt(data);
+        }
+
+        TestGameHead.getInstance().setScore(curr_score,max_socre);
+
+
 
         TestGameHead.getInstance().resetView();
     }
@@ -353,9 +415,6 @@ class SmallGame
         }
     }
 
-
-
-
     //设置方向
     public void OperGame(String dir)
     {
@@ -378,10 +437,19 @@ class SmallGame
             oper = right_move();
         }
 
+        merge_flag=false;
+
         for(int i = 0; i < grids.length; i++)
         {
             for(int k = 0; k < grids[i].length; k++)
             {
+                if(merge_flag==false)
+                {
+                    if(grids[i][k].merge==true)
+                    {
+                        merge_flag=true;
+                    }
+                }
                 grids[i][k].merge = false;
             }
         }
@@ -391,9 +459,81 @@ class SmallGame
             //增加格子
             addGrid();
             //判断输赢
+
+            if(sound_flag==true)
+            {
+                if(merge_flag==true)
+                {
+                    MediaManager.playMav(R.raw.merge);
+                }
+                else
+                {
+                    MediaManager.playMav(R.raw.move);
+                }
+            }
+
         }
 
+        if(isOver()==true)
+        {
+            HDLog.Toast("游戏结束,请重新开始");
+        }
+
+        curr_score=getCurrScore();
+
+        if(curr_score>max_socre)
+        {
+            max_socre=curr_score;
+        }
+
+        saveData();
+
+        TestGameHead.getInstance().setScore(curr_score,max_socre);
+
         TestGameHead.getInstance().resetView();
+    }
+
+    private int getCurrScore()
+    {
+        int curr=0;
+
+        for(int i = 0; i < grids.length; i++)
+        {
+            for(int k = 0; k < grids[i].length; k++)
+            {
+                curr +=grids[i][k].num;
+            }
+        }
+
+        return curr;
+    }
+
+    private void saveData()
+    {
+        StringBuffer sb = new StringBuffer();
+
+        for(int i = 0; i < grids.length; i++)
+        {
+            for(int k = 0; k < grids[i].length; k++)
+            {
+               sb.append(grids[i][k].num).append(",");
+            }
+        }
+
+        DataAccess.set2048data(num,sb.toString());
+
+        DataAccess.set2048maxscore(num,max_socre);
+    }
+
+    public void restartGame()
+    {
+        DataAccess.set2048data(num,"");
+        startGame();
+    }
+
+    public void setSoundFlag(boolean flag)
+    {
+        sound_flag=flag;
     }
 
 }

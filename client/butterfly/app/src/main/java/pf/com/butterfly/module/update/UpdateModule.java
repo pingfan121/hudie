@@ -24,7 +24,9 @@ import java.net.URL;
 
 import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.http.HttpBase;
-import pf.com.butterfly.module.okhttp.OkHttpUtils;
+import pf.com.butterfly.okhttp.IMsgback;
+import pf.com.butterfly.okhttp.OkHttpOther;
+import pf.com.butterfly.okhttp.OkHttpUtils;
 import pf.com.butterfly.util.HDLog;
 
 /**
@@ -65,39 +67,39 @@ public class UpdateModule
             url=updateurl;
         }
 
-         OkHttpUtils.getInstance().sendAppMsg(url,null,1,handler);
-
+        OkHttpOther.getInstance().send(url,null,msgback);
 
     }
-
 
     //下载更新文件的返回
-    public static void OnUpdateInfoBack(int err,String result)
+    public static IMsgback msgback=new IMsgback()
     {
-        if(err!=0)
+        @Override
+        public void onMsgDispose(int err, String result, Object userToken)
         {
-            //判断更新文件出现问题.....
-            HDLog.Toast("获取服务器更新信息失败");
-            return;
+            if(err!=0)
+            {
+                //判断更新文件出现问题.....
+                HDLog.Toast("获取服务器更新信息失败");
+                return;
+            }
+
+            UpdateInfo info=new Gson().fromJson(result,UpdateInfo.class);
+
+            String currversion=getVersionName();
+
+            if(info.version.equals(currversion))
+            {
+                //版本号一样...
+            }
+            else
+            {
+                //版本号不一样...
+                //去下载
+                showUpdataDialog(info);
+            }
         }
-
-        UpdateInfo info=new Gson().fromJson(result,UpdateInfo.class);
-
-        String currversion=getVersionName();
-
-        if(info.version.equals(currversion))
-        {
-            //版本号一样...
-        }
-        else
-        {
-            //版本号不一样...
-            //去下载
-            showUpdataDialog(info);
-        }
-
-
-    }
+    } ;
 
 
     /*
@@ -168,10 +170,10 @@ public class UpdateModule
                     {
                         case 1:
                         {
-                            Bundle bundle=msg.getData();
-                            int err=bundle.getInt("error");
-                            String result=bundle.getString("result");
-                            OnUpdateInfoBack(err,result);
+//                            Bundle bundle=msg.getData();
+//                            int err=bundle.getInt("error");
+//                            String result=bundle.getString("result");
+//                            OnUpdateInfoBack(err,result);
                             break;
                         }
                     }

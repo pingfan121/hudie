@@ -12,6 +12,7 @@ import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.message.Protocols.info_user;
 import pf.com.butterfly.message.Protocols.login_req;
 import pf.com.butterfly.message.net.NetManager;
+import pf.com.butterfly.module.ControlLayer;
 import pf.com.butterfly.module.title.TitleModule;
 import pf.com.butterfly.module.user.UserHead;
 import pf.com.butterfly.wxapi.WeiXinHead;
@@ -37,6 +38,7 @@ public class LoginHead extends AppBaseViewControl
     {
         title="登录";
         layout=R.layout.login_head;
+        layer= ControlLayer.module_login;
     }
 
 

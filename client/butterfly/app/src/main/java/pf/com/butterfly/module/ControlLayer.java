@@ -16,6 +16,7 @@ public class ControlLayer
     public static int module_view3 =3;  //模块层内的视图的视图的视图
     public static int module_view4 =4;  //模块层内的视图的视图的视图的视图
 
+    public static int module_login=99;  //登录模块
     public static int input_layers =100;  //输入层
 
 

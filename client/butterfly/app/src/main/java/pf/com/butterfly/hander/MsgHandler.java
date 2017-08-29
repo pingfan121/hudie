@@ -3,13 +3,10 @@ package pf.com.butterfly.hander;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import java.util.HashMap;
-import java.util.Map;
 
-import pf.com.butterfly.message.MsgBase;
-import pf.com.butterfly.message.MsgMap;
+import pf.com.butterfly.okhttp.IMsgback;
 
 
 /**
@@ -19,7 +16,7 @@ public class MsgHandler extends Handler
 {
     private static MsgHandler _instance=null;
 
-    private HashMap<Integer,IMsgHandler> dises = new HashMap<Integer,IMsgHandler>();
+    private HashMap<Integer,IMsgback> dises = new HashMap<Integer,IMsgback>();
 
     public int what=100;
 
@@ -38,7 +35,7 @@ public class MsgHandler extends Handler
     }
 
 
-   public synchronized void   addOneDispose(int what,IMsgHandler dispose)
+   public synchronized void   addOneDispose(int what,IMsgback dispose)
    {
 
        if (dises.containsKey(what) == false)

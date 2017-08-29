@@ -4,11 +4,9 @@ import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.TextView;
 
-import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.module.ControlLayer;
-import pf.com.butterfly.module.bored.MediaManager;
 import pf.com.butterfly.module.title.TitleModule;
 
 /**

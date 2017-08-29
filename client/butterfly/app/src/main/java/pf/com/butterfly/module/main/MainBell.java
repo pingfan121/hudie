@@ -8,7 +8,7 @@
 //import pf.com.butterfly.R;
 //import pf.com.butterfly.base.AppBaseViewControl;
 //import pf.com.butterfly.module.ControlLayer;
-//import pf.com.butterfly.module.bored.MediaManager;
+//import pf.com.butterfly.manager.MediaManager;
 //import pf.com.butterfly.module.title.TitleModule;
 //
 ///**

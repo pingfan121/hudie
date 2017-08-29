@@ -33,8 +33,7 @@ namespace hudie.app.module
             head.Content = reqinfo.req_params["content"];
 
             DbInsert<TbBoredHead> dbselect = new DbInsert<TbBoredHead>(null, head, null);
-            dbselect.processRequest();
-
+         
             sql_struct sql=new sql_struct();
 
             sql.httpinfo=reqinfo;

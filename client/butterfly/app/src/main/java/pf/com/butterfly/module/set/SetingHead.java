@@ -1,32 +1,16 @@
 package pf.com.butterfly.module.set;
 
-import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-
-import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
-import pf.com.butterfly.base.AppBaseControl;
-import pf.com.butterfly.base.AppBaseFragment;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.component.IItemClick;
 import pf.com.butterfly.component.ItemSelectAdapter;
 import pf.com.butterfly.component.ItemSelectData;
-import pf.com.butterfly.hander.IMsgHandler;
-import pf.com.butterfly.http.BmobHttp;
-import pf.com.butterfly.message.Protocols.register_req;
 import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.model.ItemData;
 import pf.com.butterfly.module.DebugHead;
-import pf.com.butterfly.module.benefit.BenefitDonationPayItemData;
-import pf.com.butterfly.module.title.TitleModule;
-import pf.com.butterfly.util.HDLog;
 
 /**
  * Created by admin on 2017/3/3.

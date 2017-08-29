@@ -1,17 +1,14 @@
 package pf.com.butterfly.module;
 
 import android.graphics.Bitmap;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-
 import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
-import pf.com.butterfly.hander.IMsgHandler;
+import pf.com.butterfly.okhttp.IMsgback;
 import pf.com.butterfly.hander.MsgHandler;
 import pf.com.butterfly.util.HDLog;
 import pf.com.butterfly.util.MixFun;
@@ -21,7 +18,7 @@ import pf.com.butterfly.util.SendPost;
  * Created by admin on 2017/2/25.
  */
 //显示图片模块
-public class ShowPhoto implements IMsgHandler
+public class ShowPhoto implements IMsgback
 {
     private ImageView img=null;
     private  Button btn_close=null;

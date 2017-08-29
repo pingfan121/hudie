@@ -1,6 +1,6 @@
 package pf.com.butterfly.message.net;
 
-import pf.com.butterfly.hander.IMsgHandler;
+import pf.com.butterfly.okhttp.IMsgback;
 import pf.com.butterfly.http.HttpBase;
 
 /**
@@ -8,7 +8,7 @@ import pf.com.butterfly.http.HttpBase;
  */
 public class HDSend extends HttpBase
 {
-    public HDSend(IMsgHandler handler)
+    public HDSend(IMsgback handler)
     {
         super(handler);
     }

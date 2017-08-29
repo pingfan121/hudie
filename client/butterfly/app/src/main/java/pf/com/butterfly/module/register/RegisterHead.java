@@ -1,6 +1,5 @@
 package pf.com.butterfly.module.register;
 
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,14 +7,10 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 
 import pf.com.butterfly.R;
-import pf.com.butterfly.base.AppBaseControl;
-import pf.com.butterfly.base.AppBaseFragment;
 import pf.com.butterfly.base.AppBaseViewControl;
-import pf.com.butterfly.hander.IMsgHandler;
-import pf.com.butterfly.http.BmobHttp;
+import pf.com.butterfly.okhttp.IMsgback;
+import pf.com.butterfly.bmob.BmobHttp;
 import pf.com.butterfly.message.Protocols.register_req;
-import pf.com.butterfly.message.net.NetManager;
-import pf.com.butterfly.module.title.TitleModule;
 import pf.com.butterfly.util.HDLog;
 
 /**
@@ -80,7 +75,7 @@ public class RegisterHead extends AppBaseViewControl
 
         view.setVisibility(View.INVISIBLE);
 
-        http=new BmobHttp(new IMsgHandler() {
+        http=new BmobHttp(new IMsgback() {
             @Override
             public void onMsgDispose(int err,String result,Object userToken)
             {

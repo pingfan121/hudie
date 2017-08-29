@@ -2,21 +2,14 @@ package pf.com.butterfly.manager;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Queue;
 
-import pf.com.butterfly.hander.IMsgHandler;
+import pf.com.butterfly.okhttp.IMsgback;
 import pf.com.butterfly.http.HeadHttp;
-import pf.com.butterfly.http.HttpBase;
 import pf.com.butterfly.util.BitmapAndStringUtils;
 
 /**
@@ -50,7 +43,7 @@ public class ImageManager
         req_head=new ArrayList<req_load>();
         req_other=new ArrayList<req_load>();
 
-        http1=new HeadHttp(new IMsgHandler()
+        http1=new HeadHttp(new IMsgback()
         {
             @Override
             public void onMsgDispose(int err, String result, Object userToken)
@@ -59,7 +52,7 @@ public class ImageManager
             }
         });
 
-        http2=new HeadHttp(new IMsgHandler()
+        http2=new HeadHttp(new IMsgback()
         {
             @Override
             public void onMsgDispose(int err, String result, Object userToken)

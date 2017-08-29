@@ -4,19 +4,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
 import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
-import pf.com.butterfly.hander.IMsgHandler;
-import pf.com.butterfly.manager.MsgManager;
-import pf.com.butterfly.message.MsgBase;
-import pf.com.butterfly.message.Protocols.advise_cteate_req;
-import pf.com.butterfly.message.net.IMsgResult;
-import pf.com.butterfly.message.net.NetManager;
+import pf.com.butterfly.okhttp.IMsgback;
+import pf.com.butterfly.okhttp.OkHttpUtils;
 import pf.com.butterfly.util.HDLog;
 
 /**
@@ -74,11 +69,11 @@ public class AdviceHead extends AppBaseViewControl
         Map<String,String> maps=new HashMap<>();
         maps.put("userid","");
         maps.put("content", str);
-        MsgManager.sendMsg("app/module/advice/add",maps,msg_result);
+        OkHttpUtils.getInstance().sendAppMsg("advice/add",maps,msg_result);
 
 
     }
-    private IMsgHandler msg_result=new IMsgHandler()
+    private IMsgback msg_result=new IMsgback()
     {
         @Override
         public void onMsgDispose(int err, String result, Object userToken)

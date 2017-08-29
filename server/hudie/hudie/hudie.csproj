@@ -115,7 +115,9 @@
     <Compile Include="cache\Cache.cs" />
     <Compile Include="cache\CacheData.cs" />
     <Compile Include="cache\TokenCache.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbAccount.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbAppJianyi.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbAppLoginLog.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbAppUser.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitDiscuss.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBenefitHead.cs" />
