@@ -18,18 +18,24 @@ namespace hudie.app.module
 		{
             Log.warn("收到了无聊模块添加请求");
 
+            reqinfo.user_data = app.getUserData(reqinfo);
+
+            if(reqinfo.user_data == null)
+            {
+                app.sendErrorMsg(reqinfo, Enum.EnumMsgState.login_invalid);
+                return;
+            }
 
             //请求数据库数据......
-
-            string str = String.Format("select * from bored_head where invalid ='0';");
 
             TbBoredHead head = new TbBoredHead();
 
             head.Id = ObjectId.NewObjectId().ToString();
-            head.Useid = "0";
+            head.Useid = reqinfo.user_data.Id;
             head.Rownum = 0;
-            head.Invalid = 0;
-            head.Createtime = DateUtil.ToUnixTime2(DateTime.Now);
+            head.InvalidTime = DateUtil.ToUnixTime2(DateTime.Now.Date);
+            head.CreateTime = DateUtil.ToUnixTime2(DateTime.Now);
+
             head.Content = reqinfo.req_params["content"];
 
             DbInsert<TbBoredHead> dbselect = new DbInsert<TbBoredHead>(null, head, null);
@@ -43,9 +49,6 @@ namespace hudie.app.module
 
             //异步...
             app.db_Insert(sql);
-
-          
-
 		}
 
         private void add_back(sql_struct sql)

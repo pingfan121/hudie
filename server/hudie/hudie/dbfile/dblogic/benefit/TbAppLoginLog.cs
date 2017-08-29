@@ -8,7 +8,7 @@ namespace GameDb.Logic
 	 [Table(Name = "app_login_log")] 
 	 public class TbAppLoginLog:TbLogic
 	 { 
-		public string _id;
+		private string _id;
 		[Id(Name = "id", Strategy = GenerationType.GUID)]
 		public string Id{
 			get{ return _id;}
@@ -17,7 +17,7 @@ namespace GameDb.Logic
 				_id = value;
 			}
 		}
-		public string _user_id;
+		private string _user_id;
 		[Column(Name = "user_id")]
 		public string UserId{
 			get{ return _user_id;}
@@ -27,7 +27,7 @@ namespace GameDb.Logic
 				changedKeys.Add("UserId");
 			}
 		}
-		public string _ip;
+		private string _ip;
 		[Column(Name = "ip")]
 		public string Ip{
 			get{ return _ip;}
@@ -37,14 +37,14 @@ namespace GameDb.Logic
 				changedKeys.Add("Ip");
 			}
 		}
-		public int _login_time;
-		[Column(Name = "login_time")]
-		public int LoginTime{
-			get{ return _login_time;}
+		private long _create_time;
+		[Column(Name = "create_time")]
+		public long CreateTime{
+			get{ return _create_time;}
 			set
 			{
-				_login_time = value;
-				changedKeys.Add("LoginTime");
+				_create_time = value;
+				changedKeys.Add("CreateTime");
 			}
 		}
 		public TbAppLoginLog()
@@ -59,7 +59,7 @@ namespace GameDb.Logic
 			t.Id = Id;
 			t.UserId = UserId;
 			t.Ip = Ip;
-			t.LoginTime = LoginTime;
+			t.CreateTime = CreateTime;
 			return t;
 		}
 	 } 

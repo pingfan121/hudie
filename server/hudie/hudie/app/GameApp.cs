@@ -4,6 +4,7 @@ using GameDb.Util;
 using GameLib.Database;
 using GameLib.Util;
 using hudie.app;
+using hudie.cache;
 using hudie.net;
 using hudie.sql;
 using messages;
@@ -155,6 +156,7 @@ namespace hudie
 
                 if(sql_read_data.TryDequeue(out sql) == true)
                 {
+                    sql.cmd.DbConnect = connect;
                     sql.cmd.processRequest();
 
                     sql_data_back.Enqueue(sql);
@@ -175,7 +177,16 @@ namespace hudie
 
                 if(sql_write_data.TryDequeue(out sql) == true)
                 {
-                    sql.cmd.processRequest();
+                    if(sql.cmd != null)
+                    {
+                        sql.cmd.DbConnect = connect;
+                        sql.cmd.processRequest();
+                    }
+                    else
+                    {
+                        connect.executeNonQuery(sql.sqlstr, null);
+                    }
+                   
 
                     sql_data_back.Enqueue(sql);
                 }
@@ -190,26 +201,35 @@ namespace hudie
       
         public void sendMsg(HttpInfo reqinfo, Object msg)
         {
-            HttpListenerResponse reponse = reqinfo.context.Response;
-            StreamWriter writer = new StreamWriter(reponse.OutputStream);
+            try
+            {
 
-            reponse.ContentType="text/html; charset=utf-8";
 
-            backmsg.error = 0;
-            backmsg.msg = msg;
+                HttpListenerResponse reponse = reqinfo.context.Response;
+                StreamWriter writer = new StreamWriter(reponse.OutputStream);
 
-            byte[] bb = Encoding.UTF8.GetBytes(JSON.Encode(backmsg));
+                reponse.ContentType = "text/html; charset=utf-8";
 
-            string str = Encoding.UTF8.GetString(bb);
+                backmsg.error = 0;
+                backmsg.msg = msg;
 
-            Console.WriteLine(str);
+                byte[] bb = Encoding.UTF8.GetBytes(JSON.Encode(backmsg));
 
-            Console.WriteLine(writer.Encoding);
+                string str = Encoding.UTF8.GetString(bb);
 
-            writer.Write(JSON.Encode(backmsg));
+                Console.WriteLine(str);
 
-            writer.Close();
-            reponse.Close();
+                Console.WriteLine(writer.Encoding);
+
+                writer.Write(JSON.Encode(backmsg));
+
+                writer.Close();
+                reponse.Close();
+            }
+            catch
+            {
+
+            }
         }
         public void sendErrorMsg(HttpInfo reqinfo,EnumMsgState err)
         {
@@ -236,21 +256,36 @@ namespace hudie
         //----------数据库读取---------
         public void db_Select(sql_struct sql)
         {
-            sql.cmd.DbConnect = this.connect;
+          //  sql.cmd.DbConnect = this.connect;
             sql_read_data.Enqueue(sql);
         }
 
         //数据库插入
         public void db_Insert(sql_struct sql)
         {
-            sql.cmd.DbConnect = this.connect;
+         //   sql.cmd.DbConnect = this.connect;
             sql_write_data.Enqueue(sql);
         }
 
         //数据库更新
         public void db_Update(sql_struct sql)
         {
+           
+          //  sql.cmd.DbConnect = this.connect;
             sql_write_data.Enqueue(sql);
+        }
+
+
+        //验证token
+        public TbAppUser getUserData(HttpInfo httpinfo)
+        {
+
+            if(httpinfo.req_params.ContainsKey("token"))
+            {
+                return TokenCache.getUserData(httpinfo.req_params["token"]);
+            }
+
+            return null;
         }
 
     }

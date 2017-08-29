@@ -9,7 +9,7 @@ namespace hudie.cache
 {
     public class CacheData : IObject
     {
-        public int lasttime;   //最后操作时间
+        public long lasttime;   //最后操作时间
         public Object data;    //数据
 
         public void OnRecycle()
@@ -37,7 +37,7 @@ namespace hudie.cache
 
         public void updateTime()
         {
-            lasttime = DateUtil.ToUnixTime(DateTime.Now);
+            lasttime = DateUtil.NowToToUnixTime2();
         }
     }
 }

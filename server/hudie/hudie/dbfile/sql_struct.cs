@@ -18,6 +18,7 @@ namespace hudie.app
         public Object data3;
 
         public IDbCmd cmd;
+        public string sqlstr = "";
 
         public sql_back fun;
     }

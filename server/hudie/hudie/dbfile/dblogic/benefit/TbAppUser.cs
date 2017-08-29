@@ -8,7 +8,7 @@ namespace GameDb.Logic
 	 [Table(Name = "app_user")] 
 	 public class TbAppUser:TbLogic
 	 { 
-		public string _id;
+		private string _id;
 		[Id(Name = "id", Strategy = GenerationType.GUID)]
 		public string Id{
 			get{ return _id;}
@@ -17,7 +17,7 @@ namespace GameDb.Logic
 				_id = value;
 			}
 		}
-		public string _mobile;
+		private string _mobile;
 		[Column(Name = "mobile")]
 		public string Mobile{
 			get{ return _mobile;}
@@ -27,7 +27,7 @@ namespace GameDb.Logic
 				changedKeys.Add("Mobile");
 			}
 		}
-		public string _mail;
+		private string _mail;
 		[Column(Name = "mail")]
 		public string Mail{
 			get{ return _mail;}
@@ -37,7 +37,7 @@ namespace GameDb.Logic
 				changedKeys.Add("Mail");
 			}
 		}
-		public string _pass;
+		private string _pass;
 		[Column(Name = "pass")]
 		public string Pass{
 			get{ return _pass;}
@@ -47,7 +47,7 @@ namespace GameDb.Logic
 				changedKeys.Add("Pass");
 			}
 		}
-		public string _wx_id;
+		private string _wx_id;
 		[Column(Name = "wx_id")]
 		public string WxId{
 			get{ return _wx_id;}
@@ -57,7 +57,7 @@ namespace GameDb.Logic
 				changedKeys.Add("WxId");
 			}
 		}
-		public string _wb_id;
+		private string _wb_id;
 		[Column(Name = "wb_id")]
 		public string WbId{
 			get{ return _wb_id;}
@@ -67,7 +67,7 @@ namespace GameDb.Logic
 				changedKeys.Add("WbId");
 			}
 		}
-		public string _name;
+		private string _name;
 		[Column(Name = "name")]
 		public string Name{
 			get{ return _name;}
@@ -77,7 +77,7 @@ namespace GameDb.Logic
 				changedKeys.Add("Name");
 			}
 		}
-		public string _head;
+		private string _head;
 		[Column(Name = "head")]
 		public string Head{
 			get{ return _head;}
@@ -87,7 +87,7 @@ namespace GameDb.Logic
 				changedKeys.Add("Head");
 			}
 		}
-		public int _sex;
+		private int _sex;
 		[Column(Name = "sex")]
 		public int Sex{
 			get{ return _sex;}
@@ -97,7 +97,7 @@ namespace GameDb.Logic
 				changedKeys.Add("Sex");
 			}
 		}
-		public long _createtime;
+		private long _createtime;
 		[Column(Name = "createtime")]
 		public long Createtime{
 			get{ return _createtime;}

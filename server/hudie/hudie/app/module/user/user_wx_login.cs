@@ -11,6 +11,7 @@ using GameLib.Util;
 using GameDb.Logic;
 using hudie.app.info;
 using GameLib.Database;
+using hudie.cache;
 
 namespace hudie.app.module
 {
@@ -32,17 +33,11 @@ namespace hudie.app.module
 
         private static HashSet<string> login_reqing = new HashSet<string>();
 
-        //远程测试微信登陆是需要跨线程的
-       // private static  public ConcurrentQueue<HttpInfo> login_wait = new ConcurrentQueue<HttpInfo>();
-
-
-
 		public void wx_login(HttpInfo reqinfo)
 		{
 		      Log.warn("收到了微信登陆消息");
 
               string wx_token = reqinfo.req_params["wx_token"];
-
 
               if(login_reqing.Contains(wx_token) == true)
               {
@@ -104,13 +99,13 @@ namespace hudie.app.module
 
             DbSelect<TbAppUser> user_select = sql.cmd as DbSelect<TbAppUser>;
 
-            string userid = "";
+            TbAppUser user;
 
             if(user_select.ListRecord == null || user_select.ListRecord.Count == 0)
             {
                     //没有查询到数据  插入一条
 
-                    TbAppUser user = new TbAppUser();
+                    user = new TbAppUser();
                     user.Id = ObjectId.NewObjectId().ToString();
                     user.WxId = info.unionid;
                     user.Sex = info.sex;
@@ -131,22 +126,20 @@ namespace hudie.app.module
 
                     Log.warn("插入一条微信登陆数据..wx_id=" + info.unionid + "  昵称:" + info.nickName);
 
-                    userid = user.Id;
             }
             else
             {
-                userid = user_select.ListRecord[0].Id;
+                user = user_select.ListRecord[0];
             }
 
             //记录一条登录日志
-
             try
             {
                 TbAppLoginLog log = new TbAppLoginLog();
                 log.Id = ObjectId.NewObjectId().ToString();
-                log.UserId = userid;
+                log.UserId = user.Id;
                 log.Ip = reqinfo.context.Request.UserHostAddress.Split(':')[0];
-                log.LoginTime = DateUtil.ToUnixTime(DateTime.Now);
+                log.CreateTime = DateUtil.ToUnixTime2(DateTime.Now);
                 sql_struct sql2 = new sql_struct();
 
                 sql2.cmd = new DbInsert<TbAppLoginLog>(null, log, null);
@@ -158,18 +151,19 @@ namespace hudie.app.module
 
             }
 
+            //记录缓存
+            TokenCache.AddToken(user.Id, user);
+
+            //做一些其他事情....
+
             res_user_wx_login res = new res_user_wx_login();
 
             res.name = info.nickName;
             res.sex = info.sex;
             res.face = info.headimgurl;
+            res.token = user.Id;
 
             app.sendMsg(reqinfo, res);
-
-
-
-            
-           
            
         }
 	}

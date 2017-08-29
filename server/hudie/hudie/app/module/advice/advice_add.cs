@@ -9,6 +9,7 @@ using GameDb.Logic;
 using GameLib.Util;
 using GameLib.Database;
 using hudie.app.info;
+using hudie.cache;
 
 namespace hudie.app.module
 {
@@ -18,17 +19,23 @@ namespace hudie.app.module
         {
             Log.warn("收到了建议请求");
 
-
             //请求数据库数据......
 
-            TbAppJianyi jianyi = new TbAppJianyi();
+            TbAppAdvice jianyi = new TbAppAdvice();
             jianyi.Id = ObjectId.NewObjectId().ToString();
-            jianyi.Time = DateTime.Now;
+            jianyi.CreateTime = DateUtil.NowToToUnixTime2();
             jianyi.Content =reqinfo.req_params["content"];
 
-            if(reqinfo.req_params.ContainsKey("userid"))
+            if(reqinfo.req_params.ContainsKey("token"))
             {
-                jianyi.Userid = reqinfo.req_params["userid"];
+                string token=reqinfo.req_params["token"];
+
+                TbAppUser user = TokenCache.getUserData(token);
+
+                if(user != null)
+                {
+                    jianyi.Userid = user.Id;
+                }
             }
             else
             {
@@ -38,7 +45,7 @@ namespace hudie.app.module
 
             sql_struct sql = new sql_struct();
 
-            sql.cmd = new DbInsert<TbAppJianyi>(null, jianyi, null);
+            sql.cmd = new DbInsert<TbAppAdvice>(null, jianyi, null);
 
             app.db_Insert(sql);
 
@@ -47,7 +54,6 @@ namespace hudie.app.module
             res_advice_add res = new res_advice_add();
 
             res.state = 0;
-            res.state2 = "测试啊";
 
             //处理结束
             app.sendMsg(reqinfo, res);

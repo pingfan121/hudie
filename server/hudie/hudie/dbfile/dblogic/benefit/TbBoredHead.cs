@@ -8,7 +8,7 @@ namespace GameDb.Logic
 	 [Table(Name = "bored_head")] 
 	 public class TbBoredHead:TbLogic
 	 { 
-		public string _id;
+		private string _id;
 		[Id(Name = "id", Strategy = GenerationType.GUID)]
 		public string Id{
 			get{ return _id;}
@@ -17,7 +17,7 @@ namespace GameDb.Logic
 				_id = value;
 			}
 		}
-		public string _useid;
+		private string _useid;
 		[Column(Name = "useid")]
 		public string Useid{
 			get{ return _useid;}
@@ -27,7 +27,7 @@ namespace GameDb.Logic
 				changedKeys.Add("Useid");
 			}
 		}
-		public string _content;
+		private string _content;
 		[Column(Name = "content")]
 		public string Content{
 			get{ return _content;}
@@ -37,17 +37,17 @@ namespace GameDb.Logic
 				changedKeys.Add("Content");
 			}
 		}
-		public long _createtime;
-		[Column(Name = "createtime")]
-		public long Createtime{
-			get{ return _createtime;}
+		private long _create_time;
+		[Column(Name = "create_time")]
+		public long CreateTime{
+			get{ return _create_time;}
 			set
 			{
-				_createtime = value;
-				changedKeys.Add("Createtime");
+				_create_time = value;
+				changedKeys.Add("CreateTime");
 			}
 		}
-		public int _rownum;
+		private int _rownum;
 		[Column(Name = "rownum")]
 		public int Rownum{
 			get{ return _rownum;}
@@ -57,14 +57,14 @@ namespace GameDb.Logic
 				changedKeys.Add("Rownum");
 			}
 		}
-		public int _invalid;
-		[Column(Name = "invalid")]
-		public int Invalid{
-			get{ return _invalid;}
+		private long _invalid_time;
+		[Column(Name = "invalid_time")]
+		public long InvalidTime{
+			get{ return _invalid_time;}
 			set
 			{
-				_invalid = value;
-				changedKeys.Add("Invalid");
+				_invalid_time = value;
+				changedKeys.Add("InvalidTime");
 			}
 		}
 		public TbBoredHead()
@@ -79,9 +79,9 @@ namespace GameDb.Logic
 			t.Id = Id;
 			t.Useid = Useid;
 			t.Content = Content;
-			t.Createtime = Createtime;
+			t.CreateTime = CreateTime;
 			t.Rownum = Rownum;
-			t.Invalid = Invalid;
+			t.InvalidTime = InvalidTime;
 			return t;
 		}
 	 } 

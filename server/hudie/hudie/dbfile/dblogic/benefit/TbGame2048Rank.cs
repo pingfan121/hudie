@@ -8,7 +8,7 @@ namespace GameDb.Logic
 	 [Table(Name = "game_2048_rank")] 
 	 public class TbGame2048Rank:TbLogic
 	 { 
-		public string _id;
+		private string _id;
 		[Id(Name = "id", Strategy = GenerationType.GUID)]
 		public string Id{
 			get{ return _id;}
@@ -17,7 +17,7 @@ namespace GameDb.Logic
 				_id = value;
 			}
 		}
-		public string _name;
+		private string _name;
 		[Column(Name = "name")]
 		public string Name{
 			get{ return _name;}
@@ -27,27 +27,17 @@ namespace GameDb.Logic
 				changedKeys.Add("Name");
 			}
 		}
-		public string _four_data;
-		[Column(Name = "four_data")]
-		public string FourData{
-			get{ return _four_data;}
+		private int _four_max_score;
+		[Column(Name = "four_max_score")]
+		public int FourMaxScore{
+			get{ return _four_max_score;}
 			set
 			{
-				_four_data = value;
-				changedKeys.Add("FourData");
+				_four_max_score = value;
+				changedKeys.Add("FourMaxScore");
 			}
 		}
-		public string _six_data;
-		[Column(Name = "six_data")]
-		public string SixData{
-			get{ return _six_data;}
-			set
-			{
-				_six_data = value;
-				changedKeys.Add("SixData");
-			}
-		}
-		public int _six_max_score;
+		private int _six_max_score;
 		[Column(Name = "six_max_score")]
 		public int SixMaxScore{
 			get{ return _six_max_score;}
@@ -60,8 +50,6 @@ namespace GameDb.Logic
 		public TbGame2048Rank()
 		{
 			Name ="";
-			FourData ="";
-			SixData ="";
 		}
 		public TbGame2048Rank copy()
 		{
@@ -69,8 +57,7 @@ namespace GameDb.Logic
 
 			t.Id = Id;
 			t.Name = Name;
-			t.FourData = FourData;
-			t.SixData = SixData;
+			t.FourMaxScore = FourMaxScore;
 			t.SixMaxScore = SixMaxScore;
 			return t;
 		}

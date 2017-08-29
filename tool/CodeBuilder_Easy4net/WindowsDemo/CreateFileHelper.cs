@@ -99,12 +99,12 @@ namespace WindowsDemo
                     {
                         strategy = "FILL";
                     }
-                    sb.Append("\t\t").Append("public ").Append(type).Append(" ").Append("_").Append(column.Name).Append(";\n");
+                    sb.Append("\t\t").Append("private ").Append(type).Append(" ").Append("_").Append(column.Name).Append(";\n");
                     sb.Append("\t\t").Append("[Id(Name = \"").Append(column.Name).Append("\", Strategy = GenerationType.").Append(strategy).Append(")]").Append("\n");
                 }
                 else
                 {
-                    sb.Append("\t\t").Append("public ").Append(type).Append(" ").Append("_").Append(column.Name).Append(";\n");
+                    sb.Append("\t\t").Append("private ").Append(type).Append(" ").Append("_").Append(column.Name).Append(";\n");
                     sb.Append("\t\t").Append("[Column(Name = \"").Append(column.Name).Append("\")]").Append("\n");
                 }
 

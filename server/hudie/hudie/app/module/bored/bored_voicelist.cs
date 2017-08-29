@@ -19,10 +19,9 @@ namespace hudie.app.module
 
             //请求数据库数据......
 
-            string str = String.Format("select * from bored_head_detail where headid ='{0}';", reqinfo.req_params["bored_id"]);
+            string str = String.Format("select * from bored_voice where bored_id ='{0}';", reqinfo.req_params["boredid"]);
 
-
-            DbSelect<TbBoredHeadDetail> dbselect = new DbSelect<TbBoredHeadDetail>(null, str, null);
+            DbSelect<TbBoredVoice> dbselect = new DbSelect<TbBoredVoice>(null, str, null);
 
             sql_struct sql = new sql_struct();
             sql.httpinfo = reqinfo;
@@ -36,7 +35,7 @@ namespace hudie.app.module
 
         private void voicelist_back(sql_struct sql)
         {
-            DbSelect<TbBoredHeadDetail> dbselect = sql.cmd as DbSelect<TbBoredHeadDetail>;
+            DbSelect<TbBoredVoice> dbselect = sql.cmd as DbSelect<TbBoredVoice>;
 
             res_bored_voicelist res = new res_bored_voicelist();
 
@@ -45,12 +44,12 @@ namespace hudie.app.module
                 res.list = new info_bored_voice[dbselect.ListRecord.Count];
 
                 int count = 0;
-                foreach (TbBoredHeadDetail theme in dbselect.ListRecord)
+                foreach(TbBoredVoice theme in dbselect.ListRecord)
                 {
                     res.list[count] = new info_bored_voice();
 
                     res.list[count].id = theme.Id;
-                    res.list[count].boredid = theme.Headid;
+                    res.list[count].boredid = theme.BoredId;
                     res.list[count].voice_url = theme.RecordUrl;
                     res.list[count].voice_len = theme.RecordLen;
                     count++;

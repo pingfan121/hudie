@@ -82,6 +82,7 @@
     <Compile Include="app\info\res_bored_add.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\info\res_bored_addvoice.cs" />
     <Compile Include="app\info\res_bored_getlist.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -105,6 +106,7 @@
     <Compile Include="app\module\advice\advice_add.cs" />
     <Compile Include="app\module\bored\bored.cs" />
     <Compile Include="app\module\bored\bored_add.cs" />
+    <Compile Include="app\module\bored\bored_addvoice.cs" />
     <Compile Include="app\module\bored\bored_getlist.cs" />
     <Compile Include="app\module\bored\bored_voicelist.cs" />
     <Compile Include="app\module\game\g2048\g2048.cs" />
@@ -115,20 +117,11 @@
     <Compile Include="cache\Cache.cs" />
     <Compile Include="cache\CacheData.cs" />
     <Compile Include="cache\TokenCache.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbAccount.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbAppJianyi.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbAppAdvice.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbAppLoginLog.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbAppUser.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbBenefitDiscuss.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbBenefitHead.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbBenefitJuankuan.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbBenefitPraise.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbBenefitProof.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbBenefitProofDiscuss.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbBenefitProofPraise.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbBenefitTheme.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbBoredHead.cs" />
-    <Compile Include="dbfile\dblogic\benefit\TbBoredHeadDetail.cs" />
+    <Compile Include="dbfile\dblogic\benefit\TbBoredVoice.cs" />
     <Compile Include="dbfile\dblogic\benefit\TbGame2048Rank.cs" />
     <Compile Include="dbfile\sql_struct.cs" />
     <Compile Include="enum\EnumMsgState.cs" />

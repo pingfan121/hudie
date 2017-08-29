@@ -42,7 +42,7 @@ namespace hudie.app.module
 // 
 //             //  string str = String.Format("select * from benefit_theme limit {0},{1};", req.curr, 20);
 // 
-//             TbAppJianyi jianyi = new TbAppJianyi();
+//             TbAppAdvice jianyi = new TbAppAdvice();
 //             jianyi.Id = ObjectId.NewObjectId().ToString();
 //             jianyi.Time = DateTime.Now;
 //             jianyi.Content =System.Web.HttpUtility.UrlDecode( reqinfo.req_params["content"]);
@@ -51,7 +51,7 @@ namespace hudie.app.module
 //             sql_struct sql = new sql_struct();
 // 
 //             sql.data1 = reqinfo;
-//             sql.cmd=new DbInsert<TbAppJianyi>(null, jianyi, null);
+//             sql.cmd=new DbInsert<TbAppAdvice>(null, jianyi, null);
 // 
 //             app.db_Insert(sql);
 // 

@@ -44,9 +44,11 @@ namespace hudie
 
         public static void OtherUpdate()
         {
-            int time = DateUtil.ToUnixTime(DateTime.Now);
+            long time = DateUtil.NowToToUnixTime2();
 
-            Cache.update(time);
+          //  Cache.update(time);
+
+            TokenCache.update(time);
         }
 
     }

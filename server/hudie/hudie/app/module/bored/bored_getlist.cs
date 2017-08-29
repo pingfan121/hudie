@@ -8,6 +8,7 @@ using GameServer.Define.EnumNormal;
 using GameDb.Logic;
 using GameLib.Database;
 using hudie.app.info;
+using GameLib.Util;
 
 namespace hudie.app.module
 {
@@ -15,12 +16,8 @@ namespace hudie.app.module
 	{
         public void getlist(HttpInfo reqinfo)
         {
-
             //请求数据库数据......
-
-            //  string str = String.Format("select * from benefit_theme limit {0},{1};", req.curr, 20);
-
-            string str = String.Format("select * from bored_head where invalid ='0';");
+            string str = String.Format("select * from bored_head where invalid_time ='{0}';",DateUtil.ToUnixTime2(DateTime.Now.Date));
 
             DbSelect<TbBoredHead> dbselect = new DbSelect<TbBoredHead>(null, str, null);
             //请求数据库数据结束......
@@ -32,9 +29,6 @@ namespace hudie.app.module
             sql.fun = getlist_back;
 
             app.db_Select(sql);
-
-
-
         }
 
         private void getlist_back(sql_struct sql)
