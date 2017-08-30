@@ -9,6 +9,7 @@ publish
 # Built application files
 *.rawproto
 *.apk
+*.suo
 *.ap_
 
 # Android Studio Navigation editor temp files
