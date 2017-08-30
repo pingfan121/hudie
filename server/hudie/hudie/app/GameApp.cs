@@ -59,6 +59,12 @@ namespace hudie
             Thread sql_write_thread = new Thread(sql_write);
             sql_write_thread.IsBackground = true;
             sql_write_thread.Start();
+
+            //测试账号
+            DbSelect<TbAppUser> select = new DbSelect<TbAppUser>(connect, "select * from app_user where id='" + "111111" + "';", null);
+            select.processRequest();
+
+            TokenCache.AddToken(select.ListRecord[0].Id, select.ListRecord[0]);
         }
 
         public void addMsg(HttpInfo info)
@@ -156,7 +162,7 @@ namespace hudie
 
                 if(sql_read_data.TryDequeue(out sql) == true)
                 {
-                    sql.cmd.DbConnect = connect;
+                    sql.cmd.DbConnect = this.connect;
                     sql.cmd.processRequest();
 
                     sql_data_back.Enqueue(sql);
@@ -179,7 +185,7 @@ namespace hudie
                 {
                     if(sql.cmd != null)
                     {
-                        sql.cmd.DbConnect = connect;
+                        sql.cmd.DbConnect = this.connect;
                         sql.cmd.processRequest();
                     }
                     else

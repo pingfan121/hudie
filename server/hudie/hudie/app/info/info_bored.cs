@@ -11,5 +11,7 @@ namespace hudie.app.info
 		public string userid;//发布人id
 		public string content;//内容
 		public int rownum;//这个还不知道是什么
+		public string username;//发布人的名字
+		public string userface;//头像
 	}
 }

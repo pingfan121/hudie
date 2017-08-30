@@ -76,7 +76,7 @@ public class ComQiPao_Voice extends LinearLayout
                 break;
         }
 
-        return true;
+        return false;
     }
 
     public void setBackground(boolean flag)

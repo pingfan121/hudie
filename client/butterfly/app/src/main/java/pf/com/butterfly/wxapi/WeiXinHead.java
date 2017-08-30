@@ -1,9 +1,5 @@
 package pf.com.butterfly.wxapi;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-
 import com.google.gson.Gson;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.SendAuth;
@@ -13,11 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pf.com.butterfly.MainActivity;
+import pf.com.butterfly.infofile.res_user_wx_login;
+import pf.com.butterfly.module.menu.MenuModule;
 import pf.com.butterfly.okhttp.IMsgback;
 import pf.com.butterfly.http.HttpBase;
 import pf.com.butterfly.manager.DataManager;
 import pf.com.butterfly.message.Protocols.login_weixin_req;
-import pf.com.butterfly.module.info.res_user_wx_login;
 import pf.com.butterfly.okhttp.OkHttpOther;
 import pf.com.butterfly.okhttp.OkHttpUtils;
 import pf.com.butterfly.module.user.UserHead;
@@ -139,10 +136,13 @@ public class WeiXinHead
             DataManager.userinfo.sex=res.sex;
             DataManager.userinfo.face=res.face;
 
+            DataManager.token=res.token;
+
             //更新个人信息
             UserHead.getInstance().updateInfo();
 
-
+            //菜单头像
+            MenuModule.getInstance().updateFace();
         }
     };
 

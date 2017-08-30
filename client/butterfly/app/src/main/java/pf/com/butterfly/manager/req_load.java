@@ -10,4 +10,5 @@ class req_load
 {
     public String url;
     public ImageView image;
+    public boolean change=false;
 }

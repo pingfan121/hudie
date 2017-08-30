@@ -32,6 +32,8 @@ namespace hudie.app.module
 
             voice.Id = ObjectId.NewObjectId().ToString();
             voice.Useid = reqinfo.user_data.Id;
+            voice.UserName = reqinfo.user_data.Name;
+            voice.UserFace = reqinfo.user_data.Head;
             voice.BoredId = reqinfo.req_params["boredid"];
             voice.RecordUrl = reqinfo.req_params["voiceurl"];
             voice.RecordLen = int.Parse(reqinfo.req_params["voicelen"]);

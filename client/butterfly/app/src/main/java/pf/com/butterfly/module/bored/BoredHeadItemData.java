@@ -9,6 +9,7 @@ import pf.com.butterfly.adapter.AdapterItemData;
 public class BoredHeadItemData extends AdapterItemData
 {
     public String id;
+    public String userid;
     public String icon;
     public String name;
     public String text;

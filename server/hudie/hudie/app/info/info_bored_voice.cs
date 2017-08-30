@@ -12,5 +12,7 @@ namespace hudie.app.info
 		public string userid;//用户id
 		public string voice_url;//语音地址
 		public int voice_len;//语音长度
+		public string username;//发布人的名字
+		public string userface;//头像
 	}
 }

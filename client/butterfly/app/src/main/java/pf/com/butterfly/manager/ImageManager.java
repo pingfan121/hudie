@@ -22,6 +22,9 @@ public class ImageManager
     private static HashMap<String,Bitmap> head_icons;
     private static HashMap<String,Bitmap> other_icons;
 
+    private static HashMap<String,Bitmap> head_map;
+    private static HashMap<String,Bitmap> other_map;
+
     private static List<req_load> req_head;
     private static List<req_load> req_other;
 
@@ -42,6 +45,9 @@ public class ImageManager
 
         req_head=new ArrayList<req_load>();
         req_other=new ArrayList<req_load>();
+
+        head_map=new HashMap<>();
+        other_map=new HashMap<>();
 
         http1=new HeadHttp(new IMsgback()
         {
@@ -68,6 +74,14 @@ public class ImageManager
 
     public static void OnDisposeHead(int err, String result, Object userToken)
     {
+
+        if(req_head.get(0).change==true)
+        {
+            req_head.get(0).change=false;
+            load1();
+            return ;
+        }
+
         req_load req=req_head.remove(0);
 
         if(err!=0)
@@ -172,11 +186,32 @@ public class ImageManager
 
     public static void LoadHead(String url, ImageView image)
     {
-        req_load req=new req_load();
-        req.url=url;
-        req.image=image;
 
-        req_head.add(req);
+
+        boolean flag=false;
+
+        for(req_load item: req_head)
+        {
+            if(item.image==image)
+            {
+                item.url=url;
+                flag=true;
+
+                if(req_head.get(0)==item)
+                {
+                    item.change=true;
+                }
+                break;
+            }
+        }
+
+        if(flag==false)
+        {
+            req_load req=new req_load();
+            req.url=url;
+            req.image=image;
+            req_head.add(req);
+        }
 
         if(req_head.size()==1)
         {

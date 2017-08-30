@@ -49,8 +49,12 @@ public class OkHttpOther extends OkHttpBase
         return mInstance;
     }
 
-
     public void send(String url, Map<String, String> params, IMsgback msgback)
+    {
+        send(url,params,msgback,null);
+    }
+
+    public void send(String url, Map<String, String> params, IMsgback msgback,Object userToken)
     {
 
         okhttp3.Request.Builder RequestBuilder = new okhttp3.Request.Builder();
@@ -76,7 +80,7 @@ public class OkHttpOther extends OkHttpBase
 
        // RequestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 
-        CallUrl(RequestBuilder,msgback);
+        CallUrl(RequestBuilder,msgback,userToken);
     }
 
 

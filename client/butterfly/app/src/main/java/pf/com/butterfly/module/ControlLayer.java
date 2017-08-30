@@ -20,5 +20,7 @@ public class ControlLayer
     public static int input_layers =100;  //输入层
 
 
+    public static int rule_head=200;//规则模块
+
     public static int debug_layer=9999;//调试输出层
 }

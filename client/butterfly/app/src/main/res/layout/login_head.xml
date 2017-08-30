@@ -32,6 +32,15 @@
             android:text="微信登录"
             android:textStyle="bold"/>
 
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/app_green"
+            android:text="测试账号登录"
+            android:textStyle="bold"/>
+
     </LinearLayout>
 
 </LinearLayout>

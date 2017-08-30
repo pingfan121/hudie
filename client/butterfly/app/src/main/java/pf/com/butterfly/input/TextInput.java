@@ -6,14 +6,18 @@ import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.message.MsgBase;
 import pf.com.butterfly.message.Protocols.advise_cteate_req;
 import pf.com.butterfly.message.net.IMsgResult;
-import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.ControlLayer;
+import pf.com.butterfly.okhttp.IMsgback;
+import pf.com.butterfly.okhttp.OkHttpUtils;
 import pf.com.butterfly.util.HDLog;
 import pf.com.butterfly.util.MixFun;
 
@@ -115,25 +119,25 @@ public class TextInput extends AppBaseViewControl
             return;
         }
 
-        advise_cteate_req req=new advise_cteate_req();
-        req.content=str;
-        req.userid="111111";
-        NetManager.SendMsg(req,msg_result);
+        Map<String,String> map=new HashMap<>();
+        map.put("content",str);
+
+        OkHttpUtils.getInstance().sendAppMsg("advice/add",map,add_result);
 
 
     }
 
-    private IMsgResult msg_result=new IMsgResult()
+    private IMsgback add_result=new IMsgback()
     {
         @Override
-        public void onError(int err, String msg)
+        public void onMsgDispose(int err, String result, Object userToken)
         {
-            HDLog.Toast(msg);
-        }
+            if(err!=0)
+            {
+                HDLog.Toast(result);
+                return ;
+            }
 
-        @Override
-        public void onResult(MsgBase msg)
-        {
             HDLog.Toast("建议提交成功,谢谢您的支持");
         }
     };

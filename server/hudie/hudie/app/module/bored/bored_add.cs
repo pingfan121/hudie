@@ -32,6 +32,8 @@ namespace hudie.app.module
 
             head.Id = ObjectId.NewObjectId().ToString();
             head.Useid = reqinfo.user_data.Id;
+            head.UserName = reqinfo.user_data.Name;
+            head.UserFace = reqinfo.user_data.Head;
             head.Rownum = 0;
             head.InvalidTime = DateUtil.ToUnixTime2(DateTime.Now.Date);
             head.CreateTime = DateUtil.ToUnixTime2(DateTime.Now);

@@ -14,6 +14,8 @@ public class DataManager
     public static Boolean app_over=false;
     //登录标志
     public static Boolean login_flag=false;
+
+    public static String token="";
     //用户信息
     public static UserInfo userinfo=new UserInfo();
 

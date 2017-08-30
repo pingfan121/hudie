@@ -10,6 +10,7 @@ import android.os.Message;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -19,6 +20,8 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import pf.com.butterfly.manager.DataManager;
+import pf.com.butterfly.util.MixFun;
 
 /**
  * HTTP通讯结构处理器
@@ -49,9 +52,16 @@ public class OkHttpUtils extends OkHttpBase
         return mInstance;
     }
 
-    public String app_msg_url="http://192.168.0.88:10012/app/module/";
+    public String app_debug_msg_url="http://192.168.0.88:10012/app/module/";
+    public String app_release_msg_url="http://www.pfkj.online:10012/app/module/";
+   // public String app_release_msg_url="http://192.168.0.88:10012/app/module/";
 
     public void sendAppMsg(String modulename, Map<String, String> params, IMsgback msgback)
+    {
+        sendAppMsg(modulename,params,msgback,null);
+    }
+
+    public void sendAppMsg(String modulename, Map<String, String> params, IMsgback msgback,Object userToken)
     {
         //设置编码
         if(params != null)
@@ -65,13 +75,27 @@ public class OkHttpUtils extends OkHttpBase
                 params.put(key,val);
             }
         }
+        else
+        {
+            params=new HashMap<>();
+        }
+        params.put("token", DataManager.token);
 
         okhttp3.Request.Builder RequestBuilder = new okhttp3.Request.Builder();
 
-        String reqUrl = app_msg_url+modulename;
+        String reqUrl="";
+
+        if(MixFun.isDebug()==true)
+        {
+            reqUrl = app_debug_msg_url+modulename;
+        }
+        else
+        {
+            reqUrl = app_release_msg_url+modulename;
+        }
 
 
-        String param_str=setUrlParams(params);
+       String param_str=setUrlParams(params);
 
         if(param_str.equals(""))
         {
@@ -95,7 +119,7 @@ public class OkHttpUtils extends OkHttpBase
         RequestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 
 
-        CallUrl(RequestBuilder,msgback);
+        CallUrl(RequestBuilder,msgback,userToken);
     }
 
 

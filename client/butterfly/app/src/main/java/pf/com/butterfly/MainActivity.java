@@ -16,6 +16,7 @@ import pf.com.butterfly.manager.DataManager;
 import pf.com.butterfly.manager.ImageManager;
 import pf.com.butterfly.manager.MediaManager;
 import pf.com.butterfly.module.menu.MenuModule;
+import pf.com.butterfly.module.rule.RuleHead;
 import pf.com.butterfly.module.title.TitleModule;
 import pf.com.butterfly.module.update.UpdateModule;
 import pf.com.butterfly.okhttp.OkHttpHandler;
@@ -24,7 +25,6 @@ import pf.com.butterfly.util.MixFun;
 import pf.com.butterfly.util.PermissionManager;
 import pf.com.butterfly.util.PhotoChoose;
 import pf.com.butterfly.module.ShowPhoto;
-import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.TestEditView;
 import pf.com.butterfly.module.TestTextView;
 import pf.com.butterfly.wxapi.WeiXinHead;
@@ -63,9 +63,6 @@ public class MainActivity  extends AppCompatActivity
 
             //初始化支付
             BP.init("a5a2688114fb06e9156acaaee76ca9a0");
-
-            //初始化网络
-            NetManager.init();
 
             //微信注册
             WeiXinHead.registToWX();

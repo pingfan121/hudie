@@ -49,6 +49,9 @@ namespace hudie.app.module
                     res.list[count] = new info_bored_voice();
 
                     res.list[count].id = theme.Id;
+                    res.list[count].userid = theme.Useid;
+                    res.list[count].username = theme.UserName;
+                    res.list[count].userface = theme.UserFace;
                     res.list[count].boredid = theme.BoredId;
                     res.list[count].voice_url = theme.RecordUrl;
                     res.list[count].voice_len = theme.RecordLen;

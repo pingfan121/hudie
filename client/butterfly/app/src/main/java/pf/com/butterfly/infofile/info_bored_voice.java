@@ -7,4 +7,6 @@ public class info_bored_voice
 	public String userid;//用户id
 	public String voice_url;//语音地址
 	public int voice_len;//语音长度
+	public String username;//发布人的名字
+	public String userface;//头像
 }

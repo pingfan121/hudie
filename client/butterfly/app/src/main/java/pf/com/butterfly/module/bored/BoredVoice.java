@@ -2,11 +2,11 @@ package pf.com.butterfly.module.bored;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
-import com.google.gson.Gson;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,14 +18,12 @@ import pf.com.butterfly.adapter.AdapterItemData;
 import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.okhttp.IMsgback;
-import pf.com.butterfly.bmob.BmobHttp;
 import pf.com.butterfly.infofile.res_bored_voicelist;
 import pf.com.butterfly.manager.MediaManager;
 import pf.com.butterfly.message.MsgBase;
 import pf.com.butterfly.message.Protocols.bored_record_item_add_req;
 import pf.com.butterfly.message.Protocols.bored_record_item_add_res;
 import pf.com.butterfly.message.net.IMsgResult;
-import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.okhttp.OkHttpBmob;
 import pf.com.butterfly.okhttp.OkHttpUtils;
 import pf.com.butterfly.util.HDLog;
@@ -63,11 +61,31 @@ public class BoredVoice extends AppBaseViewControl
     private AnimationDrawable animation;
     private View voiceAnim;
 
-    //private BmobHttp http;
+    private SwipeRefreshLayout srl;
+
+    private TextView tv_explain;
 
     @Override
     public void initControl()
     {
+
+        //下拉刷新布局
+
+        srl=(SwipeRefreshLayout)view.findViewById(R.id.sr_update);
+
+        //设置卷内的颜色
+        srl.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //设置下拉刷新监听
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                updateData();
+            }
+        });
+
+        tv_explain=(TextView) view.findViewById(R.id.tv_explain);
 
         voiceList=(ListView)view.findViewById(R.id.listView);
 
@@ -108,7 +126,7 @@ public class BoredVoice extends AppBaseViewControl
 
     private  String headid="";
 
-    public void ShowView(String bored_head_id)
+    public void ShowView(String bored_head_id,String title)
     {
         //必须先调用显示..
         this.show();
@@ -121,6 +139,8 @@ public class BoredVoice extends AppBaseViewControl
             headid=bored_head_id;
 
             updateData();
+
+            tv_explain.setText("请大声念出:"+title);
         }
     }
 
@@ -134,7 +154,9 @@ public class BoredVoice extends AppBaseViewControl
             {
                 HDLog.error("录音地址:"+filePath);
 
-                OkHttpBmob.getInstance().upBmobAMRFile(filePath,upfile_result);
+
+
+                OkHttpBmob.getInstance().upBmobAMRFile(filePath,upfile_result,(int)second);
 
                 //等待一会....这里应该播放上传动画
                 //.....
@@ -180,17 +202,23 @@ public class BoredVoice extends AppBaseViewControl
 
             HDLog.Toast("录音已提交到bmob");
 
-            //把数据发送给服务器
-            bored_record_item_add_req req=new bored_record_item_add_req();
-
-            req.head_id=headid;
-            req.time=1;
-            req.url=res.url;
+//            //把数据发送给服务器
+//            bored_record_item_add_req req=new bored_record_item_add_req();
+//
+//            req.head_id=headid;
+//            req.time=1;
+//            req.url=res.url;
             Map<String,String> params=new HashMap<>();
             params.put("boredid",headid);
+            params.put("voiceurl",res.url);
+            params.put("voicelen",userToken.toString());
 
 
-            NetManager.SendMsg(req,add_result);
+
+
+        //    NetManager.SendMsg(req,add_result);
+
+            OkHttpUtils.getInstance().sendAppMsg("bored/addvoice",params,addvoice_result);
         }
     };
 
@@ -206,7 +234,8 @@ public class BoredVoice extends AppBaseViewControl
 
         OkHttpUtils.getInstance().sendAppMsg("bored/voicelist",params,voicelist_result);
 
-        //播放发送动画.....
+        srl.setProgressViewOffset(false, 0, 30);
+        srl.setRefreshing(true);
 
     }
 
@@ -222,19 +251,21 @@ public class BoredVoice extends AppBaseViewControl
 
     //消息返回处理.......
 
-    private IMsgResult add_result=new IMsgResult()
+    private IMsgback addvoice_result=new IMsgback()
     {
-        @Override
-        public void onError(int err, String msg)
-        {
-            HDLog.Toast(msg);
-        }
 
         @Override
-        public void onResult(MsgBase msg)
+        public void onMsgDispose(int err, String result, Object userToken)
         {
-            HDLog.Toast("已提交");
+
+            if(err!=0)
+            {
+                HDLog.Toast("添加失败_"+result);
+                return ;
+            }
+            updateData();
         }
+
     };
 
     private IMsgback voicelist_result=new IMsgback()
@@ -244,7 +275,7 @@ public class BoredVoice extends AppBaseViewControl
         public void onMsgDispose(int err, String result, Object userToken)
         {
 
-            //取消发送动画...
+            srl.setRefreshing(false);
 
             if(err!=0)
             {

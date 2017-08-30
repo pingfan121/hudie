@@ -59,6 +59,10 @@ public class OkHttpBmob extends OkHttpBase
 
     public void upBmobAMRFile(String filepath,IMsgback msgback)
     {
+        upBmobAMRFile(filepath,msgback,null);
+    }
+    public void upBmobAMRFile(String filepath,IMsgback msgback,Object userToken)
+    {
 
         okhttp3.Request.Builder RequestBuilder = new okhttp3.Request.Builder();
 
@@ -77,7 +81,7 @@ public class OkHttpBmob extends OkHttpBase
         RequestBuilder.addHeader("X-Bmob-REST-API-Key","603fc86123b6ad09a9e9c264103fb5a4");
         RequestBuilder.addHeader("Content-Type", MixFun.getContentType(".amr"));
 
-        CallUrl(RequestBuilder,msgback);
+        CallUrl(RequestBuilder,msgback,userToken);
 
 
     }

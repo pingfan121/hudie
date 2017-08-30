@@ -13,6 +13,7 @@ import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.manager.DataManager;
+import pf.com.butterfly.manager.ImageManager;
 import pf.com.butterfly.module.advice.AdviceHead;
 import pf.com.butterfly.module.bored.BoredHead;
 import pf.com.butterfly.module.game_2048.SelectGameHead;
@@ -54,6 +55,8 @@ public class MenuModule
         slide = (DrawerLayout)father;
         //菜单视图
         view= father.findViewById(R.id.module_menu);
+
+        riv_head=(RoundedImageView) view.findViewById(R.id.riv_head);
 
         ListView listView=(ListView)view.findViewById(R.id.menu_item_list);
 
@@ -145,12 +148,12 @@ public class MenuModule
 
        //  adapter1.addOneItem(new MenuItemData(R.drawable.hudie,"蝴蝶",BenefitHead.getInstance()));
          adapter1.addOneItem(new MenuItemData(R.drawable.bored,"好无聊啊",BoredHead.getInstance()));
-         adapter1.addOneItem(new MenuItemData(R.drawable.rou,"中午吃啥",BoredHead.getInstance()));
-         adapter1.addOneItem(new MenuItemData(R.drawable.yu,"晚上吃啥",BoredHead.getInstance()));
+      //   adapter1.addOneItem(new MenuItemData(R.drawable.rou,"中午吃啥",BoredHead.getInstance()));
+      //   adapter1.addOneItem(new MenuItemData(R.drawable.yu,"晚上吃啥",BoredHead.getInstance()));
 
          adapter2=new ListViewAdapter(R.layout.itemlayout,MenuItemControl.class.getName());
 
-         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"2048", SelectGameHead.getInstance()));
+         adapter2.addOneItem(new MenuItemData(R.drawable.si_game,"2048", SelectGameHead.getInstance()));
 //         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"回不去", AdviceHead.getInstance()));
 //         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"舍不得",SetingHead.getInstance()));
 //         adapter2.addOneItem(new MenuItemData(R.drawable.hudie,"来不及",SetingHead.getInstance()));
@@ -160,11 +163,16 @@ public class MenuModule
          adapter3=new ListViewAdapter(R.layout.itemlayout,MenuItemControl.class.getName());
 
 
-         adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"建议", AdviceHead.getInstance()));
-         adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"设置",SetingHead.getInstance()));
-         adapter3.addOneItem(new MenuItemData(R.drawable.hudie,"退出",SetingHead.getInstance()));
+         adapter3.addOneItem(new MenuItemData(R.drawable.si_advice,"建议", AdviceHead.getInstance()));
+         adapter3.addOneItem(new MenuItemData(R.drawable.si_set,"设置",SetingHead.getInstance()));
+         adapter3.addOneItem(new MenuItemData(R.drawable.si_exit,"退出",SetingHead.getInstance()));
 
 
+     }
+
+     public void updateFace()
+     {
+         ImageManager.LoadHead(DataManager.userinfo.face,riv_head);
      }
 
 
