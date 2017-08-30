@@ -2,10 +2,10 @@ package pf.com.butterfly.module.game_2048;
 
 import android.view.View;
 
-import pf.com.butterfly.GlobalData;
 import pf.com.butterfly.MainActivity;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
+import pf.com.butterfly.manager.DataManager;
 import pf.com.butterfly.module.login.LoginHead;
 import pf.com.butterfly.util.HDLog;
 
@@ -42,14 +42,10 @@ public class SelectGameHead extends AppBaseViewControl
             @Override
             public void onClick(View view)
             {
-                if(MainActivity.main.isdebug==false)
+
+                if(DataManager.checkLogin()==false)
                 {
-                    if (GlobalData.login_flag == false)
-                    {
-                        LoginHead.getInstance().show();
-                        HDLog.Toast("请您先登录");
-                        return;
-                    }
+                    return ;
                 }
                 TestGameHead.getInstance().showView(4);
             }
@@ -60,14 +56,9 @@ public class SelectGameHead extends AppBaseViewControl
             @Override
             public void onClick(View view)
             {
-                if(MainActivity.main.isdebug==false)
+                if(DataManager.checkLogin()==false)
                 {
-                    if (GlobalData.login_flag == false)
-                    {
-                        LoginHead.getInstance().show();
-                        HDLog.Toast("请您先登录");
-                        return;
-                    }
+                    return ;
                 }
                 TestGameHead.getInstance().showView(6);
             }

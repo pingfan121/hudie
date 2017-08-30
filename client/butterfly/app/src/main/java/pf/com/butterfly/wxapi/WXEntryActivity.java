@@ -70,8 +70,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler
     @Override
     public void onResp(BaseResp resp)
     {
-      //  LogUtils.sf(resp.errStr);
-     //   LogUtils.sf("错误码 : " + resp.errCode + "");
 
         switch (resp.errCode)
         {

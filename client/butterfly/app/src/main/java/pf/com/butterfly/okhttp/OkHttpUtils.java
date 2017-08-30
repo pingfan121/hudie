@@ -91,45 +91,11 @@ public class OkHttpUtils extends OkHttpBase
         }
 
 
-      //  RequestBuilder.tag(msgback);//添加请求标签
-        RequestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-//        Request request = RequestBuilder.build();
-//
-//        Call call = mOkHttpClient.newCall(request);
-//        call.enqueue(new Callback()
-//        {
-//            @Override
-//            public void onFailure(Call arg0, IOException arg1)
-//            {
-//                httpback(-1,"通讯错误404",arg0.request().tag());
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException
-//            {
-//
-//                if (response.code() == 200)
-//                {
-//                    try
-//                    {
-//                        String Result = response.body().string();
-//
-//                        httpback(0,Result,call.request().tag());
-//
-//                    }
-//                    catch (Exception e)
-//                    {
-//                        httpback(-3,"数据异常-"+response.code(),call.request().tag());
-//                    }
-//                }
-//                else
-//                {
-//                    httpback(-2,"通讯异常-"+response.code(),call.request().tag());
-//                }
-//            }
-//        });
 
-          CallUrl(RequestBuilder,msgback);
+        RequestBuilder.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+
+
+        CallUrl(RequestBuilder,msgback);
     }
 
 

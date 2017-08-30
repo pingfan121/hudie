@@ -34,15 +34,15 @@ import pf.com.butterfly.util.MyGson;
 /**
  * Created by admin on 2017/3/3.
  */
-public class BoredDetail extends AppBaseViewControl
+public class BoredVoice extends AppBaseViewControl
 {
-    private static BoredDetail _instance;
+    private static BoredVoice _instance;
 
-    public static BoredDetail getInstance()
+    public static BoredVoice getInstance()
     {
         if(_instance==null)
         {
-            _instance=new BoredDetail();
+            _instance=new BoredVoice();
             _instance.layer = BoredHead.getInstance().layer+1;
         }
 
@@ -104,17 +104,6 @@ public class BoredDetail extends AppBaseViewControl
             }
         });
 
-//        http=new BmobHttp(new IMsgback()
-//        {
-//            @Override
-//            public void onMsgDispose(int err,String result,Object userToken)
-//            {
-//                OnMessage(err,result,userToken);
-//            }
-//        });
-//
-//
-//        http.setContentType(MixFun.getContentType(".amr"));
     }
 
     private  String headid="";
@@ -145,7 +134,6 @@ public class BoredDetail extends AppBaseViewControl
             {
                 HDLog.error("录音地址:"+filePath);
 
-            //    MsgManager.sendBmobmsg(filePath,upfile_result);
                 OkHttpBmob.getInstance().upBmobAMRFile(filePath,upfile_result);
 
                 //等待一会....这里应该播放上传动画
@@ -182,54 +170,30 @@ public class BoredDetail extends AppBaseViewControl
                 return ;
             }
 
-//            BmobHttp.fileback res =MsgManager.parseJson(result,BmobHttp.fileback.class);
-//
-//            if(res==null)
-//            {
-//                HDLog.Toast("解析出错");
-//                return;
-//            }
+            fileback res =MyGson.parseJson(result,fileback.class);
+
+            if(res==null)
+            {
+                HDLog.Toast("解析出错");
+                return;
+            }
 
             HDLog.Toast("录音已提交到bmob");
 
-//            //把数据发送给服务器
-//            bored_record_item_add_req req=new bored_record_item_add_req();
-//
-//            req.head_id=headid;
-//            req.time=1;
-//            req.url=res.url;
-//
-//            NetManager.SendMsg(req,add_result);
+            //把数据发送给服务器
+            bored_record_item_add_req req=new bored_record_item_add_req();
+
+            req.head_id=headid;
+            req.time=1;
+            req.url=res.url;
+            Map<String,String> params=new HashMap<>();
+            params.put("boredid",headid);
+
+
+            NetManager.SendMsg(req,add_result);
         }
     };
 
-    //处理http返回
-    private void OnMessage(int err,String result,Object userToken)
-    {
-        if(err==-99 ||err==-100 )
-        {
-          //  http.errerDispose(err,result);
-            return ;
-        }
-
-        BmobHttp.fileback res =new Gson().fromJson(result,BmobHttp.fileback.class);
-
-        if(res==null)
-        {
-            HDLog.Toast("解析出错");
-            return;
-        }
-
-        //把数据发送给服务器
-        bored_record_item_add_req req=new bored_record_item_add_req();
-
-        req.head_id=headid;
-        req.time=1;
-        req.url=res.url;
-
-        NetManager.SendMsg(req,add_result);
-
-    }
 
     //发送网络消息
     public void updateData()
@@ -237,9 +201,8 @@ public class BoredDetail extends AppBaseViewControl
 
         Map<String,String> params=new HashMap<>();
 
-        params.put("bored_id",headid);
+        params.put("boredid",headid);
 
-      //  MsgManager.sendMsg2("bored","voicelist",params,voicelist_result);
 
         OkHttpUtils.getInstance().sendAppMsg("bored/voicelist",params,voicelist_result);
 
@@ -306,6 +269,19 @@ public class BoredDetail extends AppBaseViewControl
             mAdapter.notifyDataSetChanged();
         }
     };
+
+    public class fileback
+    {
+        public String filename;
+        public String url;
+        public String cdnname;
+    }
+
+    public class errinfo
+    {
+        public int code;
+        public String error;
+    }
 
 
 

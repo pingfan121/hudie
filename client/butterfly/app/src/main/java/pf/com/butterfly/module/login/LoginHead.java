@@ -1,20 +1,10 @@
 package pf.com.butterfly.module.login;
 
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
-import pf.com.butterfly.GlobalData;
 import pf.com.butterfly.R;
-import pf.com.butterfly.base.AppBaseControl;
-import pf.com.butterfly.base.AppBaseFragment;
 import pf.com.butterfly.base.AppBaseViewControl;
-import pf.com.butterfly.message.Protocols.info_user;
-import pf.com.butterfly.message.Protocols.login_req;
-import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.module.ControlLayer;
-import pf.com.butterfly.module.title.TitleModule;
-import pf.com.butterfly.module.user.UserHead;
 import pf.com.butterfly.wxapi.WeiXinHead;
 
 /**

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import pf.com.butterfly.module.info.MsgData;
+import pf.com.butterfly.module.login.LoginHead;
 import pf.com.butterfly.util.HDLog;
 import pf.com.butterfly.util.MyGson;
 
@@ -112,7 +113,13 @@ public class OkHttpHandler extends Handler
         if (err < 0)
         {
             HDLog.error(result);
-        } else if (err > 0)
+        }
+        else if(err==5)
+        {
+            //显示登录模块
+            LoginHead.getInstance().show();
+        }
+        else if (err > 0)
         {
             HDLog.error("错误码:" + err);
         }

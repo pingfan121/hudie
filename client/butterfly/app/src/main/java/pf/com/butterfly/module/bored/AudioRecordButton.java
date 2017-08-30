@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import pf.com.butterfly.R;
+import pf.com.butterfly.manager.DataManager;
 import pf.com.butterfly.util.HDLog;
 import pf.com.butterfly.util.PermissionManager;
 
@@ -56,7 +57,13 @@ public class AudioRecordButton extends AppCompatButton
 		setOnLongClickListener(new OnLongClickListener() {
 
 			@Override
-			public boolean onLongClick(View v) {
+			public boolean onLongClick(View v)
+			{
+				if(DataManager.checkLogin()==false)
+				{
+					return false;
+				}
+
 				try
 				{
 					PermissionManager.applyForPermission(Manifest.permission.RECORD_AUDIO,new MyPermissionCallback());

@@ -15,6 +15,7 @@ import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.AdapterItemData;
 import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
+import pf.com.butterfly.manager.DataManager;
 import pf.com.butterfly.okhttp.IMsgback;
 import pf.com.butterfly.infofile.res_bored_add;
 import pf.com.butterfly.infofile.res_bored_getlist;
@@ -96,7 +97,7 @@ public class BoredHead extends AppBaseViewControl
                 Object obj=view.getTag();
 
               //点击了列表
-                BoredDetail.getInstance().ShowView(((BoredHeadItemData)adapter.getItem(position)).id);
+                BoredVoice.getInstance().ShowView(((BoredHeadItemData)adapter.getItem(position)).id);
 
             }
         });
@@ -114,6 +115,11 @@ public class BoredHead extends AppBaseViewControl
 
     public void OnTiJiao()
     {
+
+        if(DataManager.checkLogin()==false)
+        {
+            return ;
+        }
         //检测文本是否合法
 
         String str=et_text.getText().toString();

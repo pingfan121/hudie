@@ -3,7 +3,6 @@ package pf.com.butterfly.module.user;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import pf.com.butterfly.GlobalData;
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.manager.DataManager;

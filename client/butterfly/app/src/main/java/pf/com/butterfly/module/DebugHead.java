@@ -1,28 +1,10 @@
 package pf.com.butterfly.module;
 
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import pf.com.butterfly.R;
-import pf.com.butterfly.adapter.AdapterItemData;
-import pf.com.butterfly.adapter.ListViewAdapter;
 import pf.com.butterfly.base.AppBaseViewControl;
-import pf.com.butterfly.message.Protocols.bored_head_item_add_req;
-import pf.com.butterfly.message.Protocols.bored_head_item_add_res;
-import pf.com.butterfly.message.Protocols.bored_head_items_req;
-import pf.com.butterfly.message.Protocols.bored_head_items_res;
-import pf.com.butterfly.message.net.NetManager;
-import pf.com.butterfly.module.bored.BoredDetail;
-import pf.com.butterfly.module.bored.BoredHead;
-import pf.com.butterfly.module.bored.BoredHeadItemData;
-import pf.com.butterfly.module.bored.BoredItemView;
 import pf.com.butterfly.util.HDLog;
 
 /**
