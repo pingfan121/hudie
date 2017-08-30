@@ -37,6 +37,26 @@ namespace GameDb.Logic
 				changedKeys.Add("Useid");
 			}
 		}
+		private string _user_name;
+		[Column(Name = "user_name")]
+		public string UserName{
+			get{ return _user_name;}
+			set
+			{
+				_user_name = value;
+				changedKeys.Add("UserName");
+			}
+		}
+		private string _user_face;
+		[Column(Name = "user_face")]
+		public string UserFace{
+			get{ return _user_face;}
+			set
+			{
+				_user_face = value;
+				changedKeys.Add("UserFace");
+			}
+		}
 		private int _record_len;
 		[Column(Name = "record_len")]
 		public int RecordLen{
@@ -71,6 +91,8 @@ namespace GameDb.Logic
 		{
 			BoredId ="";
 			Useid ="";
+			UserName ="";
+			UserFace ="";
 			RecordUrl ="";
 		}
 		public TbBoredVoice copy()
@@ -80,6 +102,8 @@ namespace GameDb.Logic
 			t.Id = Id;
 			t.BoredId = BoredId;
 			t.Useid = Useid;
+			t.UserName = UserName;
+			t.UserFace = UserFace;
 			t.RecordLen = RecordLen;
 			t.RecordUrl = RecordUrl;
 			t.CreateTime = CreateTime;

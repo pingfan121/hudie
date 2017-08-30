@@ -4,7 +4,11 @@ import android.view.View;
 
 import pf.com.butterfly.R;
 import pf.com.butterfly.base.AppBaseViewControl;
+import pf.com.butterfly.manager.DataManager;
+import pf.com.butterfly.model.UserInfo;
 import pf.com.butterfly.module.ControlLayer;
+import pf.com.butterfly.module.menu.MenuModule;
+import pf.com.butterfly.util.MixFun;
 import pf.com.butterfly.wxapi.WeiXinHead;
 
 /**
@@ -57,6 +61,32 @@ public class LoginHead extends AppBaseViewControl
 //                UserHead.getInstance().updateInfo();
             }
         });
+
+        //微信登录按钮
+        view.findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                DataManager.login_flag=true;
+                DataManager.token="111111";
+                DataManager.userinfo=new UserInfo();
+                DataManager.userinfo.name="测试账号";
+                DataManager.userinfo.face="http://wx.qlogo.cn/mmopen/PdibpV1sFDHd7jGjouGwGr5yfNGzrfu47C63VVicRgxY19Cr5vddE1Sq41X0cgicLu1xJcxibGXqxORGGgR7a0ogYtyYgASZ7RTf/0";
+                DataManager.userinfo.sex=1;
+
+                LoginHead.getInstance().hide();
+                MenuModule.getInstance().updateFace();
+            }
+        });
+
+        if(MixFun.isDebug()==true)
+        {
+            view.findViewById(R.id.btn_wx_login).setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            view.findViewById(R.id.btn_wx_login).setVisibility(View.INVISIBLE);
+        }
 
 
     }

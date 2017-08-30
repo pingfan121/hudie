@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import pf.com.butterfly.module.info.MsgData;
 import pf.com.butterfly.module.login.LoginHead;
 import pf.com.butterfly.util.HDLog;
@@ -108,7 +111,10 @@ public class OkHttpHandler extends Handler
             err = msgdata.error;
         }
 
-        IMsgback imsg = (IMsgback) msg.obj;
+        Map<String,Object> map =(HashMap<String,Object>)msg.obj;
+
+        IMsgback imsg = (IMsgback) map.get("back");
+        Object userToken=map.get("usertoken");
 
         if (err < 0)
         {
@@ -126,7 +132,7 @@ public class OkHttpHandler extends Handler
 
         if (imsg != null)
         {
-            imsg.onMsgDispose(err, result, null);
+            imsg.onMsgDispose(err, result, userToken);
         }
     }
 
@@ -136,12 +142,15 @@ public class OkHttpHandler extends Handler
         String result = bundle.getString("result");
         int err = bundle.getInt("error");
 
-        IMsgback imsg = (IMsgback) msg.obj;
+        Map<String,Object> map =(HashMap<String,Object>)msg.obj;
+
+        IMsgback imsg = (IMsgback) map.get("back");
+        Object userToken=map.get("usertoken");
 
 
         if (imsg != null)
         {
-            imsg.onMsgDispose(err, result, null);
+            imsg.onMsgDispose(err, result, userToken);
         }
     }
     public void OnOtherMsg(Message msg)
@@ -152,12 +161,14 @@ public class OkHttpHandler extends Handler
 
         HDLog.error("得到消息:"+err+" "+result);
 
-        IMsgback imsg = (IMsgback) msg.obj;
+        Map<String,Object> map =(HashMap<String,Object>)msg.obj;
 
+        IMsgback imsg = (IMsgback) map.get("back");
+        Object userToken=map.get("usertoken");
 
         if (imsg != null)
         {
-            imsg.onMsgDispose(err, result, null);
+            imsg.onMsgDispose(err, result, userToken);
         }
     }
 }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import pf.com.butterfly.ControlManager;
 import pf.com.butterfly.R;
+import pf.com.butterfly.module.rule.RuleHead;
 
 /**
  * Created by admin on 2017/3/5.
@@ -77,12 +78,8 @@ public class TitleModule
 
     public void OnBtnShuoMing()
     {
-//       if(explain!=null)
-//       {
-//           explain.TitleExplain();
-//       }
+        RuleHead.getInstance().show();
 
-//        LogView.Show();
     }
     //其他事件
 

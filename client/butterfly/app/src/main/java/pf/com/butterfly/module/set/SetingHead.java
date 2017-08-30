@@ -8,7 +8,6 @@ import pf.com.butterfly.base.AppBaseViewControl;
 import pf.com.butterfly.component.IItemClick;
 import pf.com.butterfly.component.ItemSelectAdapter;
 import pf.com.butterfly.component.ItemSelectData;
-import pf.com.butterfly.message.net.NetManager;
 import pf.com.butterfly.model.ItemData;
 import pf.com.butterfly.module.DebugHead;
 
@@ -50,11 +49,11 @@ public class SetingHead extends AppBaseViewControl
                 //设置网络.....
                 if(data.text.equals("内网"))
                 {
-                    NetManager.SetNet(false);
+                //    NetManager.SetNet(false);
                 }
                 else
                 {
-                    NetManager.SetNet(true);
+              //      NetManager.SetNet(true);
                 }
 
                 //遍历

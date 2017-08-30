@@ -35,9 +35,9 @@ import pf.com.butterfly.util.HDLog;
 public class UpdateModule
 {
 
-    public static String updateurl ="http://www.pfkj.online/UpdateInfo.txt";
+    public static String updateurl ="http://www.pfkj.online/app/UpdateInfo.txt";
 
-    public static String debug_updateurl ="http://192.168.0.88:8080/UpdateInfo.txt";
+   // public static String debug_updateurl ="http://192.168.0.88:8080/UpdateInfo.txt";
 
 
     private static UpdateModule _instance=null;
@@ -58,14 +58,9 @@ public class UpdateModule
     {
         String url="";
 
-        if(MainActivity.main.isdebug==true)
-        {
-            url=debug_updateurl;
-        }
-        else
-        {
-            url=updateurl;
-        }
+
+        url=updateurl;
+
 
         OkHttpOther.getInstance().send(url,null,msgback);
 

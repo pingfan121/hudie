@@ -101,30 +101,30 @@ namespace hudie.cache
         {
             //清理token
 
-            if(currtime - TokenCache.cleantime > TokenCache.cleaninterval)
-            {
-
-                list.Clear();
-
-                lock(tokens)
-                {
-                    foreach(var temp in tokens)
-                    {
-                        if(currtime - temp.Value.lasttime > TokenCache.cleansustain)
-                        {
-                            list.Add(temp.Key);
-                        }
-                    }
-
-                    foreach(var key in list)
-                    {
-                        ObjectPool.recycle(tokens[key]);
-
-                        tokens.Remove(key);
-                    }
-
-                }
-            }
+//             if(currtime - TokenCache.cleantime > TokenCache.cleaninterval)
+//             {
+// 
+//                 list.Clear();
+// 
+//                 lock(tokens)
+//                 {
+//                     foreach(var temp in tokens)
+//                     {
+//                         if(currtime - temp.Value.lasttime > TokenCache.cleansustain)
+//                         {
+//                             list.Add(temp.Key);
+//                         }
+//                     }
+// 
+//                     foreach(var key in list)
+//                     {
+//                         ObjectPool.recycle(tokens[key]);
+// 
+//                         tokens.Remove(key);
+//                     }
+// 
+//                 }
+//             }
         }
 
     }

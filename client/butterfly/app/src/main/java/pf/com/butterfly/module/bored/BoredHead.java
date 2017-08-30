@@ -96,8 +96,9 @@ public class BoredHead extends AppBaseViewControl
 
                 Object obj=view.getTag();
 
+                BoredHeadItemData itemdata=(BoredHeadItemData)adapter.getItem(position);
               //点击了列表
-                BoredVoice.getInstance().ShowView(((BoredHeadItemData)adapter.getItem(position)).id);
+                BoredVoice.getInstance().ShowView(itemdata.id,itemdata.text);
 
             }
         });
@@ -168,14 +169,20 @@ public class BoredHead extends AppBaseViewControl
         @Override
         public void onMsgDispose(int err, String result, Object userToken)
         {
+
+            if(err!=0)
+            {
+                HDLog.Toast(result);
+                return ;
+            }
             HDLog.Toast("提交成功");
 
             res_bored_add res= MyGson.parseJson(result, res_bored_add.class);
 
             BoredHeadItemData data=new BoredHeadItemData();
             data.id=res.info.id;
-            data.icon="";
-            data.name="我是一个平凡的人";
+            data.icon=res.info.userface;
+            data.name=res.info.username;
             data.text=res.info.content;
             data.num=res.info.rownum;
 
@@ -189,7 +196,13 @@ public class BoredHead extends AppBaseViewControl
         @Override
         public void onMsgDispose(int err, String result, Object userToken)
         {
-            HDLog.Toast("已刷新");
+            srl.setRefreshing(false);
+
+            if(err!=0)
+            {
+                HDLog.Toast("无聊列表出现问题:"+err);
+                return;
+            }
 
             res_bored_getlist res=MyGson.parseJson(result, res_bored_getlist.class);
 
@@ -199,8 +212,8 @@ public class BoredHead extends AppBaseViewControl
             {
                 BoredHeadItemData data=new BoredHeadItemData();
                 data.id=res.list[i].id;
-                data.icon="";
-                data.name="我是一个平凡的人";
+                data.icon=res.list[i].userface;
+                data.name=res.list[i].username;
                 data.text=res.list[i].content;
                 data.num=res.list[i].rownum;
 
@@ -210,7 +223,7 @@ public class BoredHead extends AppBaseViewControl
             adapter.datas=datas;
             adapter.notifyDataSetChanged();
 
-            srl.setRefreshing(false);
+            HDLog.Toast("已刷新");
         }
     };
 }

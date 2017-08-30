@@ -8,6 +8,8 @@ import pf.com.butterfly.R;
 import pf.com.butterfly.adapter.AdapterItemData;
 import pf.com.butterfly.adapter.AdapterItemControl;
 import pf.com.butterfly.component.ComQiPao_Text;
+import pf.com.butterfly.manager.DataManager;
+import pf.com.butterfly.manager.ImageManager;
 
 /**
  * Created by admin on 2017/5/20.
@@ -45,6 +47,9 @@ public class BoredItemView extends AdapterItemControl
         data=obj;
 
         BoredHeadItemData itemdata=(BoredHeadItemData)obj;
+
+        //读取图片
+        ImageManager.LoadHead(itemdata.icon,iv_icon);
 
         tv_name.setText(itemdata.name);
         tv_rownum.setText("跟帖:"+itemdata.num);

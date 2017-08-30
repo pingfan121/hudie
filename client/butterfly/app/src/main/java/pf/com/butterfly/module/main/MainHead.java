@@ -53,6 +53,8 @@ public class MainHead extends AppBaseViewControl
                 MainTest.getInstance().show();
             }
         });
+
+        view.findViewById(R.id.btn_fun).setVisibility(View.INVISIBLE);
     }
 
     public void setText(String str)

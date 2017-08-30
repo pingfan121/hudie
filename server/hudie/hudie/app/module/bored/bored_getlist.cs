@@ -48,6 +48,8 @@ namespace hudie.app.module
 
                     res.list[count].id = theme.Id;
                     res.list[count].userid = theme.Useid;
+                    res.list[count].username = theme.UserName;
+                    res.list[count].userface = theme.UserFace;
                     res.list[count].content = theme.Content;
                     res.list[count].rownum = theme.Rownum;
                     count++;

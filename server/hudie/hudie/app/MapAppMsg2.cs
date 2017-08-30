@@ -40,6 +40,7 @@ namespace hudie.app
 			req_map["hudie.app.module.bored.voicelist"].Add("boredid");
 			req_map["hudie.app.module.bored.addvoice"].Add("boredid");
 			req_map["hudie.app.module.bored.addvoice"].Add("voiceurl");
+			req_map["hudie.app.module.bored.addvoice"].Add("voicelen");
 			req_map["hudie.app.module.game.g2048.rank"].Add("type");
 			req_map["hudie.app.module.game.g2048.rank"].Add("num");
 		}

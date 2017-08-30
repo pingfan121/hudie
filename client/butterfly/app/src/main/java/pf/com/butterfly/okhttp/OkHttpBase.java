@@ -10,6 +10,7 @@ import android.os.Message;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -95,9 +96,14 @@ public class OkHttpBase
         return strParams;
     }
 
-    protected void CallUrl(okhttp3.Request.Builder RequestBuilder,IMsgback msgback)
+    protected void CallUrl(okhttp3.Request.Builder RequestBuilder,IMsgback msgback,Object userToken)
     {
-        RequestBuilder.tag(msgback);//添加请求标签
+       Map<String,Object> map=new HashMap<>();
+
+        map.put("back",msgback);
+        map.put("usertoken",userToken);
+
+        RequestBuilder.tag(map);//添加请求标签
         Request request = RequestBuilder.build();
 
         Call call = mOkHttpClient.newCall(request);
@@ -135,14 +141,14 @@ public class OkHttpBase
         });
     }
 
-    private void httpback(int error, String result, Object msgback)
+    private void httpback(int error, String result, Object data)
     {
         Message msg=new Message();
         Bundle bundle=new Bundle();
         bundle.putInt("error",error);
         bundle.putString("result",result);
         msg.setData(bundle);
-        msg.obj=msgback;
+        msg.obj=data;
         msg.what=what;
 
         OkHttpHandler.getInstance().sendMessage(msg);
