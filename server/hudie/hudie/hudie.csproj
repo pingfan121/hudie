@@ -67,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="app\GlobalApp.cs" />
+    <Compile Include="app\info\res_user_login.cs" />
+    <Compile Include="app\info\res_user_test2.cs" />
+    <Compile Include="app\info\res_user_userinfo.cs" />
     <Compile Include="app\MapAppMsg.cs" />
     <Compile Include="app\MapAppMsg2.cs" />
     <Compile Include="app\module\user\user.cs" />
